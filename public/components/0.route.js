@@ -1,8 +1,10 @@
 window.routes = {
-    '/plugin-form': {
-        template: '<plugin-form></plugin-form>'
-    },
-    '/plugin-list': {
-        template: '<plugin-list></plugin-list>'
+    '/product-list': {
+        template: '<product-list data="$resolve.list"></product-list>',
+        resolve: {
+            list: ($q) => {
+                return $q.when('abc');
+            }
+        }
     }
 }

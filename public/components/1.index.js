@@ -1,9 +1,22 @@
 window.app = angular.module('myApp', [
-		'ngRoute'
+		'ngComponentRouter'
 	])
 	.constant('$config', {
 		apiUrl: 'http://localhost:4000',
 	})
+	.value('$routerRootComponent', 'myApp')
+	.config(['$locationProvider', '$config', '$httpProvider', function ($locationProvider, $config, $httpProvider) {
+		//$locationProvider.hashPrefix('!');    
+		// $httpProvider.interceptors.push('AuthInterceptor');
+		$locationProvider.html5Mode(true);
+	}])
+	.run(['$rootScope', '$location', function ($rootScope, $location) {
+		// $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
+		//   $rootScope.title = current.$$route.title;
+		//   $rootScope.navicon = current.$$route.originalPath;
+		//   delete $rootScope.onNavEvent;
+		// });
+	}])
 	// .factory('AuthInterceptor', ['$q', '$window', function ($q, $window) {
 	//   return {
 	//     responseError: function (responseError) {
@@ -19,24 +32,5 @@ window.app = angular.module('myApp', [
 	//     }
 	//   };
 	// }])
-	.run(['$rootScope', '$timeout', '$http', '$window', function ($rootScope, $timeout, $http, $window) {
-
-	}])
-	.config(['$locationProvider', '$routeProvider', '$config', '$httpProvider', function ($locationProvider, $routeProvider, $config, $httpProvider) {
-		//$locationProvider.hashPrefix('!');    
-		// $httpProvider.interceptors.push('AuthInterceptor');
-		$locationProvider.html5Mode(true);
-		for (var i in window.routes) {
-			 $routeProvider.when(i, window.routes[i]);
-		}
-	}])
-
-.run(['$rootScope', '$location', function ($rootScope, $location) {
-	// $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
-	//   $rootScope.title = current.$$route.title;
-	//   $rootScope.navicon = current.$$route.originalPath;
-	//   delete $rootScope.onNavEvent;
-	// });
-}])
 
 ;

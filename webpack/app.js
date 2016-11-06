@@ -13,7 +13,7 @@ require.ensure(['../public/css/1.font.css',
 })
 
 require(['../public/js/1.angular.min.js',
-	'../public/js/2.angular-route.min.js',
+	'../public/js/2.angular_1_router.min.js',
 	'../public/js/3.angular-animate.min.js',
 	'../public/js/4.angular-touch.min.js',
 	'../public/js/5.ng-file-upload-shim.min.js',
@@ -24,8 +24,8 @@ require(['../public/js/1.angular.min.js',
 		'../public/components/2.cuz.filter.js',
 		'../public/components/3.cuz.directive.js',
 		'../public/components/data.provider.js',
-		'../public/components/plugin/plugin-form.js',
-		'../public/components/plugin/plugin-list.js'], (require) => {
+		'../public/components/my-app.js',
+		'../public/components/product/product-list.js'], (require) => {
         require(['../public/js/8.[DONE].material.min.js']);
     });
 })

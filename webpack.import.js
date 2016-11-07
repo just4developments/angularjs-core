@@ -37,7 +37,7 @@ let loadJs = (pathJs, insertPath) => {
 let loadComponents = (pathComponents, insertPath) => {
   let componentJs = [];
   let loadComponent = (pathComponents, level, insertPath) => {
-    componentJs[level] = [];
+    if(!componentJs[level]) componentJs[level] = [];
     for(let f of fs.readdirSync(pathComponents)){
       let path0 = path.join(pathComponents, f);
       let stat = fs.lstatSync(path0);

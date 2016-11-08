@@ -1,4 +1,5 @@
 window.app = angular.module('myApp', [
+		'ngMaterial',
 		'ngComponentRouter'
 	])
 	.constant('$config', {

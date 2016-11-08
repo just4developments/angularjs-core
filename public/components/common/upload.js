@@ -9,7 +9,7 @@ app.component('uploadLogo', {
     file: '@',
     fields: '<',
     done: '&',
-    error: '&',
+    error: '&', 
     pattern: '@',
     size: '<'
   },

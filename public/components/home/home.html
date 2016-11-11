@@ -1,0 +1,36 @@
+<div layout="row" layout-wrap>
+    <md-card ng-repeat="item in $ctrl.list" flex-xs="100" flex-sm="45" flex-md="25" flex-lg="20" ng-init="imgIndex=0; detailIndex=0;" redirect-to="/test">
+        <ul class="tags" ng-class="{'ng-hide-add': 0 === detailIndex, 'ng-hide-remove': 0 !== detailIndex}">
+            <li ng-repeat="d in item.details"><span class="tag">{{d.size}}</span></li>
+        </ul>
+        <div class="md-card-image" ng-class="{'ng-hide-add': 0 === detailIndex, 'ng-hide-remove': 0 !== detailIndex}">
+            <div ng-repeat="img in item.images" class="img" ng-class="{'ng-hide-add': $index === imgIndex, 'ng-hide-remove': $index !== imgIndex}" background-src="img"></div>
+            <div class="nav">
+                <md-radio-group ng-model="imgIndex" layout="row">
+                    <md-radio-button ng-value="$index" ng-repeat="img in item.images" aria-label="{{item.name}}"></md-radio-button>
+                </md-radio-group>            
+            </div>
+        </div>
+        <md-card-content ng-class="{'ng-hide-add': 0 === detailIndex, 'ng-hide-remove': 0 !== detailIndex}">
+            <h3>{{item.name}}</h3>
+            <p class="elipsis2">{{item.des}}</p>
+        </md-card-content>
+        <div style="position: absolute; top: 0px; left: 0px;" ng-class="{'ng-hide-add': 1 === detailIndex, 'ng-hide-remove': 1 !== detailIndex}">
+            <md-card-content>
+                <p>{{item.des}}</p>
+                <md-list layout-no-padding>
+                    <md-subheader class="md-no-sticky">Available sizes</md-subheader>
+                    <md-list-item ng-repeat="d in item.details">
+                        <p >{{d.size}}: {{d.quantity}}</p>      
+                    </md-list-item>
+                </md-list>                      
+            </md-card-content>
+        </div>        
+        <md-card-actions layout="row" layout-align="end center">
+            <md-button class="md-icon-button" aria-label="Favorite" ng-click="detailIndex = detailIndex ? 0 : 1;">                
+                <md-icon ng-if="!detailIndex">keyboard_arrow_right</md-icon>
+                <md-icon ng-if="detailIndex">keyboard_arrow_left</md-icon>
+            </md-button>
+        </md-card-actions>
+    </md-card>
+</div>

@@ -1,1 +1,21 @@
-<ng-outlet></ng-outlet>
+<md-toolbar class="md-hue-2">
+    <div class="md-toolbar-tools">
+        <md-button class="md-icon-button" aria-label="Settings" ng-disabled="true">
+            <md-icon>menu</md-icon>
+        </md-button>
+        <h2>
+            <span>Angular material template 123</span>
+        </h2>
+        <span flex></span>
+        <input type="text" name="search" placeholder="Search.." class="search">
+        <md-button aria-label="More">Menu 1</md-button>
+        <md-button aria-label="More">Menu 2</md-button>
+        <md-button aria-label="More">Menu 3</md-button>
+        <md-button class="md-icon-button" aria-label="More">
+            <md-icon>more_vert</md-icon>
+        </md-button>
+    </div>
+</md-toolbar>
+<md-content flex layout-padding class="main">
+    <ng-outlet></ng-outlet>
+</md-content>

@@ -1,4 +1,4 @@
-app.factory('Cuisine', ['$http', '$rootScope', '$config', '$q', function ($http, $rootScope, $config, $q) {
+app.factory('Product', ['$http', '$rootScope', '$config', '$q', function ($http, $rootScope, $config, $q) {
 
     return {
         findById: (id) => {
@@ -9,20 +9,8 @@ app.factory('Cuisine', ['$http', '$rootScope', '$config', '$q', function ($http,
             });
             return cuisine;
         },
-        search: (name) => {
-            var deferred = $q.defer();
-            var rs = [];
-            name = name.toLowerCase();
-            for (var item of $rootScope.cuisines) {
-                if (item.name.toLowerCase().indexOf(name) != -1 || item.des.toLowerCase().indexOf(name) != -1)
-                    rs.push(item);
-            }
-            setTimeout(() => {
-                deferred.resolve({
-                    data: rs
-                });
-            }, 500);
-            return deferred.promise;
+        search: () => {
+            return $http.get(`${$config.apiUrl}/product`);
         },
         find: () => {
             // Used in new version

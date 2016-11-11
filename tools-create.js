@@ -39,14 +39,17 @@ try{
 `app.component('${handleComName(comName)}', {
     template: require('./${comName}.html'),
     controller: ['$config', function ($config) {
-        require('./${comName}.css');
-
+        require('./${comName}.scss');
+        this.$routerOnActivate = (next) => {
+            
+        }
+        
     }]
 });
 `);
 }
 
-let cssFile = path.join(pathFile, comName+'.css');
+let cssFile = path.join(pathFile, comName+'.scss');
 try{
     fs.lstatSync(cssFile)
     console.error(`File ${cssFile} was existed!`);

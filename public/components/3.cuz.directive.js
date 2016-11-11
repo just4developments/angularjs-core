@@ -3,7 +3,9 @@ app
     return {
       link: function (scope, element, attributes) {
         element.on("click", () => {
-          $location.path(attributes.goTo);
+          scope.$apply(() => {
+            $location.path(attributes.goTo);
+          });
         })
       }
     };

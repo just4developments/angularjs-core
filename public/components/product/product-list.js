@@ -1,4 +1,5 @@
-app.component('productList', {
+module.exports = {
+    name: 'productList',
     template: require('./product-list.html'),
     bindings: {
         data: '<'
@@ -6,4 +7,4 @@ app.component('productList', {
     controller: ['$config', function ($config) {
         require('./product-list.css');
     }]
-});
+}

@@ -1,5 +1,5 @@
-// TODO : Dang update image progress
-app.component('uploadLogo', {
+module.exports = {
+  name: 'uploadLogo',
   template: require('./upload.html'),
   bindings: {
     theme: '@',
@@ -49,4 +49,4 @@ app.component('uploadLogo', {
       });
     };
   }]
-});
+}

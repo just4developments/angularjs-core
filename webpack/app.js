@@ -1,34 +1,30 @@
 require('../public/index.htm');
 
-require.ensure(['../public/css/1.font.css',
-	'../public/css/2.material-font.css',
-	'../public/css/3.material.min.css',
-	'../public/css/4.angularjs-datetime-picker.css',
-	'../public/css/5.styles.css'], (require) => {
-    require(['../public/css/1.font.css',
-	'../public/css/2.material-font.css',
-	'../public/css/3.material.min.css',
-	'../public/css/4.angularjs-datetime-picker.css',
-	'../public/css/5.styles.css']);
-})
+require(['../public/css/1.font.css',
+		'../public/css/2.material-font.css',
+		'../public/css/3.material.min.css',
+		'../public/css/4.angularjs-datetime-picker.css',
+		'../public/css/5.styles.css']);
 
-require(['../public/js/1.angular.min.js',
-	'../public/js/2.angular-animate.min.js',
-	'../public/js/2.angular-aria.min.js',
-	'../public/js/2.angular-messages.min.js',
-	'../public/js/2.angular_1_router.min.js',
-	'../public/js/3.material.min.js',
-	'../public/js/5.ng-file-upload-shim.min.js',
-	'../public/js/6.ng-file-upload.min.js',
-	'../public/js/7.angularjs-datetime-picker.min.js'], (require) => {
-    require(['../public/components/1.index.js',
-		'../public/components/2.cuz.filter.js',
-		'../public/components/3.cuz.directive.js',
-		'../public/components/data.provider.js',
-		'../public/components/my-app.js',
-		'../public/components/common/upload.js',
-		'../public/components/plugin/plugin-form.js',
-		'../public/components/product/product-list.js'], (require) => {
-        require([]);
+require(['jquery', 'angular', 'router'], (jquery, angular) => {
+    global.app = angular.module('myApp', ['ngComponentRouter']).value('$routerRootComponent', 'myApp');
+    require(['../public/components/app-const.js',
+			'../public/components/app-config.js',
+			'../public/components/app-run.js',
+			'../public/components/app-directive.js',
+			'../public/components/app-filter.js',
+			'../public/components/app-provider.js',
+			'../public/components/my-app.js',
+			'../public/components/common/upload.js',
+			'../public/components/product/product-list.js'], (...com) => {
+        for (var i in com) {
+            if (i == 0) global.app.constant('$config', com[i]);
+            else if (i == 1) global.app.config(com[i]);
+            else if (i == 2) global.app.run(com[i]);            
+            else if (i == 3) for (var key in com[i]) global.app.directive(key, com[i][key]);
+            else if (i == 4) for (var key in com[i]) global.app.filter(key, com[i][key]);
+            else if (i == 5) for (var key in com[i]) global.app.factory(key, com[i][key]);
+            else global.app.component(com[i].name, com[i]);
+        }
     });
 })

@@ -15,27 +15,19 @@ let loadCss = (pathCss, insertPath) => {
 };
 
 let loadJs = (pathJs, insertPath) => {
-  var files = [];
-  var dones = [];
+  var libs = ['jquery', 'angular', 'router'].map(e=>{ return `'${e}'`}).join(', ');
+  var files = [libs];
   for(var f of fs.readdirSync(pathJs)){
-    if(LOADED_PATTERN.test(f)){
-      if(f.indexOf('[DONE]') !== -1){
-        dones.push(`'${insertPath + '/' + f}'`);
-      }else{
-        files.push(`'${insertPath + '/' + f}'`);
-      }
-    }
+    files.push(`'${insertPath + '/' + f}'`);
   }
   files.sort();
-  dones.sort();
-  return {
-      files: files,
-      dones: dones
-  };
+  return files;
 };
 
 let loadComponents = (pathComponents, insertPath) => {
-  let componentJs = [];
+  let componentJs = [['app-const.js', 'app-config.js', 'app-run.js', 'app-directive.js', 'app-filter.js', 'app-provider.js', 'my-app.js'].map(e=>{
+    return "'" + insertPath + '/' + e + "'";
+  })];  
   let loadComponent = (pathComponents, level, insertPath) => {
     if(!componentJs[level]) componentJs[level] = [];
     for(let f of fs.readdirSync(pathComponents)){
@@ -43,7 +35,7 @@ let loadComponents = (pathComponents, insertPath) => {
       let stat = fs.lstatSync(path0);
       if(stat.isDirectory()){
         loadComponent(path0, level+1, insertPath+'/'+f);
-      }else if(/\.js$/.test(f)){
+      }else if(level > 0 && /\.js$/.test(f)){
         componentJs[level].push(`'${insertPath+'/'+f}'`);
       }
     }
@@ -51,7 +43,7 @@ let loadComponents = (pathComponents, insertPath) => {
   loadComponent(pathComponents, 0, insertPath);
   var all = [];
   for(var i in componentJs){
-    componentJs[i].sort();
+    if(i != 0) componentJs[i].sort();
     all = all.concat(componentJs[i]);
   }
   return all;
@@ -60,16 +52,23 @@ let loadComponents = (pathComponents, insertPath) => {
 let content = ["require('../public/index.htm');"];
 
 let css = loadCss(path.join(__dirname, 'public', 'css'), '../public/css');
-content.push(`require.ensure([${css.join(',\n\t')}], (require) => {
-    require([${css.join(',\n\t')}]);
-})`);
+content.push(`require([${css.join(',\n\t\t')}]);`);
 
 let js = loadJs(path.join(__dirname, 'public', 'js'), '../public/js');
 let com = loadComponents(path.join(__dirname, 'public', 'components'), '../public/components');
 
-content.push(`require([${js.files.join(',\n\t')}], (require) => {
-    require([${com.join(',\n\t\t')}], (require) => {
-        require([${js.dones.join(',\n\t')}]);
+content.push(`require([${js.join(',\n\t\t')}], (jquery, angular) => {
+    global.app = angular.module('myApp', ['ngComponentRouter']).value('$routerRootComponent', 'myApp');
+    require([${com.join(',\n\t\t\t')}], (...com) => {
+        for (var i in com) {
+            if (i == 0) global.app.constant('$config', com[i]);
+            else if (i == 1) global.app.config(com[i]);
+            else if (i == 2) global.app.run(com[i]);            
+            else if (i == 3) for (var key in com[i]) global.app.directive(key, com[i][key]);
+            else if (i == 4) for (var key in com[i]) global.app.filter(key, com[i][key]);
+            else if (i == 5) for (var key in com[i]) global.app.factory(key, com[i][key]);
+            else global.app.component(com[i].name, com[i]);
+        }
     });
 })`);
 

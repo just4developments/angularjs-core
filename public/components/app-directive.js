@@ -1,5 +1,5 @@
-app
-  .directive("goTo", ['$location', function ($location) {
+module.exports = {
+  goTo : ['$location', function ($location) {
     return {
       link: function (scope, element, attributes) {
         element.on("click", () => {
@@ -9,8 +9,8 @@ app
         })
       }
     };
-  }])
-  .directive("goBack", ['$window', function ($window) {
+  }],
+  goBack:  ['$window', function ($window) {
     return {
       link: function (scope, element, attributes) {
         element.on("click", () => {
@@ -18,8 +18,8 @@ app
         })
       }
     };
-  }])
-  .directive("redirectTo", ['$window', function ($window) {
+  }],
+  redirectTo: ['$window', function ($window) {
     return {
       link: function (scope, element, attributes) {
         element.on("click", () => {
@@ -27,8 +27,8 @@ app
         })
       }
     };
-  }])
-  .directive("backgroundSrc", ['$config', function ($config) {
+  }],
+  backgroundSrc: ['$config', function ($config) {
     return {
       scope: {
         backgroundSrc: "=",
@@ -55,8 +55,8 @@ app
         }
       }
     };
-  }])
-  .directive("imageSrc", ['$config', function ($config) {
+  }],
+  imageSrc: ['$config', function ($config) {
     return {
       scope: {
         imageSrc: "=",
@@ -86,4 +86,5 @@ app
         }
       }
     };
-  }]);
+  }] 
+};

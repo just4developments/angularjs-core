@@ -6,9 +6,7 @@ const LOADED_PATTERN = /^\d+\./;
 let loadCss = (pathCss, insertPath) => {
   var files = [];
   for(var f of fs.readdirSync(pathCss)){
-    if(LOADED_PATTERN.test(f)){
-      files.push(`'${insertPath + '/' + f}'`);
-    }
+    files.push(`'${insertPath + '/' + f}'`);
   }
   files.sort();
   return files;
@@ -16,11 +14,12 @@ let loadCss = (pathCss, insertPath) => {
 
 let loadJs = (pathJs, insertPath) => {
   var libs = ['jquery', 'angular', 'router'].map(e=>{ return `'${e}'`}).join(', ');
-  var files = [libs];
+  var files = [];
   for(var f of fs.readdirSync(pathJs)){
     files.push(`'${insertPath + '/' + f}'`);
   }
   files.sort();
+  files.splice(0, 0, libs);
   return files;
 };
 
@@ -51,10 +50,11 @@ let loadComponents = (pathComponents, insertPath) => {
 
 let content = ["require('../public/index.htm');"];
 
-let css = loadCss(path.join(__dirname, 'public', 'css'), '../public/css');
+let css = loadCss(path.join(__dirname, 'public', 'assets', 'css'), '../public/assets/css');
+console.log(css);
 content.push(`require([${css.join(',\n\t\t')}]);`);
 
-let js = loadJs(path.join(__dirname, 'public', 'js'), '../public/js');
+let js = loadJs(path.join(__dirname, 'public', 'assets', 'js'), '../public/assets/js');
 let com = loadComponents(path.join(__dirname, 'public', 'components'), '../public/components');
 
 content.push(`require([${js.join(',\n\t\t')}], (jquery, angular) => {

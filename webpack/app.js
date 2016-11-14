@@ -1,12 +1,14 @@
 require('../public/index.htm');
 
-require(['../public/css/1.font.css',
-		'../public/css/2.material-font.css',
-		'../public/css/3.material.min.css',
-		'../public/css/4.angularjs-datetime-picker.css',
-		'../public/css/5.styles.css']);
+require(['../public/assets/css/1.bootstrap.min.css',
+		'../public/assets/css/2.font-awesome.min.css',
+		'../public/assets/css/3.fonts.googleapis.com.css',
+		'../public/assets/css/4.ace.min.css']);
 
-require(['jquery', 'angular', 'router'], (jquery, angular) => {
+require(['jquery', 'angular', 'router',
+		'../public/assets/js/1.ace-elements.min.js',
+		'../public/assets/js/2.ace.min.js',
+		'../public/assets/js/3.bootstrap.min.js'], (jquery, angular) => {
     global.app = angular.module('myApp', ['ngComponentRouter']).value('$routerRootComponent', 'myApp');
     require(['../public/components/app-const.js',
 			'../public/components/app-config.js',

@@ -1,52 +1,50 @@
-// TODO : Dang update image progress
-app.component('uploadLogo', {
+// app.directive('fileModel', ['$parse', function ($parse) {
+//   return {
+//     restrict: 'A',
+//     link: function (scope, element, attrs) {
+//       var model = $parse(attrs.fileModel);
+//       var modelSetter = model.assign;
+//       element.on('change', function () {
+//         scope.$apply(function () {
+//           modelSetter(scope, element[0].files[0]);
+//         });
+//       });
+//     }
+//   };
+// }]);
+
+app.service('Upload', ['$http', function ($http) {
+  this.uploadFileToUrl = function (body, uploadUrl) {
+    var fd = new FormData();
+    for(var i in body){
+      if(body[i] instanceof Object && !(body[i] instanceof File)){
+        fd.append(i, JSON.stringify(body[i]));
+      }else{
+        fd.append(i, body[i]);
+      }
+    }
+    return $http.post(uploadUrl, fd, {
+      transformRequest: angular.identity,
+      headers: {
+        'Content-Type': undefined
+      }
+    });
+  }
+}]);
+
+app.component('uploadFile', {
   template: require('./upload.html'),
   bindings: {
-    theme: '@',
-    defaultSrc: '@',
-    itemSrc: '=',
-    url: '<',
-    file: '@',
-    fields: '<',
-    done: '&',
-    error: '&', 
-    pattern: '@',
-    size: '<'
+    fileModel: '=',
+    name: '@'
   },
-  controller: ['Upload', '$window', '$rootScope', '$config', function(Upload, $window, $rootScope, $config) {    
-    var self = this;
-    var height = 170;   
-    var body = this.fields || {};
-    if(this.size){
-        var i = this.itemSrc.lastIndexOf('/');
-        this.itemSrc = this.itemSrc.substr(0, i+1) + this.size + this.itemSrc.substr(i);
-    }
-    this.apiUrl = (this.itemSrc && this.itemSrc.indexOf('http')!==0) ? $config.apiUrl : '';
-    this.pattern = this.pattern || 'image/*';  
-    this.upload = function (file) {
-      if(file === null) return null;
-      body[this.file] = file;
-      self.percent = 0;
-      self.itemSrc = undefined;
-      this.percentCss = {'top': 100+'%'};
-      Upload.upload({
-          url: this.url,
-          headers: {
-            'access_token': $rootScope.user.access_token
-          },
-          data: body
-      }).then(function (resp) {            
-          delete self.percent;
-          self.itemSrc = resp.data[0];
-          self.percent = 100;
-          self.done({resp: resp});
-      }, function (resp) {
-          delete self.percent;
-          self.error({resp: resp});
-      }, function (evt) {
-          self.percent = parseInt(100 * evt.loaded / evt.total);
-          self.percentCss = {'top': (100 - self.percent) + '%'};
+  controller: ['$element', '$attrs', '$scope', '$parse', function ($element, $attrs, $scope, $parse) {
+    require('./upload.scss');
+    var self = this;    
+    $element.on('change', function (e) {
+      $scope.$apply(function () {
+        self.fileModel = e.target.files[0];
       });
-    };
+    });
   }]
 });

@@ -26,10 +26,8 @@ require(['../public/js/1.angular.min.js',
 		'../public/components/3.cuz.directive.js',
 		'../public/components/data.provider.js',
 		'../public/components/my-app.js',
-		'../public/components/common/slider.js',
 		'../public/components/common/upload.js',
-		'../public/components/home/home.js',
-		'../public/components/product/product-list.js'], (require) => {
+		'../public/components/home/home.js'], (require) => {
         require([]);
     });
 })

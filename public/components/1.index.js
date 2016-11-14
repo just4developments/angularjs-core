@@ -11,7 +11,8 @@ window.app = angular.module('myApp', [
 		// $httpProvider.interceptors.push('AuthInterceptor');
 		$locationProvider.html5Mode(true);
 	}])
-	.run(['$rootScope', '$location', function ($rootScope, $location) {
+	.run(['$rootScope', '$location', '$config', function ($rootScope, $location, $config) {
+		$rootScope.config = $config;
 		// $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
 		//   $rootScope.title = current.$$route.title;
 		//   $rootScope.navicon = current.$$route.originalPath;

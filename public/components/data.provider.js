@@ -1,28 +1,18 @@
-app.factory('Product', ['$http', '$rootScope', '$config', '$q', function ($http, $rootScope, $config, $q) {
-
-    return {
-        findById: (id) => {
-            var cuisine = null;
-            $rootScope.cuisines.forEach(item => {
-                if (item.id == id)
-                    cuisine = item;
-            });
-            return cuisine;
-        },
-        search: () => {
-            return $http.get(`${$config.apiUrl}/product`);
-        },
-        find: () => {
-            // Used in new version
-            return $http.get(`${$config.apiUrl}/whatseat/cuisine`);
-        },
-        load: () => {
-            $http.get(`${$config.apiUrl}/whatseat/cuisine`).then((res) => {
-                $rootScope.cuisines = res.data;
-            });
-        }
-    };
-}])
+app
+    .factory('Product', ['$http', '$rootScope', '$config', '$q', function ($http, $rootScope, $config, $q) {
+        return {
+            find: () => {
+                return $http.get(`${$config.apiUrl}/product`);
+            }
+        };
+    }])
+    .factory('Category', ['$http', '$rootScope', '$config', '$q', function ($http, $rootScope, $config, $q) {
+        return {
+            find: () => {
+                return $http.get(`${$config.apiUrl}/category`);
+            }
+        };
+    }]);
 
 // app.utils = {
 //     getDistance: (lon1, lat1, lon2, lat2) => {

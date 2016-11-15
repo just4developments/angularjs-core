@@ -12,6 +12,7 @@ module.exports = {
     module: {
         loaders: [
             { test: /\.s?css$/, loader: 'style!css!sass'},
+            { test: require.resolve('angular'), loader: 'exports?window.angular' },
             {
                 test: /\.js$/,
                 exclude: /(node_modules|bower_components)/,
@@ -25,5 +26,22 @@ module.exports = {
             { test: /\.html$/, loader: 'html-loader' },
             { test: /\.htm$/, loaders: ['file-loader?name=[name].[ext]', 'extract-loader', 'html-loader'] }
         ]
-    }
+    },
+    resolve: {
+        modulesDirectories: ['node_modules'],
+        alias: {
+            angular: "angular",
+            router:  "@angular/router/angular1/angular_1_router.js",
+            messages: "angular-messages",
+            animate: "angular-animate",
+            aria: "angular-aria",
+            material: "angular-material",
+            css_material: "angular-material/angular-material.css",
+        }
+    },
+    plugins: [
+        new webpack.ProvidePlugin({
+            "angular": "angular"
+        })
+    ]
 }

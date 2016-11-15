@@ -1,21 +1,53 @@
-<md-toolbar class="md-hue-2">
-    <div class="md-toolbar-tools">
-        <md-button class="md-icon-button" aria-label="Settings" ng-disabled="true">
-            <md-icon>menu</md-icon>
-        </md-button>
-        <h2>
-            <span>Angular material template 123</span>
-        </h2>
-        <span flex></span>
-        <input type="text" name="search" placeholder="Search.." class="search">
-        <md-button aria-label="More">Menu 1</md-button>
-        <md-button aria-label="More">Menu 2</md-button>
-        <md-button aria-label="More">Menu 3</md-button>
-        <md-button class="md-icon-button" aria-label="More">
-            <md-icon>more_vert</md-icon>
-        </md-button>
-    </div>
-</md-toolbar>
 <md-content flex layout-padding class="main">
-    <ng-outlet></ng-outlet>
+    <header layout="row" layout-align="center center">
+        <img src="../assets/images/logo.png" />
+        <div flex align="right">
+            <div class="search">
+                <input type="search" />
+                <md-icon>search</md-icon>
+            </div>
+        </div>
+    </header>
+    <ul class="tab">
+        <li class="active">Tab 1</li>
+        <li>Tab 2</li>
+        <li>Tab 3</li>
+        <li>Tab 4</li>
+        <li>Tab 5</li>
+        <li>Tab 6</li>
+    </ul>    
+    <div class="tab-content">
+        <div class="banner">
+            <div class="slide"></div>
+        </div>
+        <ng-outlet></ng-outlet>
+        <footer>
+            <div layout="row" layout-wrap>
+                <section flex-xs="100" flex-sm="20" flex="20">
+                    <h4>Category</h4>
+                    <ul>
+                        <li><a href="#"> - Ban buon</a></li>
+                        <li><a href="#"> - Ban le</a></li>
+                        <li><a href="#"> - Dat hang</a></li>
+                    </ul>
+                </section>
+                <section flex-xs="100" flex-sm="40" flex="40">
+                    <h4>Policy</h4>
+                    <ul>
+                        <li></li>
+                        <li>Tab 2</li>
+                        <li>Tab 3</li>
+                    </ul>
+                </section>
+                <section flex flex-xs="100">
+                    <h4>Store information</h4>
+                    <ul class="padding-more">
+                        <li><md-icon>location_on</md-icon><a href="#">&nbsp;&nbsp;&nbsp;My Address</a></li>
+                        <li><md-icon>phone</md-icon><a href="#">&nbsp;&nbsp;&nbsp;0955.695.235</a></li>
+                        <li><md-icon>email</md-icon><a href="#">&nbsp;&nbsp;&nbsp;email@gmail.com</a></li>
+                    </ul>
+                </section>
+            </div>
+        </footer>
+    </div>    
 </md-content>

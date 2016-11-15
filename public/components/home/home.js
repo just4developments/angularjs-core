@@ -15,8 +15,9 @@ app.component('home', {
             });
         });
         this.save = (p) => {
-            console.log(p);
-            Upload.uploadFileToUrl(p, $config.apiUrl + '/product').then((resp) => {
+            var p0 = Object.assign(p);
+            // if(p0.sizes) p0.sizes = JSON.stringify(p.sizes);
+            Upload.uploadFileToUrl(p0, $config.apiUrl + '/product').then((resp) => {
                 self.list.push(resp.data.ops[0]);
                 self.isAdd = false;
             }).catch((err) => {

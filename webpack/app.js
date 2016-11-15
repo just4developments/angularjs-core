@@ -3,13 +3,11 @@ require('../public/index.htm');
 require.ensure(['../public/css/1.font.css',
 	'../public/css/2.material-font.css',
 	'../public/css/3.material.min.css',
-	'../public/css/4.angularjs-datetime-picker.css',
-	'../public/css/5.styles.css'], (require) => {
+	'../public/css/4.angularjs-datetime-picker.css'], (require) => {
     require(['../public/css/1.font.css',
 	'../public/css/2.material-font.css',
 	'../public/css/3.material.min.css',
-	'../public/css/4.angularjs-datetime-picker.css',
-	'../public/css/5.styles.css']);
+	'../public/css/4.angularjs-datetime-picker.css']);
 })
 
 require(['../public/js/1.angular.min.js',

@@ -1,23 +1,135 @@
+html, body {
+    height: 100%; width: 100%; margin: 0;
+    background-image: url(../assets/images/bg.jpg);
+    font-family: 'Comic'
+}
+md-content {
+    background-color: transparent;    
+}
 my-app {
+    .slide {
+        height: 400px;
+        background: url(../assets/images/banner.jpg);
+        background-size: 100%;
+        background-position: top center;
+        background-repeat: no-repeat;
+    }
+    .banner {
+        padding: 24px;
+    }
+    .tab {        
+        position: relative;  
+        margin: 0px;
+        padding-top: 8px;   
+        height: 35px;   
+        padding-left: 24px;
+    }
+    .tab li:nth-child(1) {
+        background-color: #7e57cc;
+    }
+    .tab li:nth-child(2) {
+        background-color: #02b8e3;
+    }
+    .tab li:nth-child(3) {
+        background-color: #8dca00;
+    }
+    .tab li:nth-child(4) {
+        background-color: #fe9400;
+    }
+    .tab li:nth-child(5) {
+        background-color: #d92469;
+    }
+    .tab li:nth-child(6) {
+        background-color: #f8c40d;
+    }
+    .tab li:hover {
+        padding: 30px 24px;
+    }
+    .tab li.active {
+        padding: 35px 24px;
+    }
+    .tab li {
+        color:white;
+        list-style: none;
+        display: inline;
+        padding: 24px 24px;        
+        font-size: 1.1em;
+        border-radius: 4px 4px 0px 0px;
+        cursor: pointer;
+    }
+    .tab-content {
+        position: relative;
+        box-shadow: 0px -1px 20px #cacaca;
+        z-index: 1;
+        background-color: white;
+    }
     .button {
         cursor: pointer;
     }
     .main {
-        max-width: 1000px;
+        max-width: 1230px;
         margin: auto;
+        margin-bottom: 32px;        
     }
+    header {
+        margin-bottom: 32px;
+    }
+    footer li {
+        overflow: hidden;
+    }    
+    footer a:hover {
+        color: #02b8e3;
+        left: 0px;
+    }
+    footer ul {
+        padding: 0px 8px;
+        margin: 0px;
+    }
+    footer {
+        margin-top: 50px;
+        font-size: 0.9em;
+        color: #969494;
+        padding: 8px;
+    }
+    footer md-icon {
+        color: #02b8e3;
+    }    
+    footer h4 {
+        font-size: 1.2em;
+        font-weight: 400;
+        color: #4f4e4f;
+        margin: 16px 0px;
+    }
+    footer .padding-more li {
+        padding: 2px 0px;
+    }
+    footer li {
+        padding: 1px 0px;
+    }
+    footer a {
+        font-size: 0.9em;
+        position: relative;
+        left: -8px;
+        text-decoration: none;
+        color: #969494;
+        -webkit-transition: 0.3s;
+        -o-transition: 0.3s;
+        transition: 0.3s;
+    }    
     .search {
-        width: 150px;
-        box-sizing: "border-box";
-        border: 2px solid #ccc;
-        border-radius: 4px;
-        background-color: white;
-        background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAVCAYAAACpF6WWAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAACYktHRAD/h4/MvwAAAAl2cEFnAAABKgAAASkAUBZlMQAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAxMy0wNC0xMFQwNjo1OTowNy0wNzowMI5BiVEAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMTMtMDQtMTBUMDY6NTk6MDctMDc6MDD/HDHtAAAAGXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAAABF0RVh0VGl0bGUAc2VhcmNoLWljb27Cg+x9AAACKklEQVQ4T6WUSavqQBCFK+2sII7gShFXLpUsBBHFf+1KcAQFwaWiolsnnBDn++4p0iHRqPDuByFJd/Wp6qrqVn5+IQP3+52m0ymtVis6Ho885na7KRgMUiKR4O9vmEQHgwGNx2NyOp0khCBFUXgcJo/Hg67XK8ViMcpkMjz+Dl200+nQZrMhh8PBE4gYQgDidrudvzEOm2KxyP9WsCginM1mHKEUS6VSFA6HOWI4G41GPAfx2+1GgUCAVFXVZMwovwY/lUqFPB4PiyFn+XxemzbT6/VovV6z8Ol0olwux+LPCBQFEQKIvhME2WyWbWGHFCD/VghUGVvE1rDlb6TTabbFmuVyqY2aEWgbFALeI5GINvyeUCjEtlgju+IZoRWfkS30CURoxFJUNjMEt9stf38CNjJKIFvNiMBJgTebzcZt843hcMhCELWqPBDxeJwulwtvC/3X7/e1qVfgFD0rC5tMJrUZM8Lr9VI0GmVBRDCfz6nZbHI/Sna7HXW7XZpMJtxSiBIP1lmhH9NqtaqfGKQDTmQREBnSgwfmMqfYYblc1o+2xHShtNttLgSiee4EmMEp3hDBPJzikimVSuRyuTTLJ1GwWCz4pCB3UhiL/X4/Hw50C5zjLSM+n898weCogxdRIzAGxigAdtNqtV6EC4UC+Xy+z6Kf2O/31Gg0TMK4ZBDxf4uCw+FA9XpdF0aaUOg/iQLcHbVaTb/p0Cl/FgXIJ/oYnaCqKv0DC6dltH6Ks84AAAAASUVORK5CYII=');
-        background-position: 8px 6px;
-        background-repeat: no-repeat;
-        padding: 5px 20px 5px 40px;
-        -webkit-transition: width .4s ease-in-out;
-        transition: width .4s ease-in-out;
+        width: 350px;
+        border: solid 1px #ccc;
+        border-radius: 6px;
+        margin-right: 8px;
+    }
+    .search md-icon {
+        margin: 3px;
+    }
+    .search input {
+        width: 295px;
+        padding: 16px 8px;  
+        border: none;
+        outline: none;      
     }
 
     /* When the input field gets focus, change its width to 100% */

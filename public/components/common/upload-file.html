@@ -1,0 +1,10 @@
+<label class="ace-file-input ace-file-multiple" ngf-select="$ctrl.upload($file)" ngf-drop="$ctrl.upload($file)" ngf-accept="$ctrl.accept">
+    <span class="ace-file-container" data-title="{{$ctrl.classTitle}}" ng-class="$ctrl.className">
+        <span class="ace-file-name" data-title="No File ...">
+            <i class="ace-icon ace-icon fa fa-cloud-upload" ng-class="$ctrl.className" ng-style="{opacity: $ctrl.percent/100}"></i>
+        </span>
+    </span>
+    <a class="remove" href="#">
+        <i class="ace-icon fa fa-times"></i>
+    </a>
+</label>

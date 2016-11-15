@@ -13,7 +13,7 @@ let loadCss = (pathCss, insertPath) => {
 };
 
 let loadJs = (pathJs, insertPath) => {
-  var libs = ['jquery', 'angular', 'router'].map(e=>{ return `'${e}'`}).join(', ');
+  var libs = ['jquery', 'angular', 'router', 'upload'].map(e=>{ return `'${e}'`}).join(', ');
   var files = [];
   for(var f of fs.readdirSync(pathJs)){
     files.push(`'${insertPath + '/' + f}'`);
@@ -58,7 +58,7 @@ let js = loadJs(path.join(__dirname, 'public', 'assets', 'js'), '../public/asset
 let com = loadComponents(path.join(__dirname, 'public', 'components'), '../public/components');
 
 content.push(`require([${js.join(',\n\t\t')}], (jquery, angular) => {
-    global.app = angular.module('myApp', ['ngComponentRouter']).value('$routerRootComponent', 'myApp');
+    global.app = angular.module('myApp', ['ngComponentRouter', 'ngFileUpload']).value('$routerRootComponent', 'myApp');
     require([${com.join(',\n\t\t\t')}], (...com) => {
         for (var i in com) {
             if (i == 0) global.app.constant('$config', com[i]);

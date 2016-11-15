@@ -35,7 +35,8 @@ module.exports = {
         alias: {
             jquery:  "jquery/dist/jquery.js",
             angular: "angular/index.js",
-            router:  "@angular/router/angular1/angular_1_router.js"
+            router:  "@angular/router/angular1/angular_1_router.js",
+            upload: "ng-file-upload"
         }
     },
     plugins: [

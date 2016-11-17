@@ -67,6 +67,7 @@ app
             ee.setAttribute('src', require('../assets/images/no-photo.png'));
           });
           if (typeof scope.imageSrc != 'undefined' && scope.imageSrc != null) {
+            if(typeof scope.imageSrc !== 'string') return;
             if (scope.imageSrc.startsWith("http://") || scope.imageSrc.startsWith("https://")) {
               ee.setAttribute('src', scope.imageSrc);
             } else {

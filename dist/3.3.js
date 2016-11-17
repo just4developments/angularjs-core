@@ -471,6 +471,7 @@ webpackJsonp([3],[
 	          ee.setAttribute('src', __webpack_require__(36));
 	        });
 	        if (typeof scope.imageSrc != 'undefined' && scope.imageSrc != null) {
+	          if (typeof scope.imageSrc !== 'string') return;
 	          if (scope.imageSrc.startsWith("http://") || scope.imageSrc.startsWith("https://")) {
 	            ee.setAttribute('src', scope.imageSrc);
 	          } else {

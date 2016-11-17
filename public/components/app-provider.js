@@ -1,5 +1,5 @@
-module.exports = {    
-    Cuisine: ['$http', '$rootScope', '$config', '$q', function ($http, $rootScope, $config, $q) {
+module.exports = {
+    Cuisine: ['$http', '$rootScope', '$config', '$q', function($http, $rootScope, $config, $q) {
         return {
             findById: (id) => {
                 var cuisine = null;
@@ -32,6 +32,38 @@ module.exports = {
                 $http.get(`${$config.apiUrl}/whatseat/cuisine`).then((res) => {
                     $rootScope.cuisines = res.data;
                 });
+            }
+        };
+    }],
+    ShellClass: ['$http', '$rootScope', '$config', '$q', function($http, $rootScope, $config, $q) {
+
+        return {
+            execute: (id, data) => {
+                return $http.post(`${$config.apiUrl}/ShellClass/execute/${id}`, data);
+            },
+            getScripts: () => {
+                return $http.get(`${$config.apiUrl}/ShellClass`);
+            },
+            deleteScript: (id) => {
+                return $http.delete(`${$config.apiUrl}/ShellClass/${id}`);
+            }
+        };
+    }],
+    UploadPackage: ['$http', '$rootScope', '$config', '$q', function($http, $rootScope, $config, $q) {
+
+        return {
+            uploadUrl: `${$config.apiUrl}/ShellClass/upload`,
+            maxUpload: 12, // max uploading file
+        };
+    }],
+    ExecuteLogs: ['$http', '$rootScope', '$config', '$q', function($http, $rootScope, $config, $q) {
+
+        return {
+            getLogs: () => {
+                return $http.get(`${$config.apiUrl}/ExecutingLogs`);
+            },
+            getTopLogs: (count) => {
+                return $http.get(`${$config.apiUrl}/ExecutingLogs?recordsPerPage=${count}&page=1`);
             }
         };
     }]

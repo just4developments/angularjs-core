@@ -4,48 +4,50 @@ const path = require('path');
 const LOADED_PATTERN = /^\d+\./;
 
 let loadCss = (pathCss, insertPath) => {
-  var files = [];
-  for(var f of fs.readdirSync(pathCss)){
-    files.push(`'${insertPath + '/' + f}'`);
-  }
-  files.sort();
-  return files;
+    var files = [];
+    for (var f of fs.readdirSync(pathCss)) {
+        files.push(`'${insertPath + '/' + f}'`);
+    }
+    files.sort();
+    return files;
 };
 
 let loadJs = (pathJs, insertPath) => {
-  var libs = ['jquery', 'angular', 'router', 'upload'].map(e=>{ return `'${e}'`}).join(', ');
-  var files = [];
-  for(var f of fs.readdirSync(pathJs)){
-    files.push(`'${insertPath + '/' + f}'`);
-  }
-  files.sort();
-  files.splice(0, 0, libs);
-  return files;
+    var libs = ['jquery', 'angular', 'router', 'upload', 'socketio'].map(e => { return `'${e}'` }).join(', ');
+    var files = [];
+    for (var f of fs.readdirSync(pathJs)) {
+        files.push(`'${insertPath + '/' + f}'`);
+    }
+    files.sort();
+    files.splice(0, 0, libs);
+    return files;
 };
 
 let loadComponents = (pathComponents, insertPath) => {
-  let componentJs = [['app-const.js', 'app-config.js', 'app-run.js', 'app-directive.js', 'app-filter.js', 'app-provider.js', 'my-app.js'].map(e=>{
-    return "'" + insertPath + '/' + e + "'";
-  })];  
-  let loadComponent = (pathComponents, level, insertPath) => {
-    if(!componentJs[level]) componentJs[level] = [];
-    for(let f of fs.readdirSync(pathComponents)){
-      let path0 = path.join(pathComponents, f);
-      let stat = fs.lstatSync(path0);
-      if(stat.isDirectory()){
-        loadComponent(path0, level+1, insertPath+'/'+f);
-      }else if(level > 0 && /\.js$/.test(f)){
-        componentJs[level].push(`'${insertPath+'/'+f}'`);
-      }
+    let componentJs = [
+        ['app-const.js', 'app-config.js', 'app-run.js', 'app-directive.js', 'app-filter.js', 'app-provider.js', 'my-app.js'].map(e => {
+            return "'" + insertPath + '/' + e + "'";
+        })
+    ];
+    let loadComponent = (pathComponents, level, insertPath) => {
+        if (!componentJs[level]) componentJs[level] = [];
+        for (let f of fs.readdirSync(pathComponents)) {
+            let path0 = path.join(pathComponents, f);
+            let stat = fs.lstatSync(path0);
+            if (stat.isDirectory()) {
+                loadComponent(path0, level + 1, insertPath + '/' + f);
+            } else if (level > 0 && /\.js$/.test(f)) {
+                componentJs[level].push(`'${insertPath+'/'+f}'`);
+            }
+        }
     }
-  }
-  loadComponent(pathComponents, 0, insertPath);
-  var all = [];
-  for(var i in componentJs){
-    if(i != 0) componentJs[i].sort();
-    all = all.concat(componentJs[i]);
-  }
-  return all;
+    loadComponent(pathComponents, 0, insertPath);
+    var all = [];
+    for (var i in componentJs) {
+        if (i != 0) componentJs[i].sort();
+        all = all.concat(componentJs[i]);
+    }
+    return all;
 };
 
 let content = ["require('../public/index.htm');"];
@@ -73,4 +75,4 @@ content.push(`require([${js.join(',\n\t\t')}], (jquery, angular) => {
 })`);
 
 fs.writeFileSync(path.join(__dirname, 'webpack', 'app.js'), content.join('\n\n'));
-console.log("Added route into config file!"); 
+console.log("Added route into config file!");

@@ -11,7 +11,7 @@ module.exports = {
     },
     module: {
         loaders: [
-            { test: /\.s?css$/, loader: 'style!css!sass'},
+            { test: /\.s?css$/, loader: 'style!css!sass' },
             { test: require.resolve('angular'), loader: 'exports?window.angular' },
             // { test: /ace-elements\.min\.js$/,   loader: 'imports?jQuery=jquery,$=jquery' },
             // { test: /ace\.min\.js$/,            loader: 'imports?jQuery=jquery,$=jquery' },
@@ -33,10 +33,11 @@ module.exports = {
     resolve: {
         modulesDirectories: ['node_modules'],
         alias: {
-            jquery:  "jquery/dist/jquery.js",
+            jquery: "jquery/dist/jquery.js",
             angular: "angular/index.js",
-            router:  "@angular/router/angular1/angular_1_router.js",
-            upload: "ng-file-upload"
+            router: "@angular/router/angular1/angular_1_router.js",
+            upload: "ng-file-upload",
+            socketio: __dirname + '/public/assets/libs/socket.io-1.4.5.js'
         }
     },
     plugins: [
@@ -46,6 +47,9 @@ module.exports = {
         }),
         new webpack.ProvidePlugin({
             "angular": "angular"
+        }),
+        new webpack.ProvidePlugin({
+            "io": "socketio"
         })
     ]
 }

@@ -14,14 +14,26 @@
 // }]);
 
 app.service('Upload', ['$http', function ($http) {
-  this.uploadFileToUrl = function (body, uploadUrl) {
+  this.uploadFileToUrl = function (body, uploadUrl, method) {
     var fd = new FormData();
     for(var i in body){
-      if(body[i] instanceof Object && !(body[i] instanceof File)){
-        fd.append(i, JSON.stringify(body[i]));
+      if(body[i] instanceof FileList && body[i].length > 0){
+        for(var j in body[i]){
+          fd.append(i, body[i][j]);
+        }
+      }else if(body[i] instanceof Object && !(body[i] instanceof File)){
+        fd.append(i, angular.toJson(body[i]));
       }else{
         fd.append(i, body[i]);
       }
+    }
+    if('PUT' === method){
+      return $http.put(uploadUrl, fd, {
+        transformRequest: angular.identity,
+        headers: {
+          'Content-Type': undefined
+        }
+      });  
     }
     return $http.post(uploadUrl, fd, {
       transformRequest: angular.identity,
@@ -35,16 +47,25 @@ app.service('Upload', ['$http', function ($http) {
 app.component('uploadFile', {
   template: require('./upload.html'),
   bindings: {
+    imgSrc: '<',
     fileModel: '=',
     name: '@'
   },
   controller: ['$element', '$attrs', '$scope', '$parse', function ($element, $attrs, $scope, $parse) {
     require('./upload.scss');
-    var self = this;    
+    var self = this; 
     $element.on('change', function (e) {
       $scope.$apply(function () {
-        self.fileModel = e.target.files[0];
+        self.fileModel = e.target.files;
       });
+      var selectedFile = event.target.files[0];
+      var reader = new FileReader();
+      var imgtag = document.getElementById("imageUpload");
+      imgtag.title = selectedFile.name;
+      reader.onload = function(event) {
+        imgtag.src = event.target.result;
+      };
+      reader.readAsDataURL(selectedFile);
     });
   }]
 });

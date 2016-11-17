@@ -1,8 +1,11 @@
 app
     .factory('Product', ['$http', '$rootScope', '$config', '$q', function ($http, $rootScope, $config, $q) {
         return {
-            find: () => {
-                return $http.get(`${$config.apiUrl}/product`);
+            find: (categoryId, type) => {
+                return $http.get(`${$config.apiUrl}/product?categoryId=${categoryId}&type=${type}`);
+            },
+            delete: (id) => {
+                return $http.delete(`${$config.apiUrl}/product/${id}`);
             }
         };
     }])

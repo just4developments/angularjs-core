@@ -1,120 +1,4 @@
-home {    
-    .sale-box {
-        position: absolute;
-        top: -3px;
-        overflow: hidden;
-        height: 85px;
-        width: 85px;
-        text-align: center;
-        z-index: 1;
-        right: -3px;
-    }
-    .sale-label {
-        background: #8dca00;
-        color: white;
-        display: block;
-        font: 700 14px/12px Arial, Helvetica, sans-serif;
-        padding: 9px 0 7px;
-        perspective: 1px;
-        position: absolute;
-        right: -33px;
-        text-align: center;
-        text-transform: uppercase;
-        top: 16px;
-        width: 130px;
-        z-index: 1;
-        -webkit-transform: rotate(45deg);
-        -ms-transform: rotate(45deg);
-        -o-transform: rotate(45deg);
-        transform: rotate(45deg);
-    }
-    .card-item-wrap {
-        position: relative;
-        padding: 8px;
-    }
-    .card-item.add {
-        padding: 8px;
-    }
-    .card-item {
-        position: relative;
-        border: solid 1px #ccc;
-    }
-    .card-name {
-        padding: 8px;
-        text-align: center;
-        color: #02b8e3;
-    }
-    .card-money {
-        padding: 8px;
-        font-size: 1.2em;
-        text-align: center;
-        color: #4f4e4f;
-    }
-    .card-image {
-        position: relative;
-    }
-    .card-image .img {
-        width: 100%;
-        height: 200px;
-        background-size: 100%;
-        background-repeat: no-repeat;
-    }
-    .card-image .img:nth-child(n+2) {
-        position: absolute;
-        left: 0px;
-        top: 0px;
-    }
-    md-radio-button {
-        margin: 0px !important;
-    }
-    .nav {
-        position: relative;
-    }
-    .nav md-radio-group {
-        top: -24px;
-        right: 0px;
-        position: absolute;
-    }
-    md-card-content h3 {
-        margin: 0px;
-    }
-    .ng-hide-add,
-    .ng-hide-remove {
-        -webkit-transition: 300ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
-        -moz-transition: 300ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
-        -ms-transition: 300ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
-        -o-transition: 300ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
-        transition: 300ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
-    }
-    .ng-hide-add.ng-hide-add-active,
-    .ng-hide-remove {
-        opacity: 0;
-        z-index: -1;
-    }
-    .ng-hide-add,
-    .ng-hide-remove.ng-hide-remove-active {
-        opacity: 1;
-        z-index: 0;
-    }
-    .tags {
-        list-style: none;
-        margin: 0;
-        overflow: hidden;
-        padding: 0;
-        position: absolute;
-        top: 0px;
-        z-index: 1;
-    }
-    .tag {
-        background: #fefefe;
-        border-radius: 0 5px 5px 0px;
-        color: #ff5991;
-        display: block;
-        padding: 4px 8px;
-        font-size: 0.8em;
-        font-weight: bolder;
-        margin: 3px 0;
-    }
+home {        
     .elipsis2 {
         overflow: hidden;
         display: -webkit-box;
@@ -135,16 +19,16 @@ home {
     }
     .tabf li.active hr,
     .tabf li:hover hr {
-        bottom: -6px;
+        bottom: -3px;
     }
     .tabf hr {
         position: absolute;
         bottom: -16px;
         left: 16px;  
-        width: 60px;
-        -webkit-transition: 0.5s;
-        -o-transition: 0.5s;
-        transition: 0.5s;
+        width: 60%;
+        -webkit-transition: 0.3s;
+        -o-transition: 0.3s;
+        transition: 0.3s;
     }
     .tabf li {        
         position: relative;        
@@ -153,8 +37,9 @@ home {
         display: inline;
         padding: 8px 16px;
         font-size: 1.2em;
-        -webkit-transition: 0.5s;
-        -o-transition: 0.5s;
-        transition: 0.5s;
+        -webkit-transition: 0.3s;
+        -o-transition: 0.3s;
+        transition: 0.3s;
+        outline: none;
     }
 }

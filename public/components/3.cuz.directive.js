@@ -34,7 +34,8 @@ app
       },
       link: function (scope, element, attributes) {
         var backgroundSrc = scope.backgroundSrc;
-        for (var i = 0; i < element.length; i++) {
+        if(typeof scope.backgroundSrc !== 'string') return;
+        for (var i = 0; i < element.length; i++) {          
           if (backgroundSrc.startsWith("http://") || backgroundSrc.startsWith("https://")) {
             element[i].style.backgroundImage = 'url(' + backgroundSrc + '), url(' + require('../assets/images/no-photo.png') + ')';
           } else {

@@ -1,48 +1,68 @@
-<md-content flex layout-padding class="main">
-    <header layout="row" layout-align="center center">
-        <img src="../assets/images/logo.png" />
-        <div flex align="right">
-            <div class="search">
-                <input type="search" />
-                <md-icon>search</md-icon>
+<section layout="row" flex>
+    <md-sidenav class="md-sidenav-left nana-theme" md-component-id="left" md-whiteframe="4">
+        <md-toolbar>
+        <h1 class="md-toolbar-tools">Nana closet</h1>
+        </md-toolbar>
+        <md-content>
+            <md-list>
+            <md-list-item ng-repeat="c in $ctrl.categories" ng-click="$ctrl.closeGoTo(c._id, $index)">
+                <p> {{ c.name }} </p>
+                <md-icon class="md-secondary" ng-show="$index == $ctrl.activeIndex">done</md-icon>
+            </md-list-item>
+            </md-list>
+        </md-content>
+    </md-sidenav>
+    <md-content flex layout-padding class="main">
+        <md-button ng-click="$ctrl.openMenu()" class="md-icon-button icon-menu" hide-sm hide-md hide-lg><md-icon>menu</md-icon></md-button>
+        <header layout="row" layout-align="center center" layout-wrap>
+            <div flex-xs="100" flex-sm="40" flex="30">
+                <img src="../assets/images/logo.png" width="100%" />
             </div>
-        </div>
-    </header>
-    <ul class="tab">
-        <li ng-class="{'active' : $index == $ctrl.activeIndex}" ng-repeat="c in $ctrl.categories" ng-click="$ctrl.goTo(c._id, $index)">{{c.name}}</li>
-    </ul>    
-    <div class="tab-content">
-        <div class="banner">
-            <div class="slide"></div>
-        </div>
-        <ng-outlet></ng-outlet>
-        <footer>
-            <div layout="row" layout-wrap>
-                <section flex-xs="100" flex-sm="20" flex="20">
-                    <h4>Category</h4>
-                    <ul>
-                        <li><a href="#"> - Ban buon</a></li>
-                        <li><a href="#"> - Ban le</a></li>
-                        <li><a href="#"> - Dat hang</a></li>
-                    </ul>
-                </section>
-                <section flex-xs="100" flex-sm="40" flex="40">
-                    <h4>Policy</h4>
-                    <ul>
-                        <li></li>
-                        <li>Tab 2</li>
-                        <li>Tab 3</li>
-                    </ul>
-                </section>
-                <section flex flex-xs="100">
-                    <h4>Store information</h4>
-                    <ul class="padding-more">
-                        <li><md-icon>location_on</md-icon><a href="#">&nbsp;&nbsp;&nbsp;My Address</a></li>
-                        <li><md-icon>phone</md-icon><a href="#">&nbsp;&nbsp;&nbsp;0955.695.235</a></li>
-                        <li><md-icon>email</md-icon><a href="#">&nbsp;&nbsp;&nbsp;email@gmail.com</a></li>
-                    </ul>
-                </section>
+            <div flex-xs="100" flex class="search" layout="row" align="right" layout-align="center center">
+                <input type="search" flex />
+                <md-icon>search</md-icon flex="10">
             </div>
-        </footer>
-    </div>    
-</md-content>
+            </div>
+        </header>
+        <ul class="tab" hide-xs>
+            <li ng-class="{'active' : $index == $ctrl.activeIndex}" ng-repeat="c in $ctrl.categories" ng-click="$ctrl.goTo(c._id, $index)">{{c.name}}</li>
+        </ul>    
+        <div class="tab-content">
+            <div class="banner" layout-padding hide-xs>
+                <img src="../assets/images/banner.jpg" width="100%" />
+            </div>
+            <ng-outlet></ng-outlet>
+            <footer>
+                <div layout="row" layout-wrap>
+                    <section flex-xs="100" flex-sm="20" flex="20">
+                        <h4>Category</h4>
+                        <ul>
+                            <li><a href="#"> - Ban buon</a></li>
+                            <li><a href="#"> - Ban le</a></li>
+                            <li><a href="#"> - Dat hang</a></li>
+                        </ul>
+                    </section>
+                    <section flex-xs="100" flex-sm="40" flex="40">
+                        <h4>Policy</h4>
+                        <ul>
+                            <li></li>
+                            <li>Tab 2</li>
+                            <li>Tab 3</li>
+                        </ul>
+                    </section>
+                    <section flex flex-xs="100">
+                        <h4>Store information</h4>
+                        <ul class="padding-more">
+                            <li><md-icon>location_on</md-icon><a href="#">&nbsp;&nbsp;&nbsp;My Address</a></li>
+                            <li><md-icon>phone</md-icon><a href="#">&nbsp;&nbsp;&nbsp;0955.695.235</a></li>
+                            <li><md-icon>email</md-icon><a href="#">&nbsp;&nbsp;&nbsp;email@gmail.com</a></li>
+                        </ul>
+                    </section>
+                </div>
+            </footer>
+        </div>    
+    </md-content>
+
+</section>
+
+</div>

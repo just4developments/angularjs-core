@@ -1,7 +1,7 @@
 app.component('product', {
     template: require('./product.html'),
     bindings: { $router: '<' },
-    controller: ['$config', 'Product', 'Category', '$scope', 'Upload', '$window', function ($config, Product, Category, $scope, Upload, $window) {
+    controller: ['$config', 'Product', 'Category', '$scope', 'Upload', '$window', '$rootScope', function ($config, Product, Category, $scope, Upload, $window, $rootScope) {
         require('./product.scss');
         var clone = (obj, ignores) => {
             if (obj === null || typeof(obj) !== 'object' || 'isActiveClone' in obj)
@@ -28,7 +28,7 @@ app.component('product', {
         this.isAdd = false;
         this.$routerOnActivate = (next) => {
             self.type = next.params.filter;
-            Product.find($window.sessionStorage.categoryId, self.type).then((resp) => {
+            Product.find($rootScope.categoryId, self.type).then((resp) => {
                 self.list = resp.data;
                 Category.find().then((resp) => {
                     self.categories = resp.data;
@@ -40,7 +40,7 @@ app.component('product', {
         }
         this.createNew = () => {
             self.isAdd = true;
-            self.p = { category_id : $window.sessionStorage.categoryId, special: self.type === 'hot' };
+            self.p = { category_id : $rootScope.categoryId, special: self.type === 'hot' };
         }  
         this.edit = (item) => {
             self.isAdd = true;

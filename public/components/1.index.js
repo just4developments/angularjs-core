@@ -3,7 +3,8 @@ window.app = angular.module('myApp', [
 		'ngComponentRouter'
 	])
 	.constant('$config', {
-		apiUrl: 'http://api.nanacloset.com',
+		apiUrl: 'http://api.nanacloset.com'
+		// apiUrl: 'http://localhost:9000'
 	})
 	.value('$routerRootComponent', 'myApp')
 	.config(['$locationProvider', '$config', '$httpProvider', function ($locationProvider, $config, $httpProvider) {
@@ -11,8 +12,9 @@ window.app = angular.module('myApp', [
 		// $httpProvider.interceptors.push('AuthInterceptor');
 		$locationProvider.html5Mode(true);
 	}])
-	.run(['$rootScope', '$location', '$config', function ($rootScope, $location, $config) {
+	.run(['$rootScope', '$location', '$config', 'Category', '$window', function ($rootScope, $location, $config, Category, $window) {
 		$rootScope.config = $config;
+		$rootScope.isAuth = $window.localStorage.isAuth;
 		// $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
 		//   $rootScope.title = current.$$route.title;
 		//   $rootScope.navicon = current.$$route.originalPath;

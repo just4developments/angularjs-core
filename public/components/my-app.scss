@@ -7,15 +7,31 @@ md-content {
     background-color: transparent;    
 }
 my-app {
-    .slide {
-        height: 400px;
-        background: url(../assets/images/banner.jpg);
-        background-size: 100%;
-        background-position: top center;
-        background-repeat: no-repeat;
+    .nana-theme{
+        md-toolbar{
+            background-color: rgb(2, 184, 227);
+        }
+        md-list-item:nth-child(1) {
+            color: rgb(209, 35, 101);
+        }
+        md-list-item:nth-child(2) {
+            color: rgb(254, 148, 0)
+        }
+        md-list-item:nth-child(3) {
+            color: #8dca00;
+        }
+        md-list-item:nth-child(3) {
+            color: #f7c30d;
+        }
+        md-list-item.active p {
+            font-weight: bold;
+        }
     }
-    .banner {
-        padding: 24px;
+    .icon-menu {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        z-index: 1;
     }
     .tab {        
         position: relative;  
@@ -117,7 +133,6 @@ my-app {
         transition: 0.3s;
     }    
     .search {
-        width: 350px;
         border: solid 1px #ccc;
         border-radius: 6px;
         margin-right: 8px;
@@ -126,7 +141,6 @@ my-app {
         margin: 3px;
     }
     .search input {
-        width: 295px;
         padding: 16px 8px;  
         border: none;
         outline: none;      

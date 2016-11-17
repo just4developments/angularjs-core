@@ -1,12 +1,12 @@
 app.component('home', {
     template: require('./home.html'),
     bindings: { $router: '<' },
-    controller: ['$config', 'Product', 'Category', '$scope', 'Upload', '$window', function ($config, Product, Category, $scope, Upload, $window) {
+    controller: ['$config', 'Product', 'Category', '$scope', 'Upload', '$window', '$rootScope', function ($config, Product, Category, $scope, Upload, $window, $rootScope) {
         require('./home.scss');
         var self = this;
         this.activeIndex = 0;
         this.$routerOnActivate = (next) => {
-             $window.sessionStorage.categoryId = next.params.categoryId;
+             $rootScope.categoryId = next.params.categoryId;
         };
         this.goTo = (filter, index) => {
             self.activeIndex = index;

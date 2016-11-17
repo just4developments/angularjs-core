@@ -3,7 +3,7 @@ window.app = angular.module('myApp', [
 		'ngComponentRouter'
 	])
 	.constant('$config', {
-		apiUrl: 'http://localhost:8000',
+		apiUrl: 'http://localhost:8001',
 	})
 	.value('$routerRootComponent', 'myApp')
 	.config(['$locationProvider', '$config', '$httpProvider', function ($locationProvider, $config, $httpProvider) {

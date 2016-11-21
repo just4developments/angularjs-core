@@ -20,11 +20,34 @@
                 <div class="card-money">{{item.money | number}} VNĐ</div>
             </div>
             <div class="des" style="position: absolute; top: 0px; left: 0px;" ng-class="{'ng-hide-add': 1 === sizeIndex, 'ng-hide-remove': 1 !== sizeIndex}">
-                <md-card-content>
+                <md-card-content ng-show="!$ctrl.isSell">
                     <img image-src="item.images[0]" width="32" style="float: left; border-radius: 100%; margin: 8px 8px 0px 0px;" />
                     <div class="card-name">{{item.name}}</div>
                     <div class="card-des">{{item.des}}</div>
-                    <div class="card-des" ng-if="item.sizes">Available sizes: <span class="card-name">{{$ctrl.toSizes(item.sizes)}}</span></div>                                        
+                    <div class="card-des" ng-if="item.sizes">Các size còn:<br/> 
+                        <span class="card-name" ng-repeat="s in item.sizes" title="Remain {{s.quantity}}/{{s.quantity0}}" ng-if="s.quantity > 0">
+                            <a href="#" ng-if="$root.isAuth && s.quantity > 0" class="card-name" ng-click="$ctrl.addSell(item, $index)">{{s.size}}</a>
+                            <span ng-if="!$root.isAuth || s.quantity == 0">{{s.size}}</span>
+                        </span>
+                    </div>
+                </md-card-content>
+                <md-card-content ng-show="$ctrl.isSell" layout="row" layout-wrap>
+                    <div align="right" style="width: 100%"><a href="#" ng-click="$ctrl.isSell = 0;"><span class="card-name">{{$ctrl.sizeName}}</span></a></div>
+                    <md-datepicker ng-model="$ctrl.trans.created_date" md-placeholder="Enter date" md-max-date="$ctrl.today" style="width: 100%"></md-datepicker>
+                    <md-input-container class="md-block" flex="100" md-no-float>
+                        <input ng-model="$ctrl.trans.buyer" placeholder="Buyer name">
+                    </md-input-container>
+                    <md-input-container class="md-block" flex="100" md-no-float>
+                        <textarea ng-model="$ctrl.trans.address" md-maxlength="150" rows="2" md-select-on-focus placeholder="Address"></textarea>
+                    </md-input-container>
+                    <md-input-container class="md-block" flex="50" md-no-float>
+                        <input ng-model="$ctrl.trans.quantity" placeholder="Quantity">
+                    </md-input-container>
+                    <div flex>
+                        <md-button ng-click="$ctrl.sell()" class="md-primary">
+                            <md-icon>shopping_basket</md-icon>
+                        </md-button>
+                    </div>
                 </md-card-content>
             </div>
             <md-card-actions layout="row" layout-align="end center">
@@ -34,7 +57,7 @@
                     </md-button>
                     <md-button class="md-icon-button" aria-label="Delete" ng-click="$ctrl.delete(item)">
                         <md-icon>delete</md-icon>
-                    </md-button>
+                    </md-button>                    
                 </md-card-icon-actions>
                 <md-button class="md-icon-button" aria-label="Details" ng-click="sizeIndex = sizeIndex ? 0 : 1;">
                     <md-icon ng-if="!sizeIndex">more_horiz</md-icon>
@@ -80,7 +103,7 @@
                         <md-icon>add</md-icon>
                     </md-button>
                 </div>
-                <div layout="row" ng-repeat="s in $ctrl.p.sizes">
+                <div layout="row" ng-repeat="s in $ctrl.p.sizes" ng-if="$ctrl.p && $ctrl.p.sizes">
                     <md-input-container class="md-block">
                         <label>Size</label>
                         <input ng-model="s.size" type="text" placeholder="S">

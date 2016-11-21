@@ -3,6 +3,7 @@ require('./my-app.scss');
 app.component('myApp', {
     template: require('./my-app.html'),
     $routeConfig: [
+        {path: '/transaction', name: 'Transaction', component: 'transaction'},
         {path: '/...', name: 'HomeNewest', component: 'home', useAsDefault: true},
         {path: '/:categoryId/...', name: 'HomeNewestByCategoryId', component: 'home'}
     ],

@@ -3,13 +3,14 @@ app.component('product', {
     bindings: { $router: '<' },
     controller: ['$config', 'Product', 'Category', '$scope', 'Upload', '$window', '$rootScope', function ($config, Product, Category, $scope, Upload, $window, $rootScope) {
         require('./product.scss');
+        this.today = new Date();
         var clone = (obj, ignores) => {
             if (obj === null || typeof(obj) !== 'object' || 'isActiveClone' in obj)
                 return obj;
             var temp;            
             if (obj instanceof Date){
                 temp = new obj.constructor(); //or new Date(obj);
-            } else {
+            }else {
                 temp = obj.constructor();
             }
 
@@ -34,25 +35,55 @@ app.component('product', {
                     self.categories = resp.data;
                 });
             });
-        };        
+        };
         this.toSizes = (sizes) => {
-            return sizes.map(e=>e.size).join(', ');
+            return sizes.filter(e=>e.quantity > 0).map(e=>e.size).join(', ');
         }
         this.createNew = () => {
             self.isAdd = true;
-            self.p = { category_id : $rootScope.categoryId, special: self.type === 'hot' };
+            setTimeout(() => {
+                self.p = { category_id : $rootScope.categoryId, special: self.type === 'hot' };
+            });
         }  
         this.edit = (item) => {
             self.isAdd = true;
-            self.p = clone(item);
+            setTimeout(() => {
+                self.p = clone(item); 
+            });            
         }
         this.delete = (item) => {
             Product.delete(item._id).then(() => {
               self.list.splice(self.list.indexOf(item), 1);  
             });
         }
+        this.addSell = (item, index) => {
+            self.trans = {
+                product: item,
+                quantity: 1,
+                status: 2,
+                created_date: new Date()
+            };
+            self.sizeName = item.sizes[index].size;
+            self.transIndex = index;
+            self.isSell = 1;
+        }
+        this.sell = () => {
+            if(!self.trans.buyer) return alert('Buyer name is required');
+            if(!self.trans.address) return alert('Address is required');
+            if(!self.trans.quantity || +self.trans.quantity <= 0) return alert('Quantity must be greater 0');
+            self.trans.product.sizes[self.transIndex].quantity= +self.trans.product.sizes[self.transIndex].quantity - +self.trans.quantity;
+            self.trans.product.quantity= +self.trans.product.quantity - +self.trans.quantity;
+            self.trans.size = self.trans.product.sizes[self.transIndex];             
+            if(self.trans.size.quantity < 0) return alert('Item not enough to sell. ' + self.trans.product.sizes[self.transIndex].quantity);
+            self.trans.money = +self.trans.product.money * +self.trans.quantity;
+            Product.sell(self.trans).then((rs) => {                
+                self.isSell = 0;
+            }).catch((e) => {
+                self.trans.product.sizes[self.transIndex].quantity+= +self.trans.quantity;
+                self.trans.product.quantity+= +self.trans.quantity;  
+            });
+        }
         this.save = () => {
-            // TODO: Doi lai clone p = p0 de ko bi update trung
             var method = self.p._id ? 'PUT' : 'POST';
             var p0 = clone(self.p, ['images']);
             p0.images = self.p.images;

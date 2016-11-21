@@ -6,6 +6,9 @@ app
             },
             delete: (id) => {
                 return $http.delete(`${$config.apiUrl}/product/${id}`);
+            },
+            sell: (trans) => {
+                return $http.post(`${$config.apiUrl}/product/sell`, trans);
             }
         };
     }])
@@ -13,6 +16,15 @@ app
         return {
             find: () => {
                 return $http.get(`${$config.apiUrl}/category`);
+            }
+        };
+    }]).factory('Transaction', ['$http', '$rootScope', '$config', '$q', function ($http, $rootScope, $config, $q) {
+        return {
+            find: () => {
+                return $http.get(`${$config.apiUrl}/transaction`);
+            },
+            update: (item) => {
+                return $http.put(`${$config.apiUrl}/transaction/${item._id}`, item);
             }
         };
     }]);

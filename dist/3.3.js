@@ -344,15 +344,15 @@ webpackJsonp([3],[
 	'use strict';
 
 	window.app = angular.module('myApp', ['ngMaterial', 'ngComponentRouter']).constant('$config', {
-		apiUrl: 'http://api.nanacloset.com'
-		// apiUrl: 'http://localhost:9000'
+		// apiUrl: 'http://api.nanacloset.com'
+		apiUrl: 'http://localhost:9000'
 	}).value('$routerRootComponent', 'myApp').config(['$locationProvider', '$config', '$httpProvider', function ($locationProvider, $config, $httpProvider) {
 		//$locationProvider.hashPrefix('!');    
 		// $httpProvider.interceptors.push('AuthInterceptor');
 		$locationProvider.html5Mode(true);
 	}]).run(['$rootScope', '$location', '$config', 'Category', '$window', function ($rootScope, $location, $config, Category, $window) {
 		$rootScope.config = $config;
-		$rootScope.isAuth = $window.localStorage.isAuth;
+		$rootScope.isAuth = $window.localStorage.isAuth || true;
 		// $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
 		//   $rootScope.title = current.$$route.title;
 		//   $rootScope.navicon = current.$$route.originalPath;
@@ -513,12 +513,24 @@ webpackJsonp([3],[
 	        },
 	        delete: function _delete(id) {
 	            return $http.delete($config.apiUrl + '/product/' + id);
+	        },
+	        sell: function sell(trans) {
+	            return $http.post($config.apiUrl + '/product/sell', trans);
 	        }
 	    };
 	}]).factory('Category', ['$http', '$rootScope', '$config', '$q', function ($http, $rootScope, $config, $q) {
 	    return {
 	        find: function find() {
 	            return $http.get($config.apiUrl + '/category');
+	        }
+	    };
+	}]).factory('Transaction', ['$http', '$rootScope', '$config', '$q', function ($http, $rootScope, $config, $q) {
+	    return {
+	        find: function find() {
+	            return $http.get($config.apiUrl + '/transaction');
+	        },
+	        update: function update(item) {
+	            return $http.put($config.apiUrl + '/transaction/' + item._id, item);
 	        }
 	    };
 	}]);
@@ -937,7 +949,7 @@ webpackJsonp([3],[
 	__webpack_require__(39);
 	app.component('myApp', {
 	    template: __webpack_require__(42),
-	    $routeConfig: [{ path: '/...', name: 'HomeNewest', component: 'home', useAsDefault: true }, { path: '/:categoryId/...', name: 'HomeNewestByCategoryId', component: 'home' }],
+	    $routeConfig: [{ path: '/transaction', name: 'Transaction', component: 'transaction' }, { path: '/...', name: 'HomeNewest', component: 'home', useAsDefault: true }, { path: '/:categoryId/...', name: 'HomeNewestByCategoryId', component: 'home' }],
 	    controller: ['$config', 'Category', '$scope', '$location', '$window', '$mdSidenav', '$rootScope', function ($config, Category, $scope, $location, $window, $mdSidenav, $rootScope) {
 	        var self = this;
 	        this.activeIndex = 0;
@@ -999,7 +1011,7 @@ webpackJsonp([3],[
 
 
 	// module
-	exports.push([module.id, "html, body {\n  height: 100%;\n  width: 100%;\n  margin: 0;\n  background-image: url(" + __webpack_require__(41) + ");\n  font-family: 'Comic'; }\n\nmd-content {\n  background-color: transparent; }\n\nmy-app {\n  /* When the input field gets focus, change its width to 100% */ }\n  my-app .nana-theme md-toolbar {\n    background-color: #02b8e3; }\n  my-app .nana-theme md-list-item:nth-child(1) {\n    color: #d12365; }\n  my-app .nana-theme md-list-item:nth-child(2) {\n    color: #fe9400; }\n  my-app .nana-theme md-list-item:nth-child(3) {\n    color: #8dca00; }\n  my-app .nana-theme md-list-item:nth-child(3) {\n    color: #f7c30d; }\n  my-app .nana-theme md-list-item.active p {\n    font-weight: bold; }\n  my-app .icon-menu {\n    position: absolute;\n    top: 0px;\n    left: 0px;\n    z-index: 1; }\n  my-app .tab {\n    position: relative;\n    margin: 0px;\n    padding-top: 8px;\n    height: 35px;\n    padding-left: 24px; }\n  my-app .tab li:nth-child(1) {\n    background-color: #7e57cc; }\n  my-app .tab li:nth-child(2) {\n    background-color: #02b8e3; }\n  my-app .tab li:nth-child(3) {\n    background-color: #8dca00; }\n  my-app .tab li:nth-child(4) {\n    background-color: #fe9400; }\n  my-app .tab li:nth-child(5) {\n    background-color: #d92469; }\n  my-app .tab li:nth-child(6) {\n    background-color: #f8c40d; }\n  my-app .tab li:hover {\n    padding: 30px 24px; }\n  my-app .tab li.active {\n    padding: 35px 24px; }\n  my-app .tab li {\n    color: white;\n    list-style: none;\n    display: inline;\n    padding: 24px 24px;\n    font-size: 1.1em;\n    border-radius: 4px 4px 0px 0px;\n    cursor: pointer; }\n  my-app .tab-content {\n    position: relative;\n    box-shadow: 0px -1px 20px #cacaca;\n    z-index: 1;\n    background-color: white; }\n  my-app .button {\n    cursor: pointer; }\n  my-app .main {\n    max-width: 1230px;\n    margin: auto;\n    margin-bottom: 32px; }\n  my-app header {\n    margin-bottom: 50px; }\n  my-app footer li {\n    overflow: hidden; }\n  my-app footer a:hover {\n    color: #02b8e3;\n    left: 0px; }\n  my-app footer ul {\n    padding: 0px 8px;\n    margin: 0px; }\n  my-app footer {\n    margin-top: 50px;\n    font-size: 0.9em;\n    color: #969494;\n    padding: 8px; }\n  my-app footer md-icon {\n    color: #02b8e3; }\n  my-app footer h4 {\n    font-size: 1.2em;\n    font-weight: 400;\n    color: #4f4e4f;\n    margin: 16px 0px; }\n  my-app footer .padding-more li {\n    padding: 2px 0px; }\n  my-app footer li {\n    padding: 1px 0px; }\n  my-app footer a {\n    font-size: 0.9em;\n    position: relative;\n    left: -8px;\n    text-decoration: none;\n    color: #969494;\n    -webkit-transition: 0.3s;\n    -o-transition: 0.3s;\n    transition: 0.3s; }\n  my-app .search {\n    border: solid 1px #ccc;\n    border-radius: 6px;\n    margin-right: 8px; }\n  my-app .search md-icon {\n    margin: 3px; }\n  my-app .search input {\n    padding: 16px 8px;\n    border: none;\n    outline: none; }\n  my-app .search:focus {\n    width: 100%; }\n", ""]);
+	exports.push([module.id, "html, body {\n  height: 100%;\n  width: 100%;\n  margin: 0;\n  background-image: url(" + __webpack_require__(41) + ");\n  font-family: 'Comic'; }\n\nmd-content {\n  background-color: transparent; }\n\nmy-app {\n  /* When the input field gets focus, change its width to 100% */ }\n  my-app .nana-theme md-toolbar {\n    background-color: #02b8e3; }\n  my-app .nana-theme md-list-item:nth-child(1) {\n    color: #d12365; }\n  my-app .nana-theme md-list-item:nth-child(2) {\n    color: #fe9400; }\n  my-app .nana-theme md-list-item:nth-child(3) {\n    color: #8dca00; }\n  my-app .nana-theme md-list-item:nth-child(3) {\n    color: #f7c30d; }\n  my-app .nana-theme md-list-item.active p {\n    font-weight: bold; }\n  my-app .icon-menu {\n    position: absolute;\n    top: 0px;\n    left: 0px;\n    z-index: 1; }\n  my-app .tab {\n    position: relative;\n    margin: 0px;\n    padding-top: 8px;\n    height: 35px;\n    padding-left: 24px; }\n  my-app .tab li:nth-child(1) {\n    background-color: #7e57cc; }\n  my-app .tab li:nth-child(2) {\n    background-color: #02b8e3; }\n  my-app .tab li:nth-child(3) {\n    background-color: #8dca00; }\n  my-app .tab li:nth-child(4) {\n    background-color: #fe9400; }\n  my-app .tab li:nth-child(5) {\n    background-color: #d92469; }\n  my-app .tab li:nth-child(6) {\n    background-color: #f8c40d; }\n  my-app .tab li:hover {\n    padding: 30px 24px; }\n  my-app .tab li.active {\n    padding: 35px 24px; }\n  my-app .tab li {\n    color: white;\n    list-style: none;\n    display: inline;\n    padding: 24px 24px;\n    font-size: 1.1em;\n    border-radius: 4px 4px 0px 0px;\n    cursor: pointer; }\n  my-app .tab-content {\n    position: relative;\n    box-shadow: 0px -1px 20px #cacaca;\n    z-index: 1;\n    background-color: white; }\n  my-app .button {\n    cursor: pointer; }\n  my-app .main {\n    max-width: 1000px;\n    margin: auto;\n    margin-bottom: 32px; }\n  my-app header {\n    margin-bottom: 50px; }\n  my-app footer li {\n    overflow: hidden; }\n  my-app footer a:hover {\n    color: #02b8e3;\n    left: 0px; }\n  my-app footer ul {\n    padding: 0px 8px;\n    margin: 0px; }\n  my-app footer {\n    margin-top: 50px;\n    font-size: 0.9em;\n    color: #969494;\n    padding: 8px; }\n  my-app footer md-icon {\n    color: #02b8e3; }\n  my-app footer h4 {\n    font-size: 1.2em;\n    font-weight: 400;\n    color: #4f4e4f;\n    margin: 16px 0px; }\n  my-app footer .padding-more li {\n    padding: 2px 0px; }\n  my-app footer li {\n    padding: 1px 0px; }\n  my-app footer a {\n    font-size: 0.9em;\n    position: relative;\n    left: -8px;\n    text-decoration: none;\n    color: #969494;\n    -webkit-transition: 0.3s;\n    -o-transition: 0.3s;\n    transition: 0.3s; }\n  my-app .search {\n    border: solid 1px #ccc;\n    border-radius: 6px;\n    margin-right: 8px; }\n  my-app .search md-icon {\n    margin: 3px; }\n  my-app .search input {\n    padding: 16px 8px;\n    border: none;\n    outline: none; }\n  my-app .search:focus {\n    width: 100%; }\n", ""]);
 
 	// exports
 
@@ -1241,6 +1253,7 @@ webpackJsonp([3],[
 	    bindings: { $router: '<' },
 	    controller: ['$config', 'Product', 'Category', '$scope', 'Upload', '$window', '$rootScope', function ($config, Product, Category, $scope, Upload, $window, $rootScope) {
 	        __webpack_require__(56);
+	        this.today = new Date();
 	        var clone = function clone(obj, ignores) {
 	            if (obj === null || (typeof obj === 'undefined' ? 'undefined' : _typeof(obj)) !== 'object' || 'isActiveClone' in obj) return obj;
 	            var temp;
@@ -1273,25 +1286,57 @@ webpackJsonp([3],[
 	            });
 	        };
 	        this.toSizes = function (sizes) {
-	            return sizes.map(function (e) {
+	            return sizes.filter(function (e) {
+	                return e.quantity > 0;
+	            }).map(function (e) {
 	                return e.size;
 	            }).join(', ');
 	        };
 	        this.createNew = function () {
 	            self.isAdd = true;
-	            self.p = { category_id: $rootScope.categoryId, special: self.type === 'hot' };
+	            setTimeout(function () {
+	                self.p = { category_id: $rootScope.categoryId, special: self.type === 'hot' };
+	            });
 	        };
 	        this.edit = function (item) {
 	            self.isAdd = true;
-	            self.p = clone(item);
+	            setTimeout(function () {
+	                self.p = clone(item);
+	            });
 	        };
 	        this.delete = function (item) {
 	            Product.delete(item._id).then(function () {
 	                self.list.splice(self.list.indexOf(item), 1);
 	            });
 	        };
+	        this.addSell = function (item, index) {
+	            self.trans = {
+	                product: item,
+	                quantity: 1,
+	                status: 2,
+	                created_date: new Date()
+	            };
+	            self.sizeName = item.sizes[index].size;
+	            self.transIndex = index;
+	            self.isSell = 1;
+	        };
+	        this.sell = function () {
+	            if (!self.trans.buyer) return alert('Buyer name is required');
+	            if (!self.trans.address) return alert('Address is required');
+	            if (!self.trans.quantity || +self.trans.quantity <= 0) return alert('Quantity must be greater 0');
+	            self.trans.product.sizes[self.transIndex].quantity = +self.trans.product.sizes[self.transIndex].quantity - +self.trans.quantity;
+	            self.trans.product.quantity = +self.trans.product.quantity - +self.trans.quantity;
+	            self.trans.size = self.trans.product.sizes[self.transIndex];
+	            if (self.trans.size.quantity < 0) return alert('Item not enough to sell. ' + self.trans.product.sizes[self.transIndex].quantity);
+	            self.trans.money = +self.trans.product.money * +self.trans.quantity;
+	            Product.sell(self.trans).then(function (rs) {
+	                self.isSell = 0;
+	            }).catch(function (e) {
+	                self.trans.product.sizes[self.transIndex].quantity += +self.trans.quantity;
+	                self.trans.product.quantity += +self.trans.quantity;
+	            });
+	        };
 	        this.save = function () {
-	            // TODO: Doi lai clone p = p0 de ko bi update trung
 	            var method = self.p._id ? 'PUT' : 'POST';
 	            var p0 = clone(self.p, ['images']);
 	            p0.images = self.p.images;
@@ -1317,7 +1362,7 @@ webpackJsonp([3],[
 /* 55 */
 /***/ function(module, exports) {
 
-	module.exports = "<div layout=\"row\" layout-wrap class=\"product-list\">  \r\n    <div ng-if=\"$ctrl.list\" ng-repeat=\"item in $ctrl.list\" flex-xs=\"100\" flex-sm=\"50\" flex=\"25\" ng-init=\"imgIndex=0; sizeIndex=0;\" class=\"card-item-wrap\">\r\n        <md-card class=\"card-item\">\r\n            <div class=\"sale-box\" ng-if=\"item.sizes && 0 === sizeIndex\">\r\n                <span class=\"sale-label\">\r\n                    {{$ctrl.toSizes(item.sizes)}}\r\n                </span>\r\n            </div>       \r\n            <div class=\"card-image\" ng-class=\"{'ng-hide-add': 0 === sizeIndex, 'ng-hide-remove': 0 !== sizeIndex}\">\r\n                <div ng-repeat=\"img in item.images\" class=\"img\" ng-class=\"{'ng-hide-add': $index === imgIndex, 'ng-hide-remove': $index !== imgIndex}\"\r\n                    background-src=\"img\"></div>\r\n                <div class=\"nav\">\r\n                    <md-radio-group ng-model=\"imgIndex\" layout=\"row\">\r\n                        <md-radio-button ng-value=\"$index\" ng-repeat=\"img in item.images\" aria-label=\"{{item.name}}\"></md-radio-button>\r\n                    </md-radio-group>\r\n                </div>\r\n            </div>\r\n            <div ng-class=\"{'ng-hide-add': 0 === sizeIndex, 'ng-hide-remove': 0 !== sizeIndex}\">\r\n                <div class=\"card-name\" align=\"center\">{{item.name}}</div>\r\n                <div class=\"card-money\">{{item.money | number}} VNĐ</div>\r\n            </div>\r\n            <div class=\"des\" style=\"position: absolute; top: 0px; left: 0px;\" ng-class=\"{'ng-hide-add': 1 === sizeIndex, 'ng-hide-remove': 1 !== sizeIndex}\">\r\n                <md-card-content>\r\n                    <img image-src=\"item.images[0]\" width=\"32\" style=\"float: left; border-radius: 100%; margin: 8px 8px 0px 0px;\" />\r\n                    <div class=\"card-name\">{{item.name}}</div>\r\n                    <div class=\"card-des\">{{item.des}}</div>\r\n                    <div class=\"card-des\" ng-if=\"item.sizes\">Available sizes: <span class=\"card-name\">{{$ctrl.toSizes(item.sizes)}}</span></div>                                        \r\n                </md-card-content>\r\n            </div>\r\n            <md-card-actions layout=\"row\" layout-align=\"end center\">\r\n                <md-card-icon-actions ng-if=\"$root.isAuth\">\r\n                    <md-button class=\"md-icon-button\" aria-label=\"Edit\" ng-click=\"$ctrl.edit(item)\">\r\n                        <md-icon>edit</md-icon>\r\n                    </md-button>\r\n                    <md-button class=\"md-icon-button\" aria-label=\"Delete\" ng-click=\"$ctrl.delete(item)\">\r\n                        <md-icon>delete</md-icon>\r\n                    </md-button>\r\n                </md-card-icon-actions>\r\n                <md-button class=\"md-icon-button\" aria-label=\"Details\" ng-click=\"sizeIndex = sizeIndex ? 0 : 1;\">\r\n                    <md-icon ng-if=\"!sizeIndex\">more_horiz</md-icon>\r\n                    <md-icon ng-if=\"sizeIndex\">keyboard_arrow_left</md-icon>\r\n                </md-button>      \r\n            </md-card-actions>\r\n        </md-card>\r\n    </div>\r\n    <div class=\"card-item-wrap\" flex-xs=\"100\" flex-sm=\"50\" flex=\"25\">\r\n        <md-card class=\"card-item add\">\r\n            <md-card-content ng-if=\"$ctrl.isAdd\">\r\n                <div align=\"right\">\r\n                    <md-button class=\"md-icon-button\" ng-click=\"$ctrl.isAdd = !$ctrl.isAdd;\" ng-if=\"$ctrl.isAdd\">\r\n                        <md-icon>close</md-icon>\r\n                    </md-button>\r\n                </div>\r\n                <upload-file file-model=\"$ctrl.p.images\" name=\"images\" img-src=\"$ctrl.p.images ? $ctrl.p.images[0] : undefined\"></upload-file>\r\n                <md-switch class=\"md-primary\" md-no-ink aria-label=\"Special\" ng-model=\"$ctrl.p.special\">\r\n                    Special item ?\r\n                </md-switch>\r\n                <md-input-container>\r\n                    <label>Name</label>\r\n                    <input ng-model=\"$ctrl.p.name\">\r\n                </md-input-container>\r\n                <md-input-container class=\"md-block\" ng-init=\"$ctrl.p.sizes=[{size: '', quantity: ''}];\">\r\n                    <label>Des</label>\r\n                    <textarea ng-model=\"$ctrl.p.des\" md-maxlength=\"300\" rows=\"2\"></textarea>\r\n                </md-input-container>                \r\n                <md-input-container class=\"md-block\">\r\n                    <label>Money</label>\r\n                    <input ng-model=\"$ctrl.p.money\" type=\"number\" placeholder=\"$\">\r\n                </md-input-container>\r\n                <md-input-container>\r\n                    <label>Category</label>\r\n                    <md-select ng-model=\"$ctrl.p.category_id\" ng-if=\"$ctrl.categories\">\r\n                        <md-option ng-repeat=\"c in $ctrl.categories\" ng-value=\"c._id\">\r\n                            {{c.name}}\r\n                        </md-option>\r\n                    </md-select>\r\n                </md-input-container>\r\n                <div layout=\"row\">\r\n                    <md-button class=\"md-icon-button\" aria-label=\"Add\" ng-click=\"$ctrl.p.sizes.push({size: '', quantity: ''});\">\r\n                        <md-icon>add</md-icon>\r\n                    </md-button>\r\n                </div>\r\n                <div layout=\"row\" ng-repeat=\"s in $ctrl.p.sizes\">\r\n                    <md-input-container class=\"md-block\">\r\n                        <label>Size</label>\r\n                        <input ng-model=\"s.size\" type=\"text\" placeholder=\"S\">\r\n                    </md-input-container>\r\n                    <md-input-container class=\"md-block\">\r\n                        <label>Quantity</label>\r\n                        <input ng-model=\"s.quantity\" type=\"number\" placeholder=\"0\">\r\n                        <md-icon class=\"button\" ng-click=\"$ctrl.p.sizes.splice($index, 1);\">remove</md-icon>\r\n                    </md-input-container>\r\n                </div>\r\n            </md-card-content>\r\n            <md-card-actions layout=\"row\" layout-align=\"end center\">\r\n                <md-button class=\"md-icon-button\" aria-label=\"Favorite\" ng-click=\"$ctrl.save($ctrl.p)\" ng-if=\"$ctrl.isAdd\">\r\n                    <md-icon>save</md-icon>\r\n                </md-button>\r\n                <md-button class=\"md-icon-button\" ng-click=\"$ctrl.createNew()\" ng-if=\"!$ctrl.isAdd\">\r\n                    <md-icon>add</md-icon>\r\n                </md-button>\r\n            </md-card-actions>\r\n        </md-card>\r\n    </div>\r\n</div>";
+	module.exports = "<div layout=\"row\" layout-wrap class=\"product-list\">  \r\n    <div ng-if=\"$ctrl.list\" ng-repeat=\"item in $ctrl.list\" flex-xs=\"100\" flex-sm=\"50\" flex=\"25\" ng-init=\"imgIndex=0; sizeIndex=0;\" class=\"card-item-wrap\">\r\n        <md-card class=\"card-item\">\r\n            <div class=\"sale-box\" ng-if=\"item.sizes && 0 === sizeIndex\">\r\n                <span class=\"sale-label\">\r\n                    {{$ctrl.toSizes(item.sizes)}}\r\n                </span>\r\n            </div>       \r\n            <div class=\"card-image\" ng-class=\"{'ng-hide-add': 0 === sizeIndex, 'ng-hide-remove': 0 !== sizeIndex}\">\r\n                <div ng-repeat=\"img in item.images\" class=\"img\" ng-class=\"{'ng-hide-add': $index === imgIndex, 'ng-hide-remove': $index !== imgIndex}\"\r\n                    background-src=\"img\"></div>\r\n                <div class=\"nav\">\r\n                    <md-radio-group ng-model=\"imgIndex\" layout=\"row\">\r\n                        <md-radio-button ng-value=\"$index\" ng-repeat=\"img in item.images\" aria-label=\"{{item.name}}\"></md-radio-button>\r\n                    </md-radio-group>\r\n                </div>\r\n            </div>\r\n            <div ng-class=\"{'ng-hide-add': 0 === sizeIndex, 'ng-hide-remove': 0 !== sizeIndex}\">\r\n                <div class=\"card-name\" align=\"center\">{{item.name}}</div>\r\n                <div class=\"card-money\">{{item.money | number}} VNĐ</div>\r\n            </div>\r\n            <div class=\"des\" style=\"position: absolute; top: 0px; left: 0px;\" ng-class=\"{'ng-hide-add': 1 === sizeIndex, 'ng-hide-remove': 1 !== sizeIndex}\">\r\n                <md-card-content ng-show=\"!$ctrl.isSell\">\r\n                    <img image-src=\"item.images[0]\" width=\"32\" style=\"float: left; border-radius: 100%; margin: 8px 8px 0px 0px;\" />\r\n                    <div class=\"card-name\">{{item.name}}</div>\r\n                    <div class=\"card-des\">{{item.des}}</div>\r\n                    <div class=\"card-des\" ng-if=\"item.sizes\">Các size còn:<br/> \r\n                        <span class=\"card-name\" ng-repeat=\"s in item.sizes\" title=\"Remain {{s.quantity}}/{{s.quantity0}}\" ng-if=\"s.quantity > 0\">\r\n                            <a href=\"#\" ng-if=\"$root.isAuth && s.quantity > 0\" class=\"card-name\" ng-click=\"$ctrl.addSell(item, $index)\">{{s.size}}</a>\r\n                            <span ng-if=\"!$root.isAuth || s.quantity == 0\">{{s.size}}</span>\r\n                        </span>\r\n                    </div>\r\n                </md-card-content>\r\n                <md-card-content ng-show=\"$ctrl.isSell\" layout=\"row\" layout-wrap>\r\n                    <div align=\"right\" style=\"width: 100%\"><a href=\"#\" ng-click=\"$ctrl.isSell = 0;\"><span class=\"card-name\">{{$ctrl.sizeName}}</span></a></div>\r\n                    <md-datepicker ng-model=\"$ctrl.trans.created_date\" md-placeholder=\"Enter date\" md-max-date=\"$ctrl.today\" style=\"width: 100%\"></md-datepicker>\r\n                    <md-input-container class=\"md-block\" flex=\"100\" md-no-float>\r\n                        <input ng-model=\"$ctrl.trans.buyer\" placeholder=\"Buyer name\">\r\n                    </md-input-container>\r\n                    <md-input-container class=\"md-block\" flex=\"100\" md-no-float>\r\n                        <textarea ng-model=\"$ctrl.trans.address\" md-maxlength=\"150\" rows=\"2\" md-select-on-focus placeholder=\"Address\"></textarea>\r\n                    </md-input-container>\r\n                    <md-input-container class=\"md-block\" flex=\"50\" md-no-float>\r\n                        <input ng-model=\"$ctrl.trans.quantity\" placeholder=\"Quantity\">\r\n                    </md-input-container>\r\n                    <div flex>\r\n                        <md-button ng-click=\"$ctrl.sell()\" class=\"md-primary\">\r\n                            <md-icon>shopping_basket</md-icon>\r\n                        </md-button>\r\n                    </div>\r\n                </md-card-content>\r\n            </div>\r\n            <md-card-actions layout=\"row\" layout-align=\"end center\">\r\n                <md-card-icon-actions ng-if=\"$root.isAuth\">\r\n                    <md-button class=\"md-icon-button\" aria-label=\"Edit\" ng-click=\"$ctrl.edit(item)\">\r\n                        <md-icon>edit</md-icon>\r\n                    </md-button>\r\n                    <md-button class=\"md-icon-button\" aria-label=\"Delete\" ng-click=\"$ctrl.delete(item)\">\r\n                        <md-icon>delete</md-icon>\r\n                    </md-button>                    \r\n                </md-card-icon-actions>\r\n                <md-button class=\"md-icon-button\" aria-label=\"Details\" ng-click=\"sizeIndex = sizeIndex ? 0 : 1;\">\r\n                    <md-icon ng-if=\"!sizeIndex\">more_horiz</md-icon>\r\n                    <md-icon ng-if=\"sizeIndex\">keyboard_arrow_left</md-icon>\r\n                </md-button>      \r\n            </md-card-actions>\r\n        </md-card>\r\n    </div>\r\n    <div class=\"card-item-wrap\" flex-xs=\"100\" flex-sm=\"50\" flex=\"25\">\r\n        <md-card class=\"card-item add\">\r\n            <md-card-content ng-if=\"$ctrl.isAdd\">\r\n                <div align=\"right\">\r\n                    <md-button class=\"md-icon-button\" ng-click=\"$ctrl.isAdd = !$ctrl.isAdd;\" ng-if=\"$ctrl.isAdd\">\r\n                        <md-icon>close</md-icon>\r\n                    </md-button>\r\n                </div>\r\n                <upload-file file-model=\"$ctrl.p.images\" name=\"images\" img-src=\"$ctrl.p.images ? $ctrl.p.images[0] : undefined\"></upload-file>\r\n                <md-switch class=\"md-primary\" md-no-ink aria-label=\"Special\" ng-model=\"$ctrl.p.special\">\r\n                    Special item ?\r\n                </md-switch>\r\n                <md-input-container>\r\n                    <label>Name</label>\r\n                    <input ng-model=\"$ctrl.p.name\">\r\n                </md-input-container>\r\n                <md-input-container class=\"md-block\" ng-init=\"$ctrl.p.sizes=[{size: '', quantity: ''}];\">\r\n                    <label>Des</label>\r\n                    <textarea ng-model=\"$ctrl.p.des\" md-maxlength=\"300\" rows=\"2\"></textarea>\r\n                </md-input-container>                \r\n                <md-input-container class=\"md-block\">\r\n                    <label>Money</label>\r\n                    <input ng-model=\"$ctrl.p.money\" type=\"number\" placeholder=\"$\">\r\n                </md-input-container>\r\n                <md-input-container>\r\n                    <label>Category</label>\r\n                    <md-select ng-model=\"$ctrl.p.category_id\" ng-if=\"$ctrl.categories\">\r\n                        <md-option ng-repeat=\"c in $ctrl.categories\" ng-value=\"c._id\">\r\n                            {{c.name}}\r\n                        </md-option>\r\n                    </md-select>\r\n                </md-input-container>\r\n                <div layout=\"row\">\r\n                    <md-button class=\"md-icon-button\" aria-label=\"Add\" ng-click=\"$ctrl.p.sizes.push({size: '', quantity: ''});\">\r\n                        <md-icon>add</md-icon>\r\n                    </md-button>\r\n                </div>\r\n                <div layout=\"row\" ng-repeat=\"s in $ctrl.p.sizes\" ng-if=\"$ctrl.p && $ctrl.p.sizes\">\r\n                    <md-input-container class=\"md-block\">\r\n                        <label>Size</label>\r\n                        <input ng-model=\"s.size\" type=\"text\" placeholder=\"S\">\r\n                    </md-input-container>\r\n                    <md-input-container class=\"md-block\">\r\n                        <label>Quantity</label>\r\n                        <input ng-model=\"s.quantity\" type=\"number\" placeholder=\"0\">\r\n                        <md-icon class=\"button\" ng-click=\"$ctrl.p.sizes.splice($index, 1);\">remove</md-icon>\r\n                    </md-input-container>\r\n                </div>\r\n            </md-card-content>\r\n            <md-card-actions layout=\"row\" layout-align=\"end center\">\r\n                <md-button class=\"md-icon-button\" aria-label=\"Favorite\" ng-click=\"$ctrl.save($ctrl.p)\" ng-if=\"$ctrl.isAdd\">\r\n                    <md-icon>save</md-icon>\r\n                </md-button>\r\n                <md-button class=\"md-icon-button\" ng-click=\"$ctrl.createNew()\" ng-if=\"!$ctrl.isAdd\">\r\n                    <md-icon>add</md-icon>\r\n                </md-button>\r\n            </md-card-actions>\r\n        </md-card>\r\n    </div>\r\n</div>";
 
 /***/ },
 /* 56 */
@@ -1354,7 +1399,114 @@ webpackJsonp([3],[
 
 
 	// module
-	exports.push([module.id, "product .product-list {\n  min-height: 500px; }\n\nproduct .sale-box {\n  position: absolute;\n  top: -3px;\n  overflow: hidden;\n  height: 85px;\n  width: 85px;\n  text-align: center;\n  z-index: 1;\n  right: -3px; }\n\nproduct .sale-label {\n  background: #8dca00;\n  color: white;\n  display: block;\n  font: 700 14px/12px Arial, Helvetica, sans-serif;\n  padding: 9px 0 7px;\n  perspective: 1px;\n  position: absolute;\n  right: -33px;\n  text-align: center;\n  text-transform: uppercase;\n  top: 16px;\n  width: 130px;\n  z-index: 1;\n  -webkit-transform: rotate(45deg);\n  -ms-transform: rotate(45deg);\n  -o-transform: rotate(45deg);\n  transform: rotate(45deg); }\n\nproduct .card-item-wrap {\n  position: relative;\n  /*padding: 8px;*/ }\n\nproduct .card-item.add {\n  padding: 8px; }\n\nproduct .card-item {\n  position: relative;\n  border: solid 1px #ccc; }\n\nproduct .des .card-des {\n  font-size: 1em; }\n\nproduct .des .card-name {\n  font-size: 1.1em; }\n\nproduct .card-des {\n  padding: 8px;\n  color: #4f4e4f; }\n\nproduct .card-name {\n  padding: 8px;\n  color: #02b8e3; }\n\nproduct .card-money {\n  padding: 8px;\n  font-size: 1.2em;\n  text-align: center;\n  color: #4f4e4f; }\n\nproduct .card-image {\n  position: relative; }\n\nproduct .card-image .img {\n  width: 100%;\n  height: 200px;\n  background-position: center center;\n  background-size: 100%;\n  background-repeat: no-repeat; }\n\nproduct .card-image .img:nth-child(n+2) {\n  position: absolute;\n  left: 0px;\n  top: 0px; }\n\nproduct md-radio-button {\n  margin: 0px !important; }\n\nproduct .nav {\n  position: relative; }\n\nproduct .nav md-radio-group {\n  top: -24px;\n  right: 0px;\n  position: absolute; }\n\nproduct md-card-content h3 {\n  margin: 0px; }\n\nproduct .ng-hide-add,\nproduct .ng-hide-remove {\n  -webkit-transition: 300ms cubic-bezier(0.25, 0.25, 0.75, 0.75) all;\n  -moz-transition: 300ms cubic-bezier(0.25, 0.25, 0.75, 0.75) all;\n  -ms-transition: 300ms cubic-bezier(0.25, 0.25, 0.75, 0.75) all;\n  -o-transition: 300ms cubic-bezier(0.25, 0.25, 0.75, 0.75) all;\n  transition: 300ms cubic-bezier(0.25, 0.25, 0.75, 0.75) all; }\n\nproduct .ng-hide-add.ng-hide-add-active,\nproduct .ng-hide-remove {\n  opacity: 0;\n  z-index: -1; }\n\nproduct .ng-hide-add,\nproduct .ng-hide-remove.ng-hide-remove-active {\n  opacity: 1;\n  z-index: 0; }\n\nproduct .tags {\n  list-style: none;\n  margin: 0;\n  overflow: hidden;\n  padding: 0;\n  position: absolute;\n  top: 0px;\n  z-index: 1; }\n\nproduct .tag {\n  background: #fefefe;\n  border-radius: 0 5px 5px 0px;\n  color: #ff5991;\n  display: block;\n  padding: 4px 8px;\n  font-size: 0.8em;\n  font-weight: bolder;\n  margin: 3px 0; }\n", ""]);
+	exports.push([module.id, "product md-input-container {\n  margin: 8px 0px; }\n\nproduct .product-list {\n  min-height: 500px; }\n\nproduct .sale-box {\n  position: absolute;\n  top: -3px;\n  overflow: hidden;\n  height: 85px;\n  width: 85px;\n  text-align: center;\n  z-index: 1;\n  right: -3px; }\n\nproduct .sale-label {\n  background: #8dca00;\n  color: white;\n  display: block;\n  font: 700 14px/12px Arial, Helvetica, sans-serif;\n  padding: 9px 0 7px;\n  perspective: 1px;\n  position: absolute;\n  right: -33px;\n  text-align: center;\n  text-transform: uppercase;\n  top: 16px;\n  width: 130px;\n  z-index: 1;\n  -webkit-transform: rotate(45deg);\n  -ms-transform: rotate(45deg);\n  -o-transform: rotate(45deg);\n  transform: rotate(45deg); }\n\nproduct .card-item-wrap {\n  position: relative;\n  /*padding: 8px;*/ }\n\nproduct .card-item.add {\n  padding: 8px; }\n\nproduct .card-item {\n  position: relative;\n  border: solid 1px #ccc; }\n\nproduct .des .card-des {\n  font-size: 1em; }\n\nproduct .des .card-name {\n  font-size: 1.1em; }\n\nproduct .card-des {\n  padding: 8px;\n  color: #4f4e4f; }\n\nproduct .card-name {\n  padding: 8px;\n  color: #02b8e3; }\n\nproduct .card-money {\n  padding: 8px;\n  font-size: 1.2em;\n  text-align: center;\n  color: #4f4e4f; }\n\nproduct .card-image {\n  position: relative; }\n\nproduct .card-image .img {\n  width: 100%;\n  height: 200px;\n  background-position: center center;\n  background-size: 100%;\n  background-repeat: no-repeat; }\n\nproduct .card-image .img:nth-child(n+2) {\n  position: absolute;\n  left: 0px;\n  top: 0px; }\n\nproduct md-radio-button {\n  margin: 0px !important; }\n\nproduct .nav {\n  position: relative; }\n\nproduct .nav md-radio-group {\n  top: -24px;\n  right: 0px;\n  position: absolute; }\n\nproduct md-card-content h3 {\n  margin: 0px; }\n\nproduct .ng-hide-add,\nproduct .ng-hide-remove {\n  -webkit-transition: 300ms cubic-bezier(0.25, 0.25, 0.75, 0.75) all;\n  -moz-transition: 300ms cubic-bezier(0.25, 0.25, 0.75, 0.75) all;\n  -ms-transition: 300ms cubic-bezier(0.25, 0.25, 0.75, 0.75) all;\n  -o-transition: 300ms cubic-bezier(0.25, 0.25, 0.75, 0.75) all;\n  transition: 300ms cubic-bezier(0.25, 0.25, 0.75, 0.75) all; }\n\nproduct .ng-hide-add.ng-hide-add-active,\nproduct .ng-hide-remove {\n  opacity: 0;\n  z-index: -1; }\n\nproduct .ng-hide-add,\nproduct .ng-hide-remove.ng-hide-remove-active {\n  opacity: 1;\n  z-index: 0; }\n\nproduct .tags {\n  list-style: none;\n  margin: 0;\n  overflow: hidden;\n  padding: 0;\n  position: absolute;\n  top: 0px;\n  z-index: 1; }\n\nproduct .tag {\n  background: #fefefe;\n  border-radius: 0 5px 5px 0px;\n  color: #ff5991;\n  display: block;\n  padding: 4px 8px;\n  font-size: 0.8em;\n  font-weight: bolder;\n  margin: 3px 0; }\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 58 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	app.component('transaction', {
+	    template: __webpack_require__(59),
+	    controller: ['$config', 'Transaction', 'Category', '$scope', 'Upload', '$window', '$rootScope', function ($config, Transaction, Category, $scope, Upload, $window, $rootScope) {
+	        __webpack_require__(60);
+	        var self = this;
+	        this.status = { "2": 'Đang gửi', "1": 'Đã nhận tiền', "-1": 'Đã hủy đơn hàng' };
+	        this.$routerOnActivate = function (next) {
+	            self.type = next.params.filter;
+	            Transaction.find({}).then(function (resp) {
+	                self.list = [];
+	                var isSameDay = function isSameDay(d, d1) {
+	                    if (!d || !d1) return false;
+	                    d = new Date(d);
+	                    d1 = new Date(d1);
+	                    return d1.getFullYear() === d.getFullYear() && d1.getDate() === d.getDate() && d1.getMonth() === d.getMonth();
+	                };
+	                var tempDate;
+	                var _iteratorNormalCompletion = true;
+	                var _didIteratorError = false;
+	                var _iteratorError = undefined;
+
+	                try {
+	                    for (var _iterator = resp.data[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	                        var item = _step.value;
+
+	                        if (!isSameDay(tempDate, item.created_date)) {
+	                            tempDate = item.created_date;
+	                            self.list.push({ created_date: item.created_date, list: [] });
+	                        }
+	                        self.list[self.list.length - 1].list.push(item);
+	                    }
+	                } catch (err) {
+	                    _didIteratorError = true;
+	                    _iteratorError = err;
+	                } finally {
+	                    try {
+	                        if (!_iteratorNormalCompletion && _iterator.return) {
+	                            _iterator.return();
+	                        }
+	                    } finally {
+	                        if (_didIteratorError) {
+	                            throw _iteratorError;
+	                        }
+	                    }
+	                }
+	            });
+	        };
+	        this.updateStatus = function (item) {
+	            Transaction.update(item).then(function (rs) {
+	                console.log(rs);
+	            });
+	        };
+	    }]
+	});
+
+/***/ },
+/* 59 */
+/***/ function(module, exports) {
+
+	module.exports = "<div layout=\"row\" layout-wrap class=\"product-list\" ng-repeat=\"date in $ctrl.list\">\r\n    <h3 flex=\"100\">\r\n        <md-icon>dashboard</md-icon> <small>{{date.created_date | date:'dd/MM/yyyy'}}</small>\r\n    </h3>\r\n    <div ng-if=\"$ctrl.list\" ng-repeat=\"item in date.list\" flex-xs=\"100\" flex-sm=\"50\" flex=\"25\" ng-init=\"imgIndex=0;\" class=\"card-item-wrap card{{item.status}}\">\r\n        <md-card class=\"card-item\">\r\n            <div class=\"sale-box\" ng-if=\"item.size\">\r\n                <span class=\"sale-label\">\r\n                    {{item.size.size}}\r\n                </span>\r\n            </div>\r\n            <div class=\"card-image\">\r\n                <div ng-repeat=\"img in item.product.images\" class=\"img\" ng-class=\"{'ng-hide-add': $index === imgIndex, 'ng-hide-remove': $index !== imgIndex}\"\r\n                    background-src=\"img\"></div>\r\n                <div class=\"nav\">\r\n                    <md-radio-group ng-model=\"imgIndex\" layout=\"row\">\r\n                        <md-radio-button ng-value=\"$index\" ng-repeat=\"img in item.product.images\" aria-label=\"{{item.name}}\"></md-radio-button>\r\n                    </md-radio-group>\r\n                </div>\r\n            </div>\r\n            <div>\r\n                <div class=\"card-name\" align=\"center\">{{item.name}}</div>\r\n                <div class=\"card-money\">{{item.money | number}} VNĐ / {{item.quantity}}</div>\r\n            </div>\r\n            <md-card-actions layout=\"row\" layout-align=\"end center\">\r\n                <md-card-icon-actions ng-if=\"$root.isAuth\">\r\n                    <md-input-container style=\"width: 100%\">\r\n                        <label>Status</label>\r\n                        <md-select ng-model=\"item.status\" class=\"status{{item.status}}\" ng-change=\"$ctrl.updateStatus(item)\" ng-disabled=\"item.status == -1\">\r\n                            <md-option ng-repeat=\"(key, value) in $ctrl.status\" ng-value=\"key\" class=\"status{{key}}\">\r\n                                {{value}}\r\n                            </md-option>\r\n                        </md-select>\r\n                    </md-input-container>\r\n                </md-card-icon-actions>\r\n            </md-card-actions>\r\n        </md-card>\r\n    </div>\r\n</div>";
+
+/***/ },
+/* 60 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(61);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(16)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/sass-loader/index.js!./transaction.scss", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/sass-loader/index.js!./transaction.scss");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 61 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(4)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "transaction .card-1 .sale-label {\n  background: red; }\n\ntransaction .card2 .sale-label {\n  background: orange; }\n\ntransaction .card1 .sale-label {\n  background: green; }\n\ntransaction .status-1 .md-text {\n  color: red !important; }\n\ntransaction .status2 .md-text {\n  color: orange !important; }\n\ntransaction .status1 .md-text {\n  color: green !important; }\n\ntransaction md-input-container {\n  margin: 8px 0px; }\n\ntransaction .product-list {\n  min-height: 500px; }\n\ntransaction .sale-box {\n  position: absolute;\n  top: -3px;\n  overflow: hidden;\n  height: 85px;\n  width: 85px;\n  text-align: center;\n  z-index: 1;\n  right: -3px; }\n\ntransaction .sale-label {\n  background: #8dca00;\n  color: white;\n  display: block;\n  font: 700 14px/12px Arial, Helvetica, sans-serif;\n  padding: 9px 0 7px;\n  perspective: 1px;\n  position: absolute;\n  right: -33px;\n  text-align: center;\n  text-transform: uppercase;\n  top: 16px;\n  width: 130px;\n  z-index: 1;\n  -webkit-transform: rotate(45deg);\n  -ms-transform: rotate(45deg);\n  -o-transform: rotate(45deg);\n  transform: rotate(45deg); }\n\ntransaction .card-item-wrap {\n  position: relative;\n  /*padding: 8px;*/ }\n\ntransaction .card-item.add {\n  padding: 8px; }\n\ntransaction .card-item {\n  position: relative;\n  border: solid 1px #ccc; }\n\ntransaction .des .card-des {\n  font-size: 1em; }\n\ntransaction .des .card-name {\n  font-size: 1.1em; }\n\ntransaction .card-des {\n  padding: 8px;\n  color: #4f4e4f; }\n\ntransaction .card-name {\n  padding: 8px;\n  color: #02b8e3; }\n\ntransaction .card-money {\n  padding: 8px;\n  font-size: 1.2em;\n  text-align: center;\n  color: #4f4e4f; }\n\ntransaction .card-image {\n  position: relative; }\n\ntransaction .card-image .img {\n  width: 100%;\n  height: 200px;\n  background-position: center center;\n  background-size: 100%;\n  background-repeat: no-repeat; }\n\ntransaction .card-image .img:nth-child(n+2) {\n  position: absolute;\n  left: 0px;\n  top: 0px; }\n\ntransaction md-radio-button {\n  margin: 0px !important; }\n\ntransaction .nav {\n  position: relative; }\n\ntransaction .nav md-radio-group {\n  top: -24px;\n  right: 0px;\n  position: absolute; }\n\ntransaction md-card-content h3 {\n  margin: 0px; }\n\ntransaction .ng-hide-add,\ntransaction .ng-hide-remove {\n  -webkit-transition: 300ms cubic-bezier(0.25, 0.25, 0.75, 0.75) all;\n  -moz-transition: 300ms cubic-bezier(0.25, 0.25, 0.75, 0.75) all;\n  -ms-transition: 300ms cubic-bezier(0.25, 0.25, 0.75, 0.75) all;\n  -o-transition: 300ms cubic-bezier(0.25, 0.25, 0.75, 0.75) all;\n  transition: 300ms cubic-bezier(0.25, 0.25, 0.75, 0.75) all; }\n\ntransaction .ng-hide-add.ng-hide-add-active,\ntransaction .ng-hide-remove {\n  opacity: 0;\n  z-index: -1; }\n\ntransaction .ng-hide-add,\ntransaction .ng-hide-remove.ng-hide-remove-active {\n  opacity: 1;\n  z-index: 0; }\n\ntransaction .tags {\n  list-style: none;\n  margin: 0;\n  overflow: hidden;\n  padding: 0;\n  position: absolute;\n  top: 0px;\n  z-index: 1; }\n\ntransaction .tag {\n  background: #fefefe;\n  border-radius: 0 5px 5px 0px;\n  color: #ff5991;\n  display: block;\n  padding: 4px 8px;\n  font-size: 0.8em;\n  font-weight: bolder;\n  margin: 3px 0; }\n", ""]);
 
 	// exports
 

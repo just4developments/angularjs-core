@@ -1,0 +1,39 @@
+<div layout="row" layout-wrap class="product-list" ng-repeat="date in $ctrl.list">
+    <h3 flex="100">
+        <md-icon>dashboard</md-icon> <small>{{date.created_date | date:'dd/MM/yyyy'}}</small>
+    </h3>
+    <div ng-if="$ctrl.list" ng-repeat="item in date.list" flex-xs="100" flex-sm="50" flex="25" ng-init="imgIndex=0;" class="card-item-wrap card{{item.status}}">
+        <md-card class="card-item">
+            <div class="sale-box" ng-if="item.size">
+                <span class="sale-label">
+                    {{item.size.size}}
+                </span>
+            </div>
+            <div class="card-image">
+                <div ng-repeat="img in item.product.images" class="img" ng-class="{'ng-hide-add': $index === imgIndex, 'ng-hide-remove': $index !== imgIndex}"
+                    background-src="img"></div>
+                <div class="nav">
+                    <md-radio-group ng-model="imgIndex" layout="row">
+                        <md-radio-button ng-value="$index" ng-repeat="img in item.product.images" aria-label="{{item.name}}"></md-radio-button>
+                    </md-radio-group>
+                </div>
+            </div>
+            <div>
+                <div class="card-name" align="center">{{item.name}}</div>
+                <div class="card-money">{{item.money | number}} VNĐ / {{item.quantity}}</div>
+            </div>
+            <md-card-actions layout="row" layout-align="end center">
+                <md-card-icon-actions ng-if="$root.isAuth">
+                    <md-input-container style="width: 100%">
+                        <label>Status</label>
+                        <md-select ng-model="item.status" class="status{{item.status}}" ng-change="$ctrl.updateStatus(item)" ng-disabled="item.status == -1">
+                            <md-option ng-repeat="(key, value) in $ctrl.status" ng-value="key" class="status{{key}}">
+                                {{value}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </md-card-icon-actions>
+            </md-card-actions>
+        </md-card>
+    </div>
+</div>

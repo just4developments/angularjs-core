@@ -1,4 +1,22 @@
-product {
+transaction {
+    .card-1 .sale-label {
+        background: red;
+    }
+    .card2 .sale-label {
+        background: orange;
+    }
+    .card1 .sale-label {
+        background: green;
+    }
+    .status-1 .md-text {
+        color: red !important;
+    }
+    .status2 .md-text {
+        color: orange !important;
+    }
+    .status1 .md-text {
+        color: green !important;
+    }
     md-input-container {
         margin: 8px 0px;
     }

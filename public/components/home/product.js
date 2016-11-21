@@ -42,7 +42,7 @@ app.component('product', {
         this.createNew = () => {
             self.isAdd = true;
             setTimeout(() => {
-                self.p = { category_id : $rootScope.categoryId, special: self.type === 'hot' };
+                self.p = { category_id : $rootScope.categoryId, special: self.type === 'hot', sizes: [{size: '', quantity: 0}] };
             });
         }  
         this.edit = (item) => {

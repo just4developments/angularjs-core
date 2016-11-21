@@ -1402,7 +1402,7 @@ webpackJsonp([3],[
 	        this.createNew = function () {
 	            self.isAdd = true;
 	            setTimeout(function () {
-	                self.p = { category_id: $rootScope.categoryId, special: self.type === 'hot' };
+	                self.p = { category_id: $rootScope.categoryId, special: self.type === 'hot', sizes: [{ size: '', quantity: 0 }] };
 	            });
 	        };
 	        this.edit = function (item) {

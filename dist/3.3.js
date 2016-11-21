@@ -344,8 +344,8 @@ webpackJsonp([3],[
 	'use strict';
 
 	window.app = angular.module('myApp', ['ngMaterial', 'ngComponentRouter']).constant('$config', {
-		// apiUrl: 'http://api.nanacloset.com'
-		apiUrl: 'http://localhost:9000'
+		apiUrl: 'http://api.nanacloset.com'
+		// apiUrl: 'http://localhost:9000'
 	}).value('$routerRootComponent', 'myApp').config(['$locationProvider', '$config', '$httpProvider', function ($locationProvider, $config, $httpProvider) {
 		//$locationProvider.hashPrefix('!');    
 		// $httpProvider.interceptors.push('AuthInterceptor');
@@ -1046,6 +1046,113 @@ webpackJsonp([3],[
 
 	'use strict';
 
+	app.component('transaction', {
+	    template: __webpack_require__(46),
+	    controller: ['$config', 'Transaction', 'Category', '$scope', 'Upload', '$window', '$rootScope', function ($config, Transaction, Category, $scope, Upload, $window, $rootScope) {
+	        __webpack_require__(47);
+	        var self = this;
+	        this.status = { "2": 'Đang gửi', "1": 'Đã nhận tiền', "-1": 'Đã hủy đơn hàng' };
+	        this.$routerOnActivate = function (next) {
+	            self.type = next.params.filter;
+	            Transaction.find({}).then(function (resp) {
+	                self.list = [];
+	                var isSameDay = function isSameDay(d, d1) {
+	                    if (!d || !d1) return false;
+	                    d = new Date(d);
+	                    d1 = new Date(d1);
+	                    return d1.getFullYear() === d.getFullYear() && d1.getDate() === d.getDate() && d1.getMonth() === d.getMonth();
+	                };
+	                var tempDate;
+	                var _iteratorNormalCompletion = true;
+	                var _didIteratorError = false;
+	                var _iteratorError = undefined;
+
+	                try {
+	                    for (var _iterator = resp.data[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	                        var item = _step.value;
+
+	                        if (!isSameDay(tempDate, item.created_date)) {
+	                            tempDate = item.created_date;
+	                            self.list.push({ created_date: item.created_date, list: [] });
+	                        }
+	                        self.list[self.list.length - 1].list.push(item);
+	                    }
+	                } catch (err) {
+	                    _didIteratorError = true;
+	                    _iteratorError = err;
+	                } finally {
+	                    try {
+	                        if (!_iteratorNormalCompletion && _iterator.return) {
+	                            _iterator.return();
+	                        }
+	                    } finally {
+	                        if (_didIteratorError) {
+	                            throw _iteratorError;
+	                        }
+	                    }
+	                }
+	            });
+	        };
+	        this.updateStatus = function (item) {
+	            Transaction.update(item).then(function (rs) {
+	                console.log(rs);
+	            });
+	        };
+	    }]
+	});
+
+/***/ },
+/* 46 */
+/***/ function(module, exports) {
+
+	module.exports = "<div layout=\"row\" layout-wrap class=\"product-list\" ng-repeat=\"date in $ctrl.list\">\r\n    <h3 flex=\"100\">\r\n        <md-icon>dashboard</md-icon> <small>{{date.created_date | date:'dd/MM/yyyy'}}</small>\r\n    </h3>\r\n    <div ng-if=\"$ctrl.list\" ng-repeat=\"item in date.list\" flex-xs=\"100\" flex-sm=\"50\" flex=\"25\" ng-init=\"imgIndex=0;\" class=\"card-item-wrap card{{item.status}}\">\r\n        <md-card class=\"card-item\">\r\n            <div class=\"sale-box\" ng-if=\"item.size\">\r\n                <span class=\"sale-label\">\r\n                    {{item.size.size}}\r\n                </span>\r\n            </div>\r\n            <div class=\"card-image\">\r\n                <div ng-repeat=\"img in item.product.images\" class=\"img\" ng-class=\"{'ng-hide-add': $index === imgIndex, 'ng-hide-remove': $index !== imgIndex}\"\r\n                    background-src=\"img\"></div>\r\n                <div class=\"nav\">\r\n                    <md-radio-group ng-model=\"imgIndex\" layout=\"row\">\r\n                        <md-radio-button ng-value=\"$index\" ng-repeat=\"img in item.product.images\" aria-label=\"{{item.name}}\"></md-radio-button>\r\n                    </md-radio-group>\r\n                </div>\r\n            </div>\r\n            <div>\r\n                <div class=\"card-name\" align=\"center\">{{item.name}}</div>\r\n                <div class=\"card-money\">{{item.money | number}} VNĐ / {{item.quantity}}</div>\r\n            </div>\r\n            <md-card-actions layout=\"row\" layout-align=\"end center\">\r\n                <md-card-icon-actions ng-if=\"$root.isAuth\">\r\n                    <md-input-container style=\"width: 100%\">\r\n                        <label>Status</label>\r\n                        <md-select ng-model=\"item.status\" class=\"status{{item.status}}\" ng-change=\"$ctrl.updateStatus(item)\" ng-disabled=\"item.status == -1\">\r\n                            <md-option ng-repeat=\"(key, value) in $ctrl.status\" ng-value=\"key\" class=\"status{{key}}\">\r\n                                {{value}}\r\n                            </md-option>\r\n                        </md-select>\r\n                    </md-input-container>\r\n                </md-card-icon-actions>\r\n            </md-card-actions>\r\n        </md-card>\r\n    </div>\r\n</div>";
+
+/***/ },
+/* 47 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(48);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(16)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/sass-loader/index.js!./transaction.scss", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/sass-loader/index.js!./transaction.scss");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 48 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(4)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "transaction .card-1 .sale-label {\n  background: red; }\n\ntransaction .card2 .sale-label {\n  background: orange; }\n\ntransaction .card1 .sale-label {\n  background: green; }\n\ntransaction .status-1 .md-text {\n  color: red !important; }\n\ntransaction .status2 .md-text {\n  color: orange !important; }\n\ntransaction .status1 .md-text {\n  color: green !important; }\n\ntransaction md-input-container {\n  margin: 8px 0px; }\n\ntransaction .product-list {\n  min-height: 500px; }\n\ntransaction .sale-box {\n  position: absolute;\n  top: -3px;\n  overflow: hidden;\n  height: 85px;\n  width: 85px;\n  text-align: center;\n  z-index: 1;\n  right: -3px; }\n\ntransaction .sale-label {\n  background: #8dca00;\n  color: white;\n  display: block;\n  font: 700 14px/12px Arial, Helvetica, sans-serif;\n  padding: 9px 0 7px;\n  perspective: 1px;\n  position: absolute;\n  right: -33px;\n  text-align: center;\n  text-transform: uppercase;\n  top: 16px;\n  width: 130px;\n  z-index: 1;\n  -webkit-transform: rotate(45deg);\n  -ms-transform: rotate(45deg);\n  -o-transform: rotate(45deg);\n  transform: rotate(45deg); }\n\ntransaction .card-item-wrap {\n  position: relative;\n  /*padding: 8px;*/ }\n\ntransaction .card-item.add {\n  padding: 8px; }\n\ntransaction .card-item {\n  position: relative;\n  border: solid 1px #ccc; }\n\ntransaction .des .card-des {\n  font-size: 1em; }\n\ntransaction .des .card-name {\n  font-size: 1.1em; }\n\ntransaction .card-des {\n  padding: 8px;\n  color: #4f4e4f; }\n\ntransaction .card-name {\n  padding: 8px;\n  color: #02b8e3; }\n\ntransaction .card-money {\n  padding: 8px;\n  font-size: 1.2em;\n  text-align: center;\n  color: #4f4e4f; }\n\ntransaction .card-image {\n  position: relative; }\n\ntransaction .card-image .img {\n  width: 100%;\n  height: 200px;\n  background-position: center center;\n  background-size: 100%;\n  background-repeat: no-repeat; }\n\ntransaction .card-image .img:nth-child(n+2) {\n  position: absolute;\n  left: 0px;\n  top: 0px; }\n\ntransaction md-radio-button {\n  margin: 0px !important; }\n\ntransaction .nav {\n  position: relative; }\n\ntransaction .nav md-radio-group {\n  top: -24px;\n  right: 0px;\n  position: absolute; }\n\ntransaction md-card-content h3 {\n  margin: 0px; }\n\ntransaction .ng-hide-add,\ntransaction .ng-hide-remove {\n  -webkit-transition: 300ms cubic-bezier(0.25, 0.25, 0.75, 0.75) all;\n  -moz-transition: 300ms cubic-bezier(0.25, 0.25, 0.75, 0.75) all;\n  -ms-transition: 300ms cubic-bezier(0.25, 0.25, 0.75, 0.75) all;\n  -o-transition: 300ms cubic-bezier(0.25, 0.25, 0.75, 0.75) all;\n  transition: 300ms cubic-bezier(0.25, 0.25, 0.75, 0.75) all; }\n\ntransaction .ng-hide-add.ng-hide-add-active,\ntransaction .ng-hide-remove {\n  opacity: 0;\n  z-index: -1; }\n\ntransaction .ng-hide-add,\ntransaction .ng-hide-remove.ng-hide-remove-active {\n  opacity: 1;\n  z-index: 0; }\n\ntransaction .tags {\n  list-style: none;\n  margin: 0;\n  overflow: hidden;\n  padding: 0;\n  position: absolute;\n  top: 0px;\n  z-index: 1; }\n\ntransaction .tag {\n  background: #fefefe;\n  border-radius: 0 5px 5px 0px;\n  color: #ff5991;\n  display: block;\n  padding: 4px 8px;\n  font-size: 0.8em;\n  font-weight: bolder;\n  margin: 3px 0; }\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 49 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
 	// app.directive('fileModel', ['$parse', function ($parse) {
 	//   return {
 	//     restrict: 'A',
@@ -1093,14 +1200,14 @@ webpackJsonp([3],[
 	}]);
 
 	app.component('uploadFile', {
-	  template: __webpack_require__(46),
+	  template: __webpack_require__(50),
 	  bindings: {
 	    imgSrc: '<',
 	    fileModel: '=',
 	    name: '@'
 	  },
 	  controller: ['$element', '$attrs', '$scope', '$parse', function ($element, $attrs, $scope, $parse) {
-	    __webpack_require__(48);
+	    __webpack_require__(52);
 	    var self = this;
 	    $element.on('change', function (e) {
 	      $scope.$apply(function () {
@@ -1119,25 +1226,25 @@ webpackJsonp([3],[
 	});
 
 /***/ },
-/* 46 */
+/* 50 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = "<div class=\"image-upload\" align=\"center\">\r\n    <label for=\"{{$ctrl.name}}\">\r\n        <img id=\"imageUpload\" ng-if=\"$ctrl.imgSrc\" image-src=\"$ctrl.imgSrc\" width=\"100%\"/>\r\n        <img id=\"imageUpload\" ng-if=\"!$ctrl.imgSrc\" src=\"" + __webpack_require__(47) + "\" width=\"100%\"/>\r\n    </label>\r\n    <input id=\"{{$ctrl.name}}\" name=\"{{$ctrl.name}}\" type=\"file\" multiple=\"true\" />\r\n</div>";
+	module.exports = "<div class=\"image-upload\" align=\"center\">\r\n    <label for=\"{{$ctrl.name}}\">\r\n        <img id=\"imageUpload\" ng-if=\"$ctrl.imgSrc\" image-src=\"$ctrl.imgSrc\" width=\"100%\"/>\r\n        <img id=\"imageUpload\" ng-if=\"!$ctrl.imgSrc\" src=\"" + __webpack_require__(51) + "\" width=\"100%\"/>\r\n    </label>\r\n    <input id=\"{{$ctrl.name}}\" name=\"{{$ctrl.name}}\" type=\"file\" multiple=\"true\" />\r\n</div>";
 
 /***/ },
-/* 47 */
+/* 51 */
 /***/ function(module, exports) {
 
 	module.exports = "data:image/png;base64,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"
 
 /***/ },
-/* 48 */
+/* 52 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(49);
+	var content = __webpack_require__(53);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(16)(content, {});
@@ -1157,7 +1264,7 @@ webpackJsonp([3],[
 	}
 
 /***/ },
-/* 49 */
+/* 53 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(4)();
@@ -1171,16 +1278,16 @@ webpackJsonp([3],[
 
 
 /***/ },
-/* 50 */
+/* 54 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	app.component('home', {
-	    template: __webpack_require__(51),
+	    template: __webpack_require__(55),
 	    bindings: { $router: '<' },
 	    controller: ['$config', 'Product', 'Category', '$scope', 'Upload', '$window', '$rootScope', function ($config, Product, Category, $scope, Upload, $window, $rootScope) {
-	        __webpack_require__(52);
+	        __webpack_require__(56);
 	        var self = this;
 	        this.activeIndex = 0;
 	        this.$routerOnActivate = function (next) {
@@ -1195,19 +1302,19 @@ webpackJsonp([3],[
 	});
 
 /***/ },
-/* 51 */
+/* 55 */
 /***/ function(module, exports) {
 
 	module.exports = "<ul class=\"tabf\">\r\n    <li ng-class=\"{'active' : 0 == $ctrl.activeIndex}\" ng-click=\"$ctrl.goTo('newest', 0)\">Newst<hr size=\"3\" color=\"#02b8e3\"/></li>\r\n    <li ng-class=\"{'active' : 1 == $ctrl.activeIndex}\" ng-click=\"$ctrl.goTo('hot', 1)\">Hot<hr size=\"3\" color=\"#02b8e3\"/></li>\r\n</ul>    \r\n<ng-outlet></ng-outlet>";
 
 /***/ },
-/* 52 */
+/* 56 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(53);
+	var content = __webpack_require__(57);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(16)(content, {});
@@ -1227,7 +1334,7 @@ webpackJsonp([3],[
 	}
 
 /***/ },
-/* 53 */
+/* 57 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(4)();
@@ -1241,7 +1348,7 @@ webpackJsonp([3],[
 
 
 /***/ },
-/* 54 */
+/* 58 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1249,10 +1356,10 @@ webpackJsonp([3],[
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 	app.component('product', {
-	    template: __webpack_require__(55),
+	    template: __webpack_require__(59),
 	    bindings: { $router: '<' },
 	    controller: ['$config', 'Product', 'Category', '$scope', 'Upload', '$window', '$rootScope', function ($config, Product, Category, $scope, Upload, $window, $rootScope) {
-	        __webpack_require__(56);
+	        __webpack_require__(60);
 	        this.today = new Date();
 	        var clone = function clone(obj, ignores) {
 	            if (obj === null || (typeof obj === 'undefined' ? 'undefined' : _typeof(obj)) !== 'object' || 'isActiveClone' in obj) return obj;
@@ -1359,19 +1466,19 @@ webpackJsonp([3],[
 	});
 
 /***/ },
-/* 55 */
+/* 59 */
 /***/ function(module, exports) {
 
 	module.exports = "<div layout=\"row\" layout-wrap class=\"product-list\">  \r\n    <div ng-if=\"$ctrl.list\" ng-repeat=\"item in $ctrl.list\" flex-xs=\"100\" flex-sm=\"50\" flex=\"25\" ng-init=\"imgIndex=0; sizeIndex=0;\" class=\"card-item-wrap\">\r\n        <md-card class=\"card-item\">\r\n            <div class=\"sale-box\" ng-if=\"item.sizes && 0 === sizeIndex\">\r\n                <span class=\"sale-label\">\r\n                    {{$ctrl.toSizes(item.sizes)}}\r\n                </span>\r\n            </div>       \r\n            <div class=\"card-image\" ng-class=\"{'ng-hide-add': 0 === sizeIndex, 'ng-hide-remove': 0 !== sizeIndex}\">\r\n                <div ng-repeat=\"img in item.images\" class=\"img\" ng-class=\"{'ng-hide-add': $index === imgIndex, 'ng-hide-remove': $index !== imgIndex}\"\r\n                    background-src=\"img\"></div>\r\n                <div class=\"nav\">\r\n                    <md-radio-group ng-model=\"imgIndex\" layout=\"row\">\r\n                        <md-radio-button ng-value=\"$index\" ng-repeat=\"img in item.images\" aria-label=\"{{item.name}}\"></md-radio-button>\r\n                    </md-radio-group>\r\n                </div>\r\n            </div>\r\n            <div ng-class=\"{'ng-hide-add': 0 === sizeIndex, 'ng-hide-remove': 0 !== sizeIndex}\">\r\n                <div class=\"card-name\" align=\"center\">{{item.name}}</div>\r\n                <div class=\"card-money\">{{item.money | number}} VNĐ</div>\r\n            </div>\r\n            <div class=\"des\" style=\"position: absolute; top: 0px; left: 0px;\" ng-class=\"{'ng-hide-add': 1 === sizeIndex, 'ng-hide-remove': 1 !== sizeIndex}\">\r\n                <md-card-content ng-show=\"!$ctrl.isSell\">\r\n                    <img image-src=\"item.images[0]\" width=\"32\" style=\"float: left; border-radius: 100%; margin: 8px 8px 0px 0px;\" />\r\n                    <div class=\"card-name\">{{item.name}}</div>\r\n                    <div class=\"card-des\">{{item.des}}</div>\r\n                    <div class=\"card-des\" ng-if=\"item.sizes\">Các size còn:<br/> \r\n                        <span class=\"card-name\" ng-repeat=\"s in item.sizes\" title=\"Remain {{s.quantity}}/{{s.quantity0}}\" ng-if=\"s.quantity > 0\">\r\n                            <a href=\"#\" ng-if=\"$root.isAuth && s.quantity > 0\" class=\"card-name\" ng-click=\"$ctrl.addSell(item, $index)\">{{s.size}}</a>\r\n                            <span ng-if=\"!$root.isAuth || s.quantity == 0\">{{s.size}}</span>\r\n                        </span>\r\n                    </div>\r\n                </md-card-content>\r\n                <md-card-content ng-show=\"$ctrl.isSell\" layout=\"row\" layout-wrap>\r\n                    <div align=\"right\" style=\"width: 100%\"><a href=\"#\" ng-click=\"$ctrl.isSell = 0;\"><span class=\"card-name\">{{$ctrl.sizeName}}</span></a></div>\r\n                    <md-datepicker ng-model=\"$ctrl.trans.created_date\" md-placeholder=\"Enter date\" md-max-date=\"$ctrl.today\" style=\"width: 100%\"></md-datepicker>\r\n                    <md-input-container class=\"md-block\" flex=\"100\" md-no-float>\r\n                        <input ng-model=\"$ctrl.trans.buyer\" placeholder=\"Buyer name\">\r\n                    </md-input-container>\r\n                    <md-input-container class=\"md-block\" flex=\"100\" md-no-float>\r\n                        <textarea ng-model=\"$ctrl.trans.address\" md-maxlength=\"150\" rows=\"2\" md-select-on-focus placeholder=\"Address\"></textarea>\r\n                    </md-input-container>\r\n                    <md-input-container class=\"md-block\" flex=\"50\" md-no-float>\r\n                        <input ng-model=\"$ctrl.trans.quantity\" placeholder=\"Quantity\">\r\n                    </md-input-container>\r\n                    <div flex>\r\n                        <md-button ng-click=\"$ctrl.sell()\" class=\"md-primary\">\r\n                            <md-icon>shopping_basket</md-icon>\r\n                        </md-button>\r\n                    </div>\r\n                </md-card-content>\r\n            </div>\r\n            <md-card-actions layout=\"row\" layout-align=\"end center\">\r\n                <md-card-icon-actions ng-if=\"$root.isAuth\">\r\n                    <md-button class=\"md-icon-button\" aria-label=\"Edit\" ng-click=\"$ctrl.edit(item)\">\r\n                        <md-icon>edit</md-icon>\r\n                    </md-button>\r\n                    <md-button class=\"md-icon-button\" aria-label=\"Delete\" ng-click=\"$ctrl.delete(item)\">\r\n                        <md-icon>delete</md-icon>\r\n                    </md-button>                    \r\n                </md-card-icon-actions>\r\n                <md-button class=\"md-icon-button\" aria-label=\"Details\" ng-click=\"sizeIndex = sizeIndex ? 0 : 1;\">\r\n                    <md-icon ng-if=\"!sizeIndex\">more_horiz</md-icon>\r\n                    <md-icon ng-if=\"sizeIndex\">keyboard_arrow_left</md-icon>\r\n                </md-button>      \r\n            </md-card-actions>\r\n        </md-card>\r\n    </div>\r\n    <div class=\"card-item-wrap\" flex-xs=\"100\" flex-sm=\"50\" flex=\"25\">\r\n        <md-card class=\"card-item add\">\r\n            <md-card-content ng-if=\"$ctrl.isAdd\">\r\n                <div align=\"right\">\r\n                    <md-button class=\"md-icon-button\" ng-click=\"$ctrl.isAdd = !$ctrl.isAdd;\" ng-if=\"$ctrl.isAdd\">\r\n                        <md-icon>close</md-icon>\r\n                    </md-button>\r\n                </div>\r\n                <upload-file file-model=\"$ctrl.p.images\" name=\"images\" img-src=\"$ctrl.p.images ? $ctrl.p.images[0] : undefined\"></upload-file>\r\n                <md-switch class=\"md-primary\" md-no-ink aria-label=\"Special\" ng-model=\"$ctrl.p.special\">\r\n                    Special item ?\r\n                </md-switch>\r\n                <md-input-container>\r\n                    <label>Name</label>\r\n                    <input ng-model=\"$ctrl.p.name\">\r\n                </md-input-container>\r\n                <md-input-container class=\"md-block\" ng-init=\"$ctrl.p.sizes=[{size: '', quantity: ''}];\">\r\n                    <label>Des</label>\r\n                    <textarea ng-model=\"$ctrl.p.des\" md-maxlength=\"300\" rows=\"2\"></textarea>\r\n                </md-input-container>                \r\n                <md-input-container class=\"md-block\">\r\n                    <label>Money</label>\r\n                    <input ng-model=\"$ctrl.p.money\" type=\"number\" placeholder=\"$\">\r\n                </md-input-container>\r\n                <md-input-container>\r\n                    <label>Category</label>\r\n                    <md-select ng-model=\"$ctrl.p.category_id\" ng-if=\"$ctrl.categories\">\r\n                        <md-option ng-repeat=\"c in $ctrl.categories\" ng-value=\"c._id\">\r\n                            {{c.name}}\r\n                        </md-option>\r\n                    </md-select>\r\n                </md-input-container>\r\n                <div layout=\"row\">\r\n                    <md-button class=\"md-icon-button\" aria-label=\"Add\" ng-click=\"$ctrl.p.sizes.push({size: '', quantity: ''});\">\r\n                        <md-icon>add</md-icon>\r\n                    </md-button>\r\n                </div>\r\n                <div layout=\"row\" ng-repeat=\"s in $ctrl.p.sizes\" ng-if=\"$ctrl.p && $ctrl.p.sizes\">\r\n                    <md-input-container class=\"md-block\">\r\n                        <label>Size</label>\r\n                        <input ng-model=\"s.size\" type=\"text\" placeholder=\"S\">\r\n                    </md-input-container>\r\n                    <md-input-container class=\"md-block\">\r\n                        <label>Quantity</label>\r\n                        <input ng-model=\"s.quantity\" type=\"number\" placeholder=\"0\">\r\n                        <md-icon class=\"button\" ng-click=\"$ctrl.p.sizes.splice($index, 1);\">remove</md-icon>\r\n                    </md-input-container>\r\n                </div>\r\n            </md-card-content>\r\n            <md-card-actions layout=\"row\" layout-align=\"end center\">\r\n                <md-button class=\"md-icon-button\" aria-label=\"Favorite\" ng-click=\"$ctrl.save($ctrl.p)\" ng-if=\"$ctrl.isAdd\">\r\n                    <md-icon>save</md-icon>\r\n                </md-button>\r\n                <md-button class=\"md-icon-button\" ng-click=\"$ctrl.createNew()\" ng-if=\"!$ctrl.isAdd\">\r\n                    <md-icon>add</md-icon>\r\n                </md-button>\r\n            </md-card-actions>\r\n        </md-card>\r\n    </div>\r\n</div>";
 
 /***/ },
-/* 56 */
+/* 60 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(57);
+	var content = __webpack_require__(61);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(16)(content, {});
@@ -1391,113 +1498,6 @@ webpackJsonp([3],[
 	}
 
 /***/ },
-/* 57 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(4)();
-	// imports
-
-
-	// module
-	exports.push([module.id, "product md-input-container {\n  margin: 8px 0px; }\n\nproduct .product-list {\n  min-height: 500px; }\n\nproduct .sale-box {\n  position: absolute;\n  top: -3px;\n  overflow: hidden;\n  height: 85px;\n  width: 85px;\n  text-align: center;\n  z-index: 1;\n  right: -3px; }\n\nproduct .sale-label {\n  background: #8dca00;\n  color: white;\n  display: block;\n  font: 700 14px/12px Arial, Helvetica, sans-serif;\n  padding: 9px 0 7px;\n  perspective: 1px;\n  position: absolute;\n  right: -33px;\n  text-align: center;\n  text-transform: uppercase;\n  top: 16px;\n  width: 130px;\n  z-index: 1;\n  -webkit-transform: rotate(45deg);\n  -ms-transform: rotate(45deg);\n  -o-transform: rotate(45deg);\n  transform: rotate(45deg); }\n\nproduct .card-item-wrap {\n  position: relative;\n  /*padding: 8px;*/ }\n\nproduct .card-item.add {\n  padding: 8px; }\n\nproduct .card-item {\n  position: relative;\n  border: solid 1px #ccc; }\n\nproduct .des .card-des {\n  font-size: 1em; }\n\nproduct .des .card-name {\n  font-size: 1.1em; }\n\nproduct .card-des {\n  padding: 8px;\n  color: #4f4e4f; }\n\nproduct .card-name {\n  padding: 8px;\n  color: #02b8e3; }\n\nproduct .card-money {\n  padding: 8px;\n  font-size: 1.2em;\n  text-align: center;\n  color: #4f4e4f; }\n\nproduct .card-image {\n  position: relative; }\n\nproduct .card-image .img {\n  width: 100%;\n  height: 200px;\n  background-position: center center;\n  background-size: 100%;\n  background-repeat: no-repeat; }\n\nproduct .card-image .img:nth-child(n+2) {\n  position: absolute;\n  left: 0px;\n  top: 0px; }\n\nproduct md-radio-button {\n  margin: 0px !important; }\n\nproduct .nav {\n  position: relative; }\n\nproduct .nav md-radio-group {\n  top: -24px;\n  right: 0px;\n  position: absolute; }\n\nproduct md-card-content h3 {\n  margin: 0px; }\n\nproduct .ng-hide-add,\nproduct .ng-hide-remove {\n  -webkit-transition: 300ms cubic-bezier(0.25, 0.25, 0.75, 0.75) all;\n  -moz-transition: 300ms cubic-bezier(0.25, 0.25, 0.75, 0.75) all;\n  -ms-transition: 300ms cubic-bezier(0.25, 0.25, 0.75, 0.75) all;\n  -o-transition: 300ms cubic-bezier(0.25, 0.25, 0.75, 0.75) all;\n  transition: 300ms cubic-bezier(0.25, 0.25, 0.75, 0.75) all; }\n\nproduct .ng-hide-add.ng-hide-add-active,\nproduct .ng-hide-remove {\n  opacity: 0;\n  z-index: -1; }\n\nproduct .ng-hide-add,\nproduct .ng-hide-remove.ng-hide-remove-active {\n  opacity: 1;\n  z-index: 0; }\n\nproduct .tags {\n  list-style: none;\n  margin: 0;\n  overflow: hidden;\n  padding: 0;\n  position: absolute;\n  top: 0px;\n  z-index: 1; }\n\nproduct .tag {\n  background: #fefefe;\n  border-radius: 0 5px 5px 0px;\n  color: #ff5991;\n  display: block;\n  padding: 4px 8px;\n  font-size: 0.8em;\n  font-weight: bolder;\n  margin: 3px 0; }\n", ""]);
-
-	// exports
-
-
-/***/ },
-/* 58 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	app.component('transaction', {
-	    template: __webpack_require__(59),
-	    controller: ['$config', 'Transaction', 'Category', '$scope', 'Upload', '$window', '$rootScope', function ($config, Transaction, Category, $scope, Upload, $window, $rootScope) {
-	        __webpack_require__(60);
-	        var self = this;
-	        this.status = { "2": 'Đang gửi', "1": 'Đã nhận tiền', "-1": 'Đã hủy đơn hàng' };
-	        this.$routerOnActivate = function (next) {
-	            self.type = next.params.filter;
-	            Transaction.find({}).then(function (resp) {
-	                self.list = [];
-	                var isSameDay = function isSameDay(d, d1) {
-	                    if (!d || !d1) return false;
-	                    d = new Date(d);
-	                    d1 = new Date(d1);
-	                    return d1.getFullYear() === d.getFullYear() && d1.getDate() === d.getDate() && d1.getMonth() === d.getMonth();
-	                };
-	                var tempDate;
-	                var _iteratorNormalCompletion = true;
-	                var _didIteratorError = false;
-	                var _iteratorError = undefined;
-
-	                try {
-	                    for (var _iterator = resp.data[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-	                        var item = _step.value;
-
-	                        if (!isSameDay(tempDate, item.created_date)) {
-	                            tempDate = item.created_date;
-	                            self.list.push({ created_date: item.created_date, list: [] });
-	                        }
-	                        self.list[self.list.length - 1].list.push(item);
-	                    }
-	                } catch (err) {
-	                    _didIteratorError = true;
-	                    _iteratorError = err;
-	                } finally {
-	                    try {
-	                        if (!_iteratorNormalCompletion && _iterator.return) {
-	                            _iterator.return();
-	                        }
-	                    } finally {
-	                        if (_didIteratorError) {
-	                            throw _iteratorError;
-	                        }
-	                    }
-	                }
-	            });
-	        };
-	        this.updateStatus = function (item) {
-	            Transaction.update(item).then(function (rs) {
-	                console.log(rs);
-	            });
-	        };
-	    }]
-	});
-
-/***/ },
-/* 59 */
-/***/ function(module, exports) {
-
-	module.exports = "<div layout=\"row\" layout-wrap class=\"product-list\" ng-repeat=\"date in $ctrl.list\">\r\n    <h3 flex=\"100\">\r\n        <md-icon>dashboard</md-icon> <small>{{date.created_date | date:'dd/MM/yyyy'}}</small>\r\n    </h3>\r\n    <div ng-if=\"$ctrl.list\" ng-repeat=\"item in date.list\" flex-xs=\"100\" flex-sm=\"50\" flex=\"25\" ng-init=\"imgIndex=0;\" class=\"card-item-wrap card{{item.status}}\">\r\n        <md-card class=\"card-item\">\r\n            <div class=\"sale-box\" ng-if=\"item.size\">\r\n                <span class=\"sale-label\">\r\n                    {{item.size.size}}\r\n                </span>\r\n            </div>\r\n            <div class=\"card-image\">\r\n                <div ng-repeat=\"img in item.product.images\" class=\"img\" ng-class=\"{'ng-hide-add': $index === imgIndex, 'ng-hide-remove': $index !== imgIndex}\"\r\n                    background-src=\"img\"></div>\r\n                <div class=\"nav\">\r\n                    <md-radio-group ng-model=\"imgIndex\" layout=\"row\">\r\n                        <md-radio-button ng-value=\"$index\" ng-repeat=\"img in item.product.images\" aria-label=\"{{item.name}}\"></md-radio-button>\r\n                    </md-radio-group>\r\n                </div>\r\n            </div>\r\n            <div>\r\n                <div class=\"card-name\" align=\"center\">{{item.name}}</div>\r\n                <div class=\"card-money\">{{item.money | number}} VNĐ / {{item.quantity}}</div>\r\n            </div>\r\n            <md-card-actions layout=\"row\" layout-align=\"end center\">\r\n                <md-card-icon-actions ng-if=\"$root.isAuth\">\r\n                    <md-input-container style=\"width: 100%\">\r\n                        <label>Status</label>\r\n                        <md-select ng-model=\"item.status\" class=\"status{{item.status}}\" ng-change=\"$ctrl.updateStatus(item)\" ng-disabled=\"item.status == -1\">\r\n                            <md-option ng-repeat=\"(key, value) in $ctrl.status\" ng-value=\"key\" class=\"status{{key}}\">\r\n                                {{value}}\r\n                            </md-option>\r\n                        </md-select>\r\n                    </md-input-container>\r\n                </md-card-icon-actions>\r\n            </md-card-actions>\r\n        </md-card>\r\n    </div>\r\n</div>";
-
-/***/ },
-/* 60 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(61);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(16)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/sass-loader/index.js!./transaction.scss", function() {
-				var newContent = require("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/sass-loader/index.js!./transaction.scss");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
 /* 61 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -1506,7 +1506,7 @@ webpackJsonp([3],[
 
 
 	// module
-	exports.push([module.id, "transaction .card-1 .sale-label {\n  background: red; }\n\ntransaction .card2 .sale-label {\n  background: orange; }\n\ntransaction .card1 .sale-label {\n  background: green; }\n\ntransaction .status-1 .md-text {\n  color: red !important; }\n\ntransaction .status2 .md-text {\n  color: orange !important; }\n\ntransaction .status1 .md-text {\n  color: green !important; }\n\ntransaction md-input-container {\n  margin: 8px 0px; }\n\ntransaction .product-list {\n  min-height: 500px; }\n\ntransaction .sale-box {\n  position: absolute;\n  top: -3px;\n  overflow: hidden;\n  height: 85px;\n  width: 85px;\n  text-align: center;\n  z-index: 1;\n  right: -3px; }\n\ntransaction .sale-label {\n  background: #8dca00;\n  color: white;\n  display: block;\n  font: 700 14px/12px Arial, Helvetica, sans-serif;\n  padding: 9px 0 7px;\n  perspective: 1px;\n  position: absolute;\n  right: -33px;\n  text-align: center;\n  text-transform: uppercase;\n  top: 16px;\n  width: 130px;\n  z-index: 1;\n  -webkit-transform: rotate(45deg);\n  -ms-transform: rotate(45deg);\n  -o-transform: rotate(45deg);\n  transform: rotate(45deg); }\n\ntransaction .card-item-wrap {\n  position: relative;\n  /*padding: 8px;*/ }\n\ntransaction .card-item.add {\n  padding: 8px; }\n\ntransaction .card-item {\n  position: relative;\n  border: solid 1px #ccc; }\n\ntransaction .des .card-des {\n  font-size: 1em; }\n\ntransaction .des .card-name {\n  font-size: 1.1em; }\n\ntransaction .card-des {\n  padding: 8px;\n  color: #4f4e4f; }\n\ntransaction .card-name {\n  padding: 8px;\n  color: #02b8e3; }\n\ntransaction .card-money {\n  padding: 8px;\n  font-size: 1.2em;\n  text-align: center;\n  color: #4f4e4f; }\n\ntransaction .card-image {\n  position: relative; }\n\ntransaction .card-image .img {\n  width: 100%;\n  height: 200px;\n  background-position: center center;\n  background-size: 100%;\n  background-repeat: no-repeat; }\n\ntransaction .card-image .img:nth-child(n+2) {\n  position: absolute;\n  left: 0px;\n  top: 0px; }\n\ntransaction md-radio-button {\n  margin: 0px !important; }\n\ntransaction .nav {\n  position: relative; }\n\ntransaction .nav md-radio-group {\n  top: -24px;\n  right: 0px;\n  position: absolute; }\n\ntransaction md-card-content h3 {\n  margin: 0px; }\n\ntransaction .ng-hide-add,\ntransaction .ng-hide-remove {\n  -webkit-transition: 300ms cubic-bezier(0.25, 0.25, 0.75, 0.75) all;\n  -moz-transition: 300ms cubic-bezier(0.25, 0.25, 0.75, 0.75) all;\n  -ms-transition: 300ms cubic-bezier(0.25, 0.25, 0.75, 0.75) all;\n  -o-transition: 300ms cubic-bezier(0.25, 0.25, 0.75, 0.75) all;\n  transition: 300ms cubic-bezier(0.25, 0.25, 0.75, 0.75) all; }\n\ntransaction .ng-hide-add.ng-hide-add-active,\ntransaction .ng-hide-remove {\n  opacity: 0;\n  z-index: -1; }\n\ntransaction .ng-hide-add,\ntransaction .ng-hide-remove.ng-hide-remove-active {\n  opacity: 1;\n  z-index: 0; }\n\ntransaction .tags {\n  list-style: none;\n  margin: 0;\n  overflow: hidden;\n  padding: 0;\n  position: absolute;\n  top: 0px;\n  z-index: 1; }\n\ntransaction .tag {\n  background: #fefefe;\n  border-radius: 0 5px 5px 0px;\n  color: #ff5991;\n  display: block;\n  padding: 4px 8px;\n  font-size: 0.8em;\n  font-weight: bolder;\n  margin: 3px 0; }\n", ""]);
+	exports.push([module.id, "product md-input-container {\n  margin: 8px 0px; }\n\nproduct .product-list {\n  min-height: 500px; }\n\nproduct .sale-box {\n  position: absolute;\n  top: -3px;\n  overflow: hidden;\n  height: 85px;\n  width: 85px;\n  text-align: center;\n  z-index: 1;\n  right: -3px; }\n\nproduct .sale-label {\n  background: #8dca00;\n  color: white;\n  display: block;\n  font: 700 14px/12px Arial, Helvetica, sans-serif;\n  padding: 9px 0 7px;\n  perspective: 1px;\n  position: absolute;\n  right: -33px;\n  text-align: center;\n  text-transform: uppercase;\n  top: 16px;\n  width: 130px;\n  z-index: 1;\n  -webkit-transform: rotate(45deg);\n  -ms-transform: rotate(45deg);\n  -o-transform: rotate(45deg);\n  transform: rotate(45deg); }\n\nproduct .card-item-wrap {\n  position: relative;\n  /*padding: 8px;*/ }\n\nproduct .card-item.add {\n  padding: 8px; }\n\nproduct .card-item {\n  position: relative;\n  border: solid 1px #ccc; }\n\nproduct .des .card-des {\n  font-size: 1em; }\n\nproduct .des .card-name {\n  font-size: 1.1em; }\n\nproduct .card-des {\n  padding: 8px;\n  color: #4f4e4f; }\n\nproduct .card-name {\n  padding: 8px;\n  color: #02b8e3; }\n\nproduct .card-money {\n  padding: 8px;\n  font-size: 1.2em;\n  text-align: center;\n  color: #4f4e4f; }\n\nproduct .card-image {\n  position: relative; }\n\nproduct .card-image .img {\n  width: 100%;\n  height: 200px;\n  background-position: center center;\n  background-size: 100%;\n  background-repeat: no-repeat; }\n\nproduct .card-image .img:nth-child(n+2) {\n  position: absolute;\n  left: 0px;\n  top: 0px; }\n\nproduct md-radio-button {\n  margin: 0px !important; }\n\nproduct .nav {\n  position: relative; }\n\nproduct .nav md-radio-group {\n  top: -24px;\n  right: 0px;\n  position: absolute; }\n\nproduct md-card-content h3 {\n  margin: 0px; }\n\nproduct .ng-hide-add,\nproduct .ng-hide-remove {\n  -webkit-transition: 300ms cubic-bezier(0.25, 0.25, 0.75, 0.75) all;\n  -moz-transition: 300ms cubic-bezier(0.25, 0.25, 0.75, 0.75) all;\n  -ms-transition: 300ms cubic-bezier(0.25, 0.25, 0.75, 0.75) all;\n  -o-transition: 300ms cubic-bezier(0.25, 0.25, 0.75, 0.75) all;\n  transition: 300ms cubic-bezier(0.25, 0.25, 0.75, 0.75) all; }\n\nproduct .ng-hide-add.ng-hide-add-active,\nproduct .ng-hide-remove {\n  opacity: 0;\n  z-index: -1; }\n\nproduct .ng-hide-add,\nproduct .ng-hide-remove.ng-hide-remove-active {\n  opacity: 1;\n  z-index: 0; }\n\nproduct .tags {\n  list-style: none;\n  margin: 0;\n  overflow: hidden;\n  padding: 0;\n  position: absolute;\n  top: 0px;\n  z-index: 1; }\n\nproduct .tag {\n  background: #fefefe;\n  border-radius: 0 5px 5px 0px;\n  color: #ff5991;\n  display: block;\n  padding: 4px 8px;\n  font-size: 0.8em;\n  font-weight: bolder;\n  margin: 3px 0; }\n", ""]);
 
 	// exports
 

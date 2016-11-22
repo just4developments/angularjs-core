@@ -58,31 +58,40 @@ app
   .directive("imageSrc", ['$config', function ($config) {
     return {
       scope: {
-        imageSrc: "=",
-        size: "<"
+        imageSrc: "<",
+        size: "<",
+        watch: "<"
       },
       link: function (scope, element, attributes) {
-        for (var i = 0; i < element.length; i++) {
-          var ee = element[i];
-          ee.addEventListener('error', (e) => {
-            ee.setAttribute('src', require('../assets/images/no-photo.png'));
-          });
-          if (typeof scope.imageSrc != 'undefined' && scope.imageSrc != null) {
-            if(typeof scope.imageSrc !== 'string') return;
-            if (scope.imageSrc.startsWith("http://") || scope.imageSrc.startsWith("https://")) {
-              ee.setAttribute('src', scope.imageSrc);
-            } else {
-              var imageSrc = scope.imageSrc;
-              if (imageSrc && scope.size) {
-                var ii = imageSrc.lastIndexOf('/');
-                imageSrc = imageSrc.substr(0, ii + 1) + scope.size + imageSrc.substr(ii);
+        var handle = () => {
+          for (var i = 0; i < element.length; i++) {
+            var ee = element[i];
+            ee.addEventListener('error', (e) => {
+              ee.setAttribute('src', require('../assets/images/no-photo.png'));
+            });
+            if (typeof scope.imageSrc != 'undefined' && scope.imageSrc != null) {
+              if(typeof scope.imageSrc !== 'string') return;
+              if (scope.imageSrc.startsWith("http://") || scope.imageSrc.startsWith("https://")) {
+                ee.setAttribute('src', scope.imageSrc);
+              } else {
+                var imageSrc = scope.imageSrc;
+                if (imageSrc && scope.size) {
+                  var ii = imageSrc.lastIndexOf('/');
+                  imageSrc = imageSrc.substr(0, ii + 1) + scope.size + imageSrc.substr(ii);
+                }
+                ee.setAttribute('src', $config.apiUrl + imageSrc);
               }
-              console.log($config.apiUrl + imageSrc);
-              ee.setAttribute('src', $config.apiUrl + imageSrc);
+            } else {
+              ee.setAttribute('src', require('../assets/images/no-photo.png'));
             }
-          } else {
-            ee.setAttribute('src', require('../assets/images/no-photo.png'));
-          }
+          } 
+        };
+        if(scope.watch){
+          scope.$watch('imageSrc', function(){
+            handle(); 
+          });
+        }else{
+          handle();
         }
       }
     };

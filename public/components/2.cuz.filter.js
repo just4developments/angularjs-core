@@ -2,7 +2,7 @@ app
 .filter('money', ['$filter', function($filter) {
   return function(input, symbol) {
     if(input === undefined) return '';
-    return $filter('number')(+input) + ' ' + symbol;
+    return $filter('number')(+input) + ' ' + (symbol || '₫');
   };
 }])
 .filter('mformat', ['$filter', function($filter) {

@@ -33,13 +33,11 @@ product {
         -ms-transform: rotate(45deg);
         -o-transform: rotate(45deg);
         transform: rotate(45deg);
+        box-shadow: 1px 1px 1px #5f5f5f;
     }
     .card-item-wrap {
         position: relative;
         /*padding: 8px;*/
-    }
-    .card-item.add {
-        padding: 8px;
     }
     .card-item {
         position: relative;
@@ -95,6 +93,9 @@ product {
     }
     md-card-content h3 {
         margin: 0px;
+    }
+    md-card-content {
+        padding: 8px;
     }
     .ng-hide-add,
     .ng-hide-remove {

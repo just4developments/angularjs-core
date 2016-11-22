@@ -4,6 +4,7 @@ app.component('myApp', {
     template: require('./my-app.html'),
     $routeConfig: [
         {path: '/transaction', name: 'Transaction', component: 'transaction'},
+        {path: '/policy', name: 'Policy', component: 'policy'},
         {path: '/...', name: 'HomeNewest', component: 'home', useAsDefault: true},
         {path: '/:categoryId/...', name: 'HomeNewestByCategoryId', component: 'home'}
     ],

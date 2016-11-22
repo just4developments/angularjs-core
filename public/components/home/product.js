@@ -1,7 +1,7 @@
 app.component('product', {
     template: require('./product.html'),
     bindings: { $router: '<' },
-    controller: ['$config', 'Product', 'Category', '$scope', 'Upload', '$window', '$rootScope', function ($config, Product, Category, $scope, Upload, $window, $rootScope) {
+    controller: ['$config', 'Product', 'Category', '$scope', 'Upload', '$window', '$rootScope', '$mdDialog', function ($config, Product, Category, $scope, Upload, $window, $rootScope, $mdDialog) {
         require('./product.scss');
         this.today = new Date();
         var clone = (obj, ignores) => {
@@ -52,6 +52,7 @@ app.component('product', {
             });            
         }
         this.delete = (item) => {
+            if(!$window.confirm('Bạn có chắc muốn xóa sản phẩm này ?')) return; 
             Product.delete(item._id).then(() => {
               self.list.splice(self.list.indexOf(item), 1);  
             });
@@ -63,6 +64,7 @@ app.component('product', {
                 status: 2,
                 created_date: new Date()
             };
+
             self.sizeName = item.sizes[index].size;
             self.transIndex = index;
             self.isSell = 1;
@@ -71,16 +73,17 @@ app.component('product', {
             if(!self.trans.buyer) return alert('Buyer name is required');
             if(!self.trans.address) return alert('Address is required');
             if(!self.trans.quantity || +self.trans.quantity <= 0) return alert('Quantity must be greater 0');
+            if(+self.trans.product.sizes[self.transIndex].quantity - +self.trans.quantity < 0) return alert('Item not enough to sell');
             self.trans.product.sizes[self.transIndex].quantity= +self.trans.product.sizes[self.transIndex].quantity - +self.trans.quantity;
             self.trans.product.quantity= +self.trans.product.quantity - +self.trans.quantity;
-            self.trans.size = self.trans.product.sizes[self.transIndex];             
-            if(self.trans.size.quantity < 0) return alert('Item not enough to sell. ' + self.trans.product.sizes[self.transIndex].quantity);
+            self.trans.size = self.trans.product.sizes[self.transIndex];                         
             self.trans.money = +self.trans.product.money * +self.trans.quantity;
             Product.sell(self.trans).then((rs) => {                
                 self.isSell = 0;
             }).catch((e) => {
                 self.trans.product.sizes[self.transIndex].quantity+= +self.trans.quantity;
                 self.trans.product.quantity+= +self.trans.quantity;  
+                alert(e.data.message);
             });
         }
         this.save = () => {
@@ -89,16 +92,45 @@ app.component('product', {
             p0.images = self.p.images;
             if(p0.sizes) p0.sizes = angular.toJson(p0.sizes);
             Upload.uploadFileToUrl(p0, $config.apiUrl + '/product', method).then((resp) => {
-                console.log(resp.data);
                 if(self.p._id){
-                    self.list[self.list.findIndex(e=>e._id === self.p._id)] = resp.data;
+                    self.list[self.list.findIndex(e=>e._id === self.p._id)] = self.p;
                 }else{                    
                     self.list.push(resp.data);
                 }
                 self.isAdd = false;
             }).catch((err) => {
-                console.error(err);
+                alert(err.data.message);
             });
-        };
+        }
+        this.viewImage = (imgs, index) => {
+            self.images = {
+                imgs: imgs,
+                index: index
+            };
+            $mdDialog.show({
+                template: `<md-dialog aria-label="Image dialog">
+             <md-dialog-content>
+               <div style="position: relative; padding: 0px; margin: 0px;">
+                <img image-src="images.imgs[images.index]" width="100%" ng-click="next()" watch="true" />
+                <div layout-padding style="position: absolute; bottom: 0px; right: 0px; color: white; text-shadow: 1px 1px 1px #000; font-size: 0.8em;">{{images.index+1}}/{{images.imgs.length}}</div>
+               </div>
+             </md-dialog-content>             
+           </md-dialog>`,
+                parent: angular.element(document.body),
+                locals: {
+                    images: self.images
+                },
+                clickOutsideToClose: true,
+                escapeToClose: true,
+                controller: ($scope, $mdDialog, images) => {
+                    $scope.images = images;                    
+                    $scope.next = () => {
+                        if(++$scope.images.index > $scope.images.imgs.length-1){
+                            $scope.images.index = 0;
+                        }
+                    }
+                }
+            });
+        }
     }]
 });

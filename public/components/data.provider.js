@@ -20,8 +20,8 @@ app
         };
     }]).factory('Transaction', ['$http', '$rootScope', '$config', '$q', function ($http, $rootScope, $config, $q) {
         return {
-            find: () => {
-                return $http.get(`${$config.apiUrl}/transaction`);
+            find: (filter) => {
+                return $http.get(`${$config.apiUrl}/transaction`, {params: filter});
             },
             update: (item) => {
                 return $http.put(`${$config.apiUrl}/transaction/${item._id}`, item);

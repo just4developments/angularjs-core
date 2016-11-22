@@ -51,7 +51,7 @@ app.component('uploadFile', {
     fileModel: '=',
     name: '@'
   },
-  controller: ['$element', '$attrs', '$scope', '$parse', function ($element, $attrs, $scope, $parse) {
+  controller: ['$element', '$attrs', '$scope', '$parse', '$window', function ($element, $attrs, $scope, $parse, $window) {
     require('./upload.scss');
     var self = this; 
     $element.on('change', function (e) {
@@ -67,5 +67,8 @@ app.component('uploadFile', {
       };
       reader.readAsDataURL(selectedFile);
     });
+    this.open = () => {
+      $window.document.querySelector('#'+self.name).click();
+    }
   }]
 });

@@ -8,12 +8,15 @@ transaction {
     .card1 .sale-label {
         background: green;
     }
+    .status-1,
     .status-1 .md-text {
         color: red !important;
     }
+    .status2,
     .status2 .md-text {
         color: orange !important;
     }
+    .status1,
     .status1 .md-text {
         color: green !important;
     }

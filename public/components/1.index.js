@@ -14,7 +14,7 @@ window.app = angular.module('myApp', [
 	}])
 	.run(['$rootScope', '$location', '$config', 'Category', '$window', function ($rootScope, $location, $config, Category, $window) {
 		$rootScope.config = $config;
-		$rootScope.isAuth = $window.localStorage.isAuth || true;
+		$rootScope.isAuth = $window.localStorage.isAuth;
 		// $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
 		//   $rootScope.title = current.$$route.title;
 		//   $rootScope.navicon = current.$$route.originalPath;

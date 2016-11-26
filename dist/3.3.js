@@ -344,8 +344,8 @@ webpackJsonp([3],[
 	'use strict';
 
 	window.app = angular.module('myApp', ['ngMaterial', 'ngComponentRouter']).constant('$config', {
-		// apiUrl: 'http://api.nanacloset.com'
-		apiUrl: 'http://localhost:9000'
+		apiUrl: 'http://api.nanacloset.com'
+		// apiUrl: 'http://localhost:9000'
 	}).value('$routerRootComponent', 'myApp').config(['$locationProvider', '$config', '$httpProvider', function ($locationProvider, $config, $httpProvider) {
 		//$locationProvider.hashPrefix('!');    
 		// $httpProvider.interceptors.push('AuthInterceptor');

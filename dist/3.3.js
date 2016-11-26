@@ -1440,7 +1440,7 @@ webpackJsonp([3],[
 
 
 	// module
-	exports.push([module.id, "home .elipsis2 {\n  overflow: hidden;\n  display: -webkit-box;\n  -webkit-line-clamp: 2;\n  -webkit-box-orient: vertical; }\n\nhome .tabf {\n  margin: 0px;\n  padding: 0px;\n  list-style-type: none;\n  height: 30px;\n  overflow: hidden;\n  margin: 30px 0px; }\n\nhome .tabf li.active,\nhome .tabf li:hover {\n  color: #02b8e3; }\n\nhome .tabf li.active hr,\nhome .tabf li:hover hr {\n  bottom: -3px; }\n\nhome .tabf hr {\n  position: absolute;\n  bottom: -16px;\n  left: 16px;\n  width: 60%;\n  -webkit-transition: 0.3s;\n  -o-transition: 0.3s;\n  transition: 0.3s; }\n\nhome .tabf li {\n  position: relative;\n  color: #4f4e4f;\n  cursor: pointer;\n  display: inline;\n  padding: 8px 16px;\n  font-size: 1.2em;\n  -webkit-transition: 0.3s;\n  -o-transition: 0.3s;\n  transition: 0.3s;\n  outline: none; }\n", ""]);
+	exports.push([module.id, "home .elipsis2 {\n  overflow: hidden;\n  display: -webkit-box;\n  -webkit-line-clamp: 2;\n  -webkit-box-orient: vertical; }\n\nhome .tabf {\n  margin: 0px;\n  padding: 0px;\n  list-style-type: none;\n  height: 30px;\n  overflow: hidden;\n  margin: 30px 0px; }\n\nhome .tabf li.active,\nhome .tabf li:hover {\n  color: #02b8e3; }\n\nhome .tabf li.active hr,\nhome .tabf li:hover hr {\n  bottom: -3px; }\n\nhome .tabf hr {\n  position: absolute;\n  bottom: -16px;\n  left: 16px;\n  width: 126px;\n  -webkit-transition: 0.3s;\n  -o-transition: 0.3s;\n  transition: 0.3s; }\n\nhome .tabf li {\n  position: relative;\n  color: #4f4e4f;\n  cursor: pointer;\n  display: inline;\n  padding: 8px 16px;\n  font-size: 1.2em;\n  -webkit-transition: 0.3s;\n  -o-transition: 0.3s;\n  transition: 0.3s;\n  outline: none; }\n", ""]);
 
 	// exports
 

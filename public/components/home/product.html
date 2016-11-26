@@ -20,12 +20,12 @@
             </div>
             <div class="des" style="position: absolute; top: 0px; left: 0px;" ng-class="{'ng-hide-add': 1 === sizeIndex, 'ng-hide-remove': 1 !== sizeIndex}">
                 <md-card-content ng-show="!$ctrl.isSell">
-                    <img image-src="item.images[0]" width="32" style="float: left; border-radius: 100%; margin: 8px 8px 0px 0px;" />
+                    <img image-src="item.images[0]" size="'thumb'" width="32" style="float: left; border-radius: 100%; margin: 8px 8px 0px 0px;" />
                     <div class="card-name">{{item.name}}</div>
                     <div class="card-des">{{item.des}}</div>
                     <div class="card-des" ng-if="$root.isAuth">Các size còn:<br/> 
                         <span class="card-name" ng-repeat="s in item.sizes" title="Remain {{s.quantity}}/{{s.quantity0}}" ng-if="s.quantity > 0">
-                            <a href="#" ng-if=" && s.quantity > 0" class="card-name" ng-click="$ctrl.addSell(item, $index)">{{s.size}}</a>
+                            <a href="#" ng-if="s.quantity > 0" class="card-name" ng-click="$ctrl.addSell(item, $index)">{{s.size}}</a>
                         </span>
                     </div>
                 </md-card-content>

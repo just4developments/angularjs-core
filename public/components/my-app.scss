@@ -15,11 +15,11 @@ md-content {
     cursor: pointer;
 }
 
-.contact .info div:nth-child(n+2){
+.contact .info div:nth-child(n+2) {
     font-size: 0.8em;
 }
 
-.contact .info div:nth-child(n+2) md-icon{
+.contact .info div:nth-child(n+2) md-icon {
     font-size: 1em;
 }
 
@@ -36,15 +36,18 @@ md-content {
     height: auto;
     margin: 1px 4px;
 }
+
 .contact .info a {
     text-decoration: none;
-    font-size: 1em;    
+    font-size: 1em;
     color: #555;
 }
+
 .contact:hover .info {
     right: 4px;
 }
-.contact .info {    
+
+.contact .info {
     position: absolute;
     right: -350px;
     bottom: -65px;
@@ -56,9 +59,11 @@ md-content {
     -webkit-transition: top 0.3s;
     transition: right 0.3s;
 }
+
 .contact img:hover {
     box-shadow: none;
 }
+
 .contact img {
     box-shadow: 1px 1px 1px #333;
     width: 60px;
@@ -66,7 +71,7 @@ md-content {
     right: 8px;
     top: 0px;
     z-index: 1;
-    border-radius: 100%;    
+    border-radius: 100%;
 }
 
 my-app {
@@ -156,10 +161,6 @@ my-app {
     footer li {
         overflow: hidden;
     }
-    footer a:hover {
-        color: #02b8e3;
-        left: 0px;
-    }
     footer ul {
         padding: 0px 8px;
         margin: 0px;
@@ -167,16 +168,23 @@ my-app {
     footer {
         margin-top: 50px;
         font-size: 0.9em;
-        color: #969494;
-        padding: 8px;
+        padding: 16px 8px;
+        color: #fab8d1;
+        text-shadow: 0px 0px 1px #78173c;
+        background: #cf3871;
+        box-shadow: -1px -2px 3px #5d0c2b;
+    }
+    footer img {
+        border: solid 1px #9b1648;
+        border-radius: 4px;
     }
     footer md-icon {
-        color: #02b8e3;
+        color: #efefef;
     }
     footer h4 {
         font-size: 1.2em;
         font-weight: 400;
-        color: #4f4e4f;
+        color: white;
         margin: 16px 0px;
     }
     footer .padding-more a {
@@ -188,15 +196,20 @@ my-app {
     footer li {
         padding: 1px 0px;
     }
+    footer a:hover {
+        color: #65092c;
+        left: 0px;
+    }
     footer a {
         font-size: 0.9em;
         position: relative;
         left: -8px;
         text-decoration: none;
-        color: #969494;
-        -webkit-transition: 0.3s;
-        -o-transition: 0.3s;
-        transition: 0.3s;
+        color: #fab8d1;
+        text-shadow: 0px 0px 1px #78173c;
+        -webkit-transition: 0.2s;
+        -o-transition: 0.2s;
+        transition: 0.2s;
     }
     .search {
         border: solid 1px #ccc;

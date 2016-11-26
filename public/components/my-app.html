@@ -32,9 +32,7 @@
             <li ng-class="{'active' : $index == $ctrl.activeIndex}" ng-repeat="c in $ctrl.categories" ng-click="$ctrl.goTo(c._id, $index)">{{c.name}}</li>
         </ul>    
         <div class="tab-content">
-            <div class="banner" layout-padding hide-xs>
-                <img src="../assets/images/banner.jpg" width="100%" />
-            </div>
+            <banner></banner>
             <ng-outlet></ng-outlet>            
         </div>    
     </md-content>    

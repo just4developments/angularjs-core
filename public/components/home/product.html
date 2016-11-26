@@ -23,10 +23,9 @@
                     <img image-src="item.images[0]" width="32" style="float: left; border-radius: 100%; margin: 8px 8px 0px 0px;" />
                     <div class="card-name">{{item.name}}</div>
                     <div class="card-des">{{item.des}}</div>
-                    <div class="card-des" ng-if="item.sizes">Các size còn:<br/> 
+                    <div class="card-des" ng-if="$root.isAuth">Các size còn:<br/> 
                         <span class="card-name" ng-repeat="s in item.sizes" title="Remain {{s.quantity}}/{{s.quantity0}}" ng-if="s.quantity > 0">
-                            <a href="#" ng-if="$root.isAuth && s.quantity > 0" class="card-name" ng-click="$ctrl.addSell(item, $index)">{{s.size}}</a>
-                            <span ng-if="!$root.isAuth || s.quantity == 0">{{s.size}}</span>
+                            <a href="#" ng-if=" && s.quantity > 0" class="card-name" ng-click="$ctrl.addSell(item, $index)">{{s.size}}</a>
                         </span>
                     </div>
                 </md-card-content>

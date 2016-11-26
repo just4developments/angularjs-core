@@ -11,6 +11,10 @@ md-content {
     background-color: transparent;
 }
 
+md-dialog {
+    max-width: 90%;
+    max-height: 98%;
+}
 .contact {
     cursor: pointer;
 }
@@ -109,7 +113,7 @@ my-app {
         padding-left: 24px;
     }
     .tab li:nth-child(1) {
-        background-color: #7e57cc;
+        background-color: #d92469;        
     }
     .tab li:nth-child(2) {
         background-color: #02b8e3;
@@ -121,25 +125,33 @@ my-app {
         background-color: #fe9400;
     }
     .tab li:nth-child(5) {
-        background-color: #d92469;
+        background-color: #7e57cc;
     }
     .tab li:nth-child(6) {
         background-color: #f8c40d;
     }
     .tab li:hover {
-        padding: 30px 24px;
+        padding: 22px 24px;
     }
     .tab li.active {
-        padding: 35px 24px;
+        padding: 24px 24px;
+        font-size: 1.1em;
+        font-weight:bold;
+    }
+    .tab li:first-child{
+        border-radius: 4px 0px 0px 0px;
+    }
+    .tab li:last-child {
+        border-radius: 0px 4px 0px 0px;
     }
     .tab li {
         color: white;
         list-style: none;
         display: inline;
-        padding: 24px 24px;
-        font-size: 1.1em;
-        border-radius: 4px 4px 0px 0px;
+        padding: 20px 24px;
+        font-size: 1em;
         cursor: pointer;
+        outline: none;
     }
     .tab-content {
         position: relative;
@@ -162,7 +174,7 @@ my-app {
         overflow: hidden;
     }
     footer ul {
-        padding: 0px 8px;
+        padding: 0px 10px;
         margin: 0px;
     }
     footer {
@@ -187,8 +199,11 @@ my-app {
         color: white;
         margin: 16px 0px;
     }
+    footer .padding-more md-icon {
+        font-size: 20px;
+    }
     footer .padding-more a {
-        margin-left: 20px;
+        margin-left: 12px;
     }
     footer .padding-more li {
         padding: 2px 0px;

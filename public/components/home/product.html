@@ -75,22 +75,22 @@
                 </div>
                 <upload-file file-model="$ctrl.p.images" name="images" img-src="$ctrl.p.images ? $ctrl.p.images[0] : undefined"></upload-file>
                 <md-switch class="md-primary" md-no-ink aria-label="Special" ng-model="$ctrl.p.special">
-                    Special item ?
+                    Hàng bán chạy ?
                 </md-switch>
                 <md-input-container>
-                    <label>Name</label>
+                    <label>Tên sản phẩm</label>
                     <input ng-model="$ctrl.p.name">
                 </md-input-container>
                 <md-input-container class="md-block" ng-init="$ctrl.p.sizes=[{size: '', quantity: ''}];">
-                    <label>Des</label>
+                    <label>Mô tả sản phẩm</label>
                     <textarea ng-model="$ctrl.p.des" md-maxlength="300" rows="2"></textarea>
                 </md-input-container>                
                 <md-input-container class="md-block">
-                    <label>Money</label>
+                    <label>Tiền</label>
                     <input ng-model="$ctrl.p.money" type="number" placeholder="$">
                 </md-input-container>
-                <md-input-container>
-                    <label>Category</label>
+                <md-input-container style="width: 100%" class="md-block">
+                    <label>Nhóm buôn bán</label>
                     <md-select ng-model="$ctrl.p.category_id" ng-if="$ctrl.categories">
                         <md-option ng-repeat="c in $ctrl.categories" ng-value="c._id">
                             {{c.name}}
@@ -99,7 +99,7 @@
                 </md-input-container>
                 <div layout="row">
                     <md-input-container class="md-block" flex="80">
-                        <label>Size</label>
+                        <label>Kích cỡ hiển thị</label>
                         <input ng-model="$ctrl.p.size" type="text" placeholder="Size desc">
                     </md-input-container>
                     <md-button class="md-icon-button" aria-label="Add" ng-click="$ctrl.p.sizes.push({size: '', quantity: ''});">
@@ -108,11 +108,11 @@
                 </div>
                 <div layout="row" ng-repeat="s in $ctrl.p.sizes" ng-if="$ctrl.p && $ctrl.p.sizes">
                     <md-input-container class="md-block">
-                        <label>Size</label>
+                        <label>Kích cỡ</label>
                         <input ng-model="s.size" type="text" placeholder="S">
                     </md-input-container>
                     <md-input-container class="md-block">
-                        <label>Quantity</label>
+                        <label>Số lượng</label>
                         <input ng-model="s.quantity" type="number" placeholder="0">
                         <md-icon class="button" ng-click="$ctrl.p.sizes.splice($index, 1);">remove</md-icon>
                     </md-input-container>

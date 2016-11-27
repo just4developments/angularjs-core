@@ -30,27 +30,39 @@ app
     return {
       scope: {
         backgroundSrc: "=",
-        size: "<"
+        size: "<",
+        watch: "<"
       },
       link: function (scope, element, attributes) {
-        var backgroundSrc = scope.backgroundSrc;
-        if(typeof scope.backgroundSrc !== 'string') return;
-        for (var i = 0; i < element.length; i++) {          
-          if (backgroundSrc.startsWith("http://") || backgroundSrc.startsWith("https://")) {
-            element[i].style.backgroundImage = 'url(' + backgroundSrc + '), url(' + require('../assets/images/no-photo.png') + ')';
-          } else {
-            if (backgroundSrc) {
-              if (scope.size) {
-                var ii = backgroundSrc.lastIndexOf('.');
-                backgroundSrc = backgroundSrc.substr(0, ii) + '.' + scope.size + backgroundSrc.substr(ii);
-                element[i].style.backgroundImage = 'url(' + $config.apiUrl + backgroundSrc + '), url(' + require('../assets/images/no-photo.png') + ')';
-              } else {
-                element[i].style.backgroundImage = 'url(' + $config.apiUrl + backgroundSrc + ')';
-              }
+        var handle = () => {
+          console.log('handle');
+          var backgroundSrc = scope.backgroundSrc;
+          if(typeof scope.backgroundSrc !== 'string') return;
+          for (var i = 0; i < element.length; i++) {          
+            if (backgroundSrc.startsWith("http://") || backgroundSrc.startsWith("https://")) {
+              element[i].style.backgroundImage = 'url(' + backgroundSrc + '), url(' + require('../assets/images/no-photo.png') + ')';
             } else {
-              element[i].style.backgroundImage += 'url(' + require('../assets/images/no-photo.png') + ')';
+              if (backgroundSrc) {
+                if (scope.size) {
+                  var ii = backgroundSrc.lastIndexOf('.');
+                  backgroundSrc = backgroundSrc.substr(0, ii) + '.' + scope.size + backgroundSrc.substr(ii);
+                  element[i].style.backgroundImage = 'url(' + $config.apiUrl + backgroundSrc + '), url(' + require('../assets/images/no-photo.png') + ')';
+                } else {
+                  element[i].style.backgroundImage = 'url(' + $config.apiUrl + backgroundSrc + ')';
+                }
+              } else {
+                element[i].style.backgroundImage += 'url(' + require('../assets/images/no-photo.png') + ')';
+              }
+              console.log(element[i].style.backgroundImage);
             }
           }
+        };
+        if(scope.watch){
+          scope.$watch('backgroundSrc', function(){
+            handle(); 
+          });
+        }else{
+          handle();
         }
       }
     };

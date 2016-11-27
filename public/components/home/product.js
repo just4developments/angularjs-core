@@ -88,19 +88,21 @@ app.component('product', {
             });
         }
         this.save = () => {
+            self.isAdd = false;
             var method = self.p._id ? 'PUT' : 'POST';
             var p0 = clone(self.p, ['images']);
             p0.images = self.p.images;
             if(p0.sizes) p0.sizes = angular.toJson(p0.sizes);
             Upload.uploadFileToUrl(p0, $config.apiUrl + '/product', method).then((resp) => {
                 if(self.p._id){
+                    self.p.images = resp.data.images;
                     self.list[self.list.findIndex(e=>e._id === self.p._id)] = self.p;
                 }else{                    
                     self.list.push(resp.data);
-                }
-                self.isAdd = false;
+                }                              
             }).catch((err) => {
                 alert(err.data.message);
+                self.isAdd = true;
             });
         }
         this.viewImage = (imgs, index) => {

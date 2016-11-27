@@ -1,4 +1,10 @@
 product {
+    .card-item-wrap .img {
+        cursor: pointer;
+    }
+    .card-item-wrap:hover .img {
+        background-size: 110%;
+    }
     md-input-container {
         margin: 8px 0px;
     }

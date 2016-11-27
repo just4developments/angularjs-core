@@ -437,27 +437,39 @@ webpackJsonp([3],[
 	  return {
 	    scope: {
 	      backgroundSrc: "=",
-	      size: "<"
+	      size: "<",
+	      watch: "<"
 	    },
 	    link: function link(scope, element, attributes) {
-	      var backgroundSrc = scope.backgroundSrc;
-	      if (typeof scope.backgroundSrc !== 'string') return;
-	      for (var i = 0; i < element.length; i++) {
-	        if (backgroundSrc.startsWith("http://") || backgroundSrc.startsWith("https://")) {
-	          element[i].style.backgroundImage = 'url(' + backgroundSrc + '), url(' + __webpack_require__(36) + ')';
-	        } else {
-	          if (backgroundSrc) {
-	            if (scope.size) {
-	              var ii = backgroundSrc.lastIndexOf('.');
-	              backgroundSrc = backgroundSrc.substr(0, ii) + '.' + scope.size + backgroundSrc.substr(ii);
-	              element[i].style.backgroundImage = 'url(' + $config.apiUrl + backgroundSrc + '), url(' + __webpack_require__(36) + ')';
-	            } else {
-	              element[i].style.backgroundImage = 'url(' + $config.apiUrl + backgroundSrc + ')';
-	            }
+	      var handle = function handle() {
+	        console.log('handle');
+	        var backgroundSrc = scope.backgroundSrc;
+	        if (typeof scope.backgroundSrc !== 'string') return;
+	        for (var i = 0; i < element.length; i++) {
+	          if (backgroundSrc.startsWith("http://") || backgroundSrc.startsWith("https://")) {
+	            element[i].style.backgroundImage = 'url(' + backgroundSrc + '), url(' + __webpack_require__(36) + ')';
 	          } else {
-	            element[i].style.backgroundImage += 'url(' + __webpack_require__(36) + ')';
+	            if (backgroundSrc) {
+	              if (scope.size) {
+	                var ii = backgroundSrc.lastIndexOf('.');
+	                backgroundSrc = backgroundSrc.substr(0, ii) + '.' + scope.size + backgroundSrc.substr(ii);
+	                element[i].style.backgroundImage = 'url(' + $config.apiUrl + backgroundSrc + '), url(' + __webpack_require__(36) + ')';
+	              } else {
+	                element[i].style.backgroundImage = 'url(' + $config.apiUrl + backgroundSrc + ')';
+	              }
+	            } else {
+	              element[i].style.backgroundImage += 'url(' + __webpack_require__(36) + ')';
+	            }
+	            console.log(element[i].style.backgroundImage);
 	          }
 	        }
+	      };
+	      if (scope.watch) {
+	        scope.$watch('backgroundSrc', function () {
+	          handle();
+	        });
+	      } else {
+	        handle();
 	      }
 	    }
 	  };
@@ -1038,7 +1050,7 @@ webpackJsonp([3],[
 /* 42 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = "<section layout=\"row\" flex>\r\n    <md-sidenav class=\"md-sidenav-left nana-theme\" md-component-id=\"left\" md-whiteframe=\"4\">\r\n        <md-toolbar>\r\n        <h1 class=\"md-toolbar-tools\">Nana closet</h1>\r\n        </md-toolbar>\r\n        <md-content>\r\n            <md-list>\r\n            <md-list-item ng-repeat=\"c in $ctrl.categories\" ng-click=\"$ctrl.closeGoTo(c._id + '/moi-nhat', $index)\">\r\n                <p> {{ c.name }} </p>\r\n                <md-icon class=\"md-secondary\" ng-show=\"$index == $ctrl.activeIndex\">done</md-icon>\r\n            </md-list-item>\r\n            <md-list-item ng-click=\"$ctrl.closeGoTo('transaction', $ctrl.categories.length)\">\r\n                <p> Giao dịch </p>\r\n                <md-icon class=\"md-secondary\" ng-show=\"$ctrl.categories.length == $ctrl.activeIndex\">done</md-icon>\r\n            </md-list-item>\r\n            </md-list>\r\n        </md-content>\r\n    </md-sidenav>\r\n    <md-content flex layout-padding class=\"main\">\r\n        <md-button ng-click=\"$ctrl.openMenu()\" class=\"md-icon-button icon-menu\" hide-sm hide-md hide-lg><md-icon>menu</md-icon></md-button>\r\n        <header layout=\"row\" layout-align=\"center center\" layout-wrap>\r\n            <div flex-xs=\"100\" flex-sm=\"40\" flex=\"30\">\r\n                <img src=\"" + __webpack_require__(43) + "\" width=\"100%\" />\r\n            </div>\r\n            <div flex-xs=\"100\" flex class=\"search\" layout=\"row\" align=\"right\" layout-align=\"center center\">\r\n                <input type=\"search\" flex />\r\n                <md-icon>search</md-icon flex=\"10\">\r\n            </div>\r\n            </div>\r\n        </header>\r\n        <ul class=\"tab\" hide-xs>\r\n            <li ng-class=\"{'active' : $index == $ctrl.activeIndex}\" ng-repeat=\"c in $ctrl.categories\" ng-click=\"$ctrl.goTo(c._id, $index)\">{{c.name}}</li>\r\n        </ul>    \r\n        <div class=\"tab-content\">\r\n            <banner></banner>\r\n            <ng-outlet></ng-outlet>            \r\n        </div>    \r\n    </md-content>    \r\n</section>\r\n<footer>\r\n    <div layout=\"row\" layout-wrap class=\"main\">\r\n        <section flex-xs=\"100\" flex-sm=\"50\" flex=\"30\">\r\n            <h4><md-icon>shopping_basket</md-icon> Chính sách bán hàng</h4>\r\n            <ul>\r\n                <li><a href=\"/policy\"><b>- Hướng dẫn mua hàng của nanacloset</b></a></li>\r\n                <li><a href=\"/policy\"><b>- Quy định đổi trả hàng</b></a></li>\r\n                <li><a href=\"/policy\"><b>- Cách thức liên hệ mua hàng, tư vấn</b></a></li>\r\n            </ul>\r\n            <h4><md-icon>menu</md-icon> Danh mục dịch vụ</h4>\r\n            <ul>\r\n                <li ng-repeat=\"c in $ctrl.categories\"><a href=\"#\" ng-click=\"$ctrl.closeGoTo(c._id, $index)\"> - {{c.name}}</a></li>\r\n            </ul>\r\n        </section>\r\n        <section flex flex-xs=\"100\">\r\n            <h4><md-icon>info_outline</md-icon> Thông tin về shop</h4>\r\n            <ul class=\"padding-more\">\r\n                <li><md-icon>location_on</md-icon> Phố Lương Yên, P.Bạch Đằng, Q.Hai Bà Trưng, Hà Nội</li>\r\n                <li><md-icon>phone</md-icon><a href=\"tel:0962925790\">0962.925.790</a></li>\r\n                <li><md-icon>email</md-icon><a href=\"mailto:www.nanacloset@gmail.com\">www.nanacloset@gmail.com</a></li>\r\n                <li><md-icon>pageview</md-icon><a href=\"https://www.facebook.com/Menana198/\" target=\"_blank\">Fanpage Menana198</a></li>\r\n                <li><md-icon>inbox</md-icon><a href=\"https://m.facebook.com/messages/read/?fbid=1722718674613640\" target=\"_blank\">Inbox Facebook</a></li>\r\n            </ul>\r\n        </section>\r\n        <section flex-xs=\"100\" flex-sm=\"50\" flex=\"30\">\r\n            <h4><md-icon>directions</md-icon> Bản đồ tới shop</h4>\r\n            <img src=\"" + __webpack_require__(44) + "\" width=\"100%\" onclick=\"window.open('https://goo.gl/maps/HGP1AVYxMpJ2', '_blank');\" style=\"cursor: pointer\"/>\r\n        </section>\r\n    </div>\r\n</footer>\r\n</div>\r\n\r\n<div style=\"position: fixed; bottom: 8px; right: 8px; z-index: 1; width: 60px; height: 60px; width: 100%;\" class=\"contact\">\r\n    <div style=\"position: relative;\" align=\"right\">\r\n        <div class=\"info\" align=\"left\">\r\n            <div><a href=\"tel:0962925790\"><md-icon>phone</md-icon> 0962.925.790</a></div>\r\n            <div><md-icon>email</md-icon><a href=\"mailto:www.nanacloset@gmail.com\">www.nanacloset@gmail.com</a></div>\r\n            <div><md-icon>pageview</md-icon><a href=\"https://www.facebook.com/Menana198/\" target=\"_blank\">Fanpage Menana198</a></div>\r\n            <div><md-icon>inbox</md-icon><a href=\"https://m.facebook.com/messages/read/?fbid=1722718674613640\" target=\"_blank\">Inbox Facebook</a></div>\r\n        </div>\r\n        <img src=\"" + __webpack_require__(45) + "\" width=\"100%\" />\r\n    </div>    \r\n</div>";
+	module.exports = "<section layout=\"row\" flex>\r\n    <md-sidenav class=\"md-sidenav-left nana-theme\" md-component-id=\"left\" md-whiteframe=\"4\">\r\n        <md-toolbar>\r\n        <h1 class=\"md-toolbar-tools\">Nana closet</h1>\r\n        </md-toolbar>\r\n        <md-content>\r\n            <md-list>\r\n            <md-list-item ng-repeat=\"c in $ctrl.categories\" ng-click=\"$ctrl.closeGoTo(c._id + '/moi-nhat', $index)\">\r\n                <p> {{ c.name }} </p>\r\n                <md-icon class=\"md-secondary\" ng-show=\"$index == $ctrl.activeIndex\">done</md-icon>\r\n            </md-list-item>\r\n            <md-list-item ng-click=\"$ctrl.closeGoTo('transaction', $ctrl.categories.length)\">\r\n                <p> Giao dịch </p>\r\n                <md-icon class=\"md-secondary\" ng-show=\"$ctrl.categories.length == $ctrl.activeIndex\">done</md-icon>\r\n            </md-list-item>\r\n            </md-list>\r\n        </md-content>\r\n    </md-sidenav>\r\n    <md-content flex layout-padding class=\"main\">\r\n        <md-button ng-click=\"$ctrl.openMenu()\" class=\"md-icon-button icon-menu\" hide-sm hide-md hide-lg><md-icon>menu</md-icon></md-button>\r\n        <header layout=\"row\" layout-align=\"center center\" layout-wrap>\r\n            <div flex-xs=\"100\" flex-sm=\"40\" flex=\"30\">\r\n                <img src=\"" + __webpack_require__(43) + "\" width=\"100%\" />\r\n            </div>\r\n            <div flex-xs=\"100\" flex class=\"search\" layout=\"row\" align=\"right\" layout-align=\"center center\">\r\n                <input type=\"search\" flex />\r\n                <md-icon>search</md-icon flex=\"10\">\r\n            </div>\r\n            </div>\r\n        </header>\r\n        <ul class=\"tab\" hide-xs>\r\n            <li ng-class=\"{'active' : $index == $ctrl.activeIndex}\" ng-repeat=\"c in $ctrl.categories\" ng-click=\"$ctrl.goTo(c._id, $index)\">{{c.name}}</li>\r\n        </ul>    \r\n        <div class=\"tab-content\">\r\n            <banner></banner>\r\n            <ng-outlet></ng-outlet>            \r\n        </div>    \r\n    </md-content>    \r\n</section>\r\n<footer>\r\n    <div layout=\"row\" layout-wrap class=\"main\">\r\n        <section flex-xs=\"100\" flex-sm=\"50\" flex=\"30\">\r\n            <h4><md-icon>shopping_basket</md-icon> Chính sách bán hàng</h4>\r\n            <ul>\r\n                <li><a href=\"/policy\"><b>- Hướng dẫn mua hàng của nanacloset</b></a></li>\r\n                <li><a href=\"/policy\"><b>- Quy định đổi trả hàng</b></a></li>\r\n                <li><a href=\"/policy\"><b>- Cách thức liên hệ mua hàng, tư vấn</b></a></li>\r\n            </ul>\r\n            <h4><md-icon>menu</md-icon> Danh mục dịch vụ</h4>\r\n            <ul>\r\n                <li ng-repeat=\"c in $ctrl.categories\"><a href=\"#\" ng-click=\"$ctrl.closeGoTo(c._id, $index)\"> - {{c.name}}</a></li>\r\n            </ul>\r\n        </section>\r\n        <section flex flex-xs=\"100\" flex-sm=\"50\">\r\n            <h4><md-icon>info_outline</md-icon> Thông tin về shop</h4>\r\n            <ul class=\"padding-more\">\r\n                <li><md-icon>location_on</md-icon> Phố Lương Yên, P.Bạch Đằng, Q.Hai Bà Trưng, Hà Nội</li>\r\n                <li><md-icon>phone</md-icon><a href=\"tel:0962925790\">0962.925.790</a></li>\r\n                <li><md-icon>email</md-icon><a href=\"mailto:www.nanacloset@gmail.com\">www.nanacloset@gmail.com</a></li>\r\n                <li><md-icon>pageview</md-icon><a href=\"https://www.facebook.com/Menana198/\" target=\"_blank\">Fanpage Menana198</a></li>\r\n                <li><md-icon>inbox</md-icon><a href=\"https://m.facebook.com/messages/read/?fbid=1722718674613640\" target=\"_blank\">Inbox Facebook</a></li>\r\n            </ul>\r\n        </section>\r\n        <section flex-xs=\"100\" flex-sm=\"50\" flex=\"30\">\r\n            <h4><md-icon>directions</md-icon> Bản đồ tới shop</h4>\r\n            <img src=\"" + __webpack_require__(44) + "\" width=\"100%\" onclick=\"window.open('https://goo.gl/maps/HGP1AVYxMpJ2', '_blank');\" style=\"cursor: pointer\"/>\r\n        </section>\r\n    </div>\r\n</footer>\r\n</div>\r\n\r\n<div style=\"position: fixed; bottom: 8px; right: 8px; z-index: 1; width: 60px; height: 60px; width: 100%;\" class=\"contact\">\r\n    <div style=\"position: relative;\" align=\"right\">\r\n        <div class=\"info\" align=\"left\">\r\n            <div><a href=\"tel:0962925790\"><md-icon>phone</md-icon> 0962.925.790</a></div>\r\n            <div><md-icon>email</md-icon><a href=\"mailto:www.nanacloset@gmail.com\">www.nanacloset@gmail.com</a></div>\r\n            <div><md-icon>pageview</md-icon><a href=\"https://www.facebook.com/Menana198/\" target=\"_blank\">Fanpage Menana198</a></div>\r\n            <div><md-icon>inbox</md-icon><a href=\"https://m.facebook.com/messages/read/?fbid=1722718674613640\" target=\"_blank\">Inbox Facebook</a></div>\r\n        </div>\r\n        <img src=\"" + __webpack_require__(45) + "\" width=\"100%\" />\r\n    </div>    \r\n</div>";
 
 /***/ },
 /* 43 */
@@ -1546,21 +1558,23 @@ webpackJsonp([3],[
 	            });
 	        };
 	        this.save = function () {
+	            self.isAdd = false;
 	            var method = self.p._id ? 'PUT' : 'POST';
 	            var p0 = clone(self.p, ['images']);
 	            p0.images = self.p.images;
 	            if (p0.sizes) p0.sizes = angular.toJson(p0.sizes);
 	            Upload.uploadFileToUrl(p0, $config.apiUrl + '/product', method).then(function (resp) {
 	                if (self.p._id) {
+	                    self.p.images = resp.data.images;
 	                    self.list[self.list.findIndex(function (e) {
 	                        return e._id === self.p._id;
 	                    })] = self.p;
 	                } else {
 	                    self.list.push(resp.data);
 	                }
-	                self.isAdd = false;
 	            }).catch(function (err) {
 	                alert(err.data.message);
+	                self.isAdd = true;
 	            });
 	        };
 	        this.viewImage = function (imgs, index) {
@@ -1630,7 +1644,7 @@ webpackJsonp([3],[
 
 
 	// module
-	exports.push([module.id, "product md-input-container {\n  margin: 8px 0px; }\n\nproduct .product-list {\n  min-height: 500px; }\n\nproduct .sale-box {\n  position: absolute;\n  top: -3px;\n  overflow: hidden;\n  height: 85px;\n  width: 85px;\n  text-align: center;\n  z-index: 1;\n  right: -3px; }\n\nproduct .sale-label {\n  background: #8dca00;\n  color: white;\n  display: block;\n  font: 700 14px/12px Arial, Helvetica, sans-serif;\n  padding: 9px 0 7px;\n  perspective: 1px;\n  position: absolute;\n  right: -33px;\n  text-align: center;\n  text-transform: uppercase;\n  top: 16px;\n  width: 130px;\n  z-index: 1;\n  -webkit-transform: rotate(45deg);\n  -ms-transform: rotate(45deg);\n  -o-transform: rotate(45deg);\n  transform: rotate(45deg);\n  box-shadow: 1px 1px 1px #7d7c7c; }\n\nproduct .card-item-wrap {\n  position: relative;\n  /*padding: 8px;*/ }\n\nproduct .card-item {\n  position: relative;\n  border: solid 1px #ccc; }\n\nproduct .des .card-des {\n  font-size: 1em; }\n\nproduct .des .card-name {\n  font-size: 1.1em; }\n\nproduct .card-des {\n  padding: 8px;\n  color: #4f4e4f; }\n\nproduct .card-name {\n  padding: 8px;\n  color: #02b8e3; }\n\nproduct .card-money {\n  padding: 8px;\n  font-size: 1.2em;\n  text-align: center;\n  color: #4f4e4f; }\n\nproduct .card-image {\n  position: relative; }\n\nproduct .card-image .img {\n  width: 100%;\n  height: 200px;\n  background-position: center center;\n  background-size: 100%;\n  background-repeat: no-repeat; }\n\nproduct .card-image .img:nth-child(n+2) {\n  position: absolute;\n  left: 0px;\n  top: 0px; }\n\nproduct md-radio-button {\n  margin: 0px !important; }\n\nproduct .nav {\n  position: relative; }\n\nproduct .nav md-radio-group {\n  top: -24px;\n  right: 0px;\n  position: absolute; }\n\nproduct md-card-content h3 {\n  margin: 0px; }\n\nproduct md-card-content {\n  padding: 8px; }\n\nproduct .ng-hide-add,\nproduct .ng-hide-remove {\n  -webkit-transition: 300ms cubic-bezier(0.25, 0.25, 0.75, 0.75) all;\n  -moz-transition: 300ms cubic-bezier(0.25, 0.25, 0.75, 0.75) all;\n  -ms-transition: 300ms cubic-bezier(0.25, 0.25, 0.75, 0.75) all;\n  -o-transition: 300ms cubic-bezier(0.25, 0.25, 0.75, 0.75) all;\n  transition: 300ms cubic-bezier(0.25, 0.25, 0.75, 0.75) all; }\n\nproduct .ng-hide-add.ng-hide-add-active,\nproduct .ng-hide-remove {\n  opacity: 0;\n  z-index: -1; }\n\nproduct .ng-hide-add,\nproduct .ng-hide-remove.ng-hide-remove-active {\n  opacity: 1;\n  z-index: 0; }\n\nproduct .tags {\n  list-style: none;\n  margin: 0;\n  overflow: hidden;\n  padding: 0;\n  position: absolute;\n  top: 0px;\n  z-index: 1; }\n\nproduct .tag {\n  background: #fefefe;\n  border-radius: 0 5px 5px 0px;\n  color: #ff5991;\n  display: block;\n  padding: 4px 8px;\n  font-size: 0.8em;\n  font-weight: bolder;\n  margin: 3px 0; }\n", ""]);
+	exports.push([module.id, "product .card-item-wrap .img {\n  cursor: pointer; }\n\nproduct .card-item-wrap:hover .img {\n  background-size: 110%; }\n\nproduct md-input-container {\n  margin: 8px 0px; }\n\nproduct .product-list {\n  min-height: 500px; }\n\nproduct .sale-box {\n  position: absolute;\n  top: -3px;\n  overflow: hidden;\n  height: 85px;\n  width: 85px;\n  text-align: center;\n  z-index: 1;\n  right: -3px; }\n\nproduct .sale-label {\n  background: #8dca00;\n  color: white;\n  display: block;\n  font: 700 14px/12px Arial, Helvetica, sans-serif;\n  padding: 9px 0 7px;\n  perspective: 1px;\n  position: absolute;\n  right: -33px;\n  text-align: center;\n  text-transform: uppercase;\n  top: 16px;\n  width: 130px;\n  z-index: 1;\n  -webkit-transform: rotate(45deg);\n  -ms-transform: rotate(45deg);\n  -o-transform: rotate(45deg);\n  transform: rotate(45deg);\n  box-shadow: 1px 1px 1px #7d7c7c; }\n\nproduct .card-item-wrap {\n  position: relative;\n  /*padding: 8px;*/ }\n\nproduct .card-item {\n  position: relative;\n  border: solid 1px #ccc; }\n\nproduct .des .card-des {\n  font-size: 1em; }\n\nproduct .des .card-name {\n  font-size: 1.1em; }\n\nproduct .card-des {\n  padding: 8px;\n  color: #4f4e4f; }\n\nproduct .card-name {\n  padding: 8px;\n  color: #02b8e3; }\n\nproduct .card-money {\n  padding: 8px;\n  font-size: 1.2em;\n  text-align: center;\n  color: #4f4e4f; }\n\nproduct .card-image {\n  position: relative; }\n\nproduct .card-image .img {\n  width: 100%;\n  height: 200px;\n  background-position: center center;\n  background-size: 100%;\n  background-repeat: no-repeat; }\n\nproduct .card-image .img:nth-child(n+2) {\n  position: absolute;\n  left: 0px;\n  top: 0px; }\n\nproduct md-radio-button {\n  margin: 0px !important; }\n\nproduct .nav {\n  position: relative; }\n\nproduct .nav md-radio-group {\n  top: -24px;\n  right: 0px;\n  position: absolute; }\n\nproduct md-card-content h3 {\n  margin: 0px; }\n\nproduct md-card-content {\n  padding: 8px; }\n\nproduct .ng-hide-add,\nproduct .ng-hide-remove {\n  -webkit-transition: 300ms cubic-bezier(0.25, 0.25, 0.75, 0.75) all;\n  -moz-transition: 300ms cubic-bezier(0.25, 0.25, 0.75, 0.75) all;\n  -ms-transition: 300ms cubic-bezier(0.25, 0.25, 0.75, 0.75) all;\n  -o-transition: 300ms cubic-bezier(0.25, 0.25, 0.75, 0.75) all;\n  transition: 300ms cubic-bezier(0.25, 0.25, 0.75, 0.75) all; }\n\nproduct .ng-hide-add.ng-hide-add-active,\nproduct .ng-hide-remove {\n  opacity: 0;\n  z-index: -1; }\n\nproduct .ng-hide-add,\nproduct .ng-hide-remove.ng-hide-remove-active {\n  opacity: 1;\n  z-index: 0; }\n\nproduct .tags {\n  list-style: none;\n  margin: 0;\n  overflow: hidden;\n  padding: 0;\n  position: absolute;\n  top: 0px;\n  z-index: 1; }\n\nproduct .tag {\n  background: #fefefe;\n  border-radius: 0 5px 5px 0px;\n  color: #ff5991;\n  display: block;\n  padding: 4px 8px;\n  font-size: 0.8em;\n  font-weight: bolder;\n  margin: 3px 0; }\n", ""]);
 
 	// exports
 

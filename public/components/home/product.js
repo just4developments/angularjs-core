@@ -116,7 +116,7 @@ app.component('product', {
              <md-dialog-content>
                <div style="position: relative; padding: 0px; margin: 0px;">
                 <img image-src="images.imgs[images.index]" width="100%" ng-click="next()" watch="true" />
-                <div layout-padding style="position: absolute; bottom: 0px; right: 0px; color: white; text-shadow: 1px 1px 1px #000; font-size: 0.8em;">{{images.index+1}}/{{images.imgs.length}}</div>
+                <div layout-padding style="position: fixed; bottom: 0px; right: 0px; color: #d92469; font-size: 0.9em;">{{images.index+1}}/{{images.imgs.length}}</div>
                </div>
              </md-dialog-content>             
            </md-dialog>`,

@@ -35,7 +35,6 @@ app
       },
       link: function (scope, element, attributes) {
         var handle = () => {
-          console.log('handle');
           var backgroundSrc = scope.backgroundSrc;
           if(typeof scope.backgroundSrc !== 'string') return;
           for (var i = 0; i < element.length; i++) {          
@@ -53,7 +52,6 @@ app
               } else {
                 element[i].style.backgroundImage += 'url(' + require('../assets/images/no-photo.png') + ')';
               }
-              console.log(element[i].style.backgroundImage);
             }
           }
         };

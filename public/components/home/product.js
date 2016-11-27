@@ -1,7 +1,7 @@
 app.component('product', {
     template: require('./product.html'),
     bindings: { $router: '<' },
-    controller: ['$config', 'Product', 'Category', '$scope', 'Upload', '$window', '$rootScope', '$mdDialog', '$mdMedia', function ($config, Product, Category, $scope, Upload, $window, $rootScope, $mdDialog, $mdMedia) {
+    controller: ['$config', 'Product', 'Category', '$scope', 'Upload', '$window', '$rootScope', '$mdDialog', '$mdMedia', '$location', function ($config, Product, Category, $scope, Upload, $window, $rootScope, $mdDialog, $mdMedia, $location) {
         require('./product.scss');
         this.today = new Date();
         this.deviceSize = $mdMedia('xs') ? 'list.mob' : ($mdMedia('sm') ? 'list.tab' : 'list.pc');
@@ -99,7 +99,8 @@ app.component('product', {
                     self.list[self.list.findIndex(e=>e._id === self.p._id)] = self.p;
                 }else{                    
                     self.list.push(resp.data);
-                }                              
+                }
+                $location.path($location.path());
             }).catch((err) => {
                 alert(err.data.message);
                 self.isAdd = true;

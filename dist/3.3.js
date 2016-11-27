@@ -442,7 +442,6 @@ webpackJsonp([3],[
 	    },
 	    link: function link(scope, element, attributes) {
 	      var handle = function handle() {
-	        console.log('handle');
 	        var backgroundSrc = scope.backgroundSrc;
 	        if (typeof scope.backgroundSrc !== 'string') return;
 	        for (var i = 0; i < element.length; i++) {
@@ -460,7 +459,6 @@ webpackJsonp([3],[
 	            } else {
 	              element[i].style.backgroundImage += 'url(' + __webpack_require__(36) + ')';
 	            }
-	            console.log(element[i].style.backgroundImage);
 	          }
 	        }
 	      };
@@ -1468,7 +1466,7 @@ webpackJsonp([3],[
 	app.component('product', {
 	    template: __webpack_require__(65),
 	    bindings: { $router: '<' },
-	    controller: ['$config', 'Product', 'Category', '$scope', 'Upload', '$window', '$rootScope', '$mdDialog', '$mdMedia', function ($config, Product, Category, $scope, Upload, $window, $rootScope, $mdDialog, $mdMedia) {
+	    controller: ['$config', 'Product', 'Category', '$scope', 'Upload', '$window', '$rootScope', '$mdDialog', '$mdMedia', '$location', function ($config, Product, Category, $scope, Upload, $window, $rootScope, $mdDialog, $mdMedia, $location) {
 	        __webpack_require__(66);
 	        this.today = new Date();
 	        this.deviceSize = $mdMedia('xs') ? 'list.mob' : $mdMedia('sm') ? 'list.tab' : 'list.pc';
@@ -1572,6 +1570,7 @@ webpackJsonp([3],[
 	                } else {
 	                    self.list.push(resp.data);
 	                }
+	                $location.path($location.path());
 	            }).catch(function (err) {
 	                alert(err.data.message);
 	                self.isAdd = true;

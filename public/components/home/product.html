@@ -1,5 +1,5 @@
-<div layout="row" layout-wrap class="product-list">  
-    <div ng-if="$ctrl.list" ng-repeat="item in $ctrl.list" flex-xs="100" flex-sm="50" flex="25" ng-init="imgIndex=0; sizeIndex=0;" class="card-item-wrap">
+<div layout="row" layout-wrap class="product-list" ng-class="{'active' : $ctrl.list}">  
+    <div ng-if="$ctrl.list" ng-repeat="item in $ctrl.list" flex-xs="100" flex-sm="50" flex="25" ng-init="imgIndex=0; sizeIndex=0;" class="card-item-wrap" ng-class="{'removed': item.status == 0}">
         <md-card class="card-item">
             <div class="sale-box" ng-if="item.sizes && 0 === sizeIndex">
                 <span class="sale-label">
@@ -48,19 +48,30 @@
                     </div>
                 </md-card-content>
             </div>
-            <md-card-actions layout="row" layout-align="end center">
-                <md-card-icon-actions ng-if="$root.isAuth">
-                    <md-button class="md-icon-button" aria-label="Edit" ng-click="$ctrl.edit(item)">
-                        <md-icon>edit</md-icon>
+            <md-card-actions layout="row" layout-align="end center" ng-if="$root.isAuth">
+                <div style="display: relative">       
+                    <md-button aria-label="menu" class="md-icon-button" ng-click="isOpen = !isOpen">
+                        <md-icon aria-label="menu">gavel</md-icon>
                     </md-button>
-                    <md-button class="md-icon-button" aria-label="Delete" ng-click="$ctrl.delete(item)">
-                        <md-icon>delete</md-icon>
-                    </md-button>                    
-                </md-card-icon-actions>
-                <md-button class="md-icon-button" aria-label="Details" ng-click="sizeIndex = sizeIndex ? 0 : 1;">
+                    <div ng-show="isOpen" style="position: absolute; bottom: 50px; z-index: 1; left: 16px;">             
+                        <md-button class="md-icon-button" aria-label="Edit" ng-click="isOpen = !isOpen; $ctrl.edit(item)">
+                            <md-icon>edit</md-icon>
+                        </md-button><br/>
+                        <md-button class="md-icon-button" aria-label="Delete" ng-click="isOpen = !isOpen; $ctrl.delete(item)">
+                            <md-icon>delete</md-icon>
+                        </md-button>
+                    </div>
+                </div>
+                <input type="number" style="width: 50px" placeholder="Thứ tự" ng-model="item.position" ng-blur="$ctrl.update(item)" />
+                <md-button class="md-icon-button" aria-label="Status" ng-click="$ctrl.toggleVisible(item)">
+                    <md-icon ng-if="item.status">visibility</md-icon>
+                    <md-icon ng-if="!item.status">visibility_off</md-icon>
+                </md-button>                
+                <div flex></div>
+                <md-button class="md-icon-button" aria-label="Details" ng-click="$parent.sizeIndex = $parent.sizeIndex ? 0 : 1;">
                     <md-icon ng-if="!sizeIndex">more_horiz</md-icon>
                     <md-icon ng-if="sizeIndex">keyboard_arrow_left</md-icon>
-                </md-button>      
+                </md-button>               
             </md-card-actions>
         </md-card>
     </div>

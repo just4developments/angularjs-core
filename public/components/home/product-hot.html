@@ -1,0 +1,13 @@
+<div layout="row" layout-wrap class="product-hot" ng-if="$ctrl.list">  
+    <h3 flex="100" ng-click="$ctrl.goTo('hot')" du-smooth-scroll="proSpecial" duration="800"><md-icon>stars</md-icon> Sản phẩm nổi bật</h3>
+    <div ng-repeat="item in $ctrl.list" flex-xs="100" flex-sm="50" flex="20" ng-init="imgIndex=0; sizeIndex=0;" class="card-item-wrap" ng-class="{'removed': item.status == 0}">
+        <md-card class="card-item">
+            <div class="card-image">
+                <div class="img" background-src="item.images[0]" size="$ctrl.deviceSize"></div>
+            </div>
+            <div ng-class="{'ng-hide-add': 0 === sizeIndex, 'ng-hide-remove': 0 !== sizeIndex}" class="des">
+                <div class="card-money" align="right">{{item.money | money}}</div>            
+            </div>        
+        </md-card>
+    </div>
+</div>

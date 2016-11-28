@@ -1,6 +1,7 @@
 window.app = angular.module('myApp', [
 		'ngMaterial',
-		'ngComponentRouter'
+		'ngComponentRouter',
+		'duScroll'
 	])
 	.constant('$config', {
 		apiUrl: 'http://api.nanacloset.com'
@@ -12,9 +13,10 @@ window.app = angular.module('myApp', [
 		// $httpProvider.interceptors.push('AuthInterceptor');
 		$locationProvider.html5Mode(true);
 	}])
-	.run(['$rootScope', '$location', '$config', 'Category', '$window', function ($rootScope, $location, $config, Category, $window) {
+	.run(['$rootScope', '$location', '$config', 'Category', '$window', '$mdMedia', function ($rootScope, $location, $config, Category, $window, $mdMedia) {
 		$rootScope.config = $config;
 		$rootScope.isAuth = $window.localStorage.isAuth;
+		$rootScope.deviceCss = $mdMedia('xs') ? 'xs' : ($mdMedia('sm') ? 'sm' : 'md');
 		// $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
 		//   $rootScope.title = current.$$route.title;
 		//   $rootScope.navicon = current.$$route.originalPath;

@@ -4,9 +4,10 @@ app.component('home', {
     controller: ['$config', 'Product', 'Category', '$scope', 'Upload', '$window', '$rootScope', function ($config, Product, Category, $scope, Upload, $window, $rootScope) {
         require('./home.scss');
         var self = this;
-        this.activeIndex = 0;
-        this.$routerOnActivate = (next) => {
-             $rootScope.categoryId = next.params.categoryId;
+        this.activeIndex = location.href.indexOf('hot') !== -1 ? 1 : 0;
+        this.$routerOnActivate = (next) => {            
+            $rootScope.categoryId = next.params.categoryId;
+            self.categoryId = next.params.categoryId;
         };
         this.goTo = (filter, index) => {
             self.activeIndex = index;

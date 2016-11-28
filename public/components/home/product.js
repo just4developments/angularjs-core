@@ -45,7 +45,20 @@ app.component('product', {
             setTimeout(() => {
                 self.p = { category_id : $rootScope.categoryId, special: self.type === 'hot', sizes: [{size: '', quantity: 0}] };
             });
+        }
+        this.toggleVisible = (item) => {
+            item.status = item.status === 0 ? 1 : 0;
+            Product.update(item).then((resp) => {
+                console.log(resp);
+            });
         }  
+        this.update = (item) => {
+            Product.update(item).then((resp) => {
+                self.list.sort((a, b) => {
+                   return a.position - b.position; 
+                });
+            })
+        }
         this.edit = (item) => {
             self.isAdd = true;
             setTimeout(() => {

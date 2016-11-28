@@ -28,18 +28,13 @@ module.exports = {
         ]
     },
     plugins: [
-        new webpack.DefinePlugin({
-            'process.env': {
-                'NODE_ENV': JSON.stringify('production')
-            }
-        }),
         new webpack.optimize.DedupePlugin(),
         new webpack.optimize.OccurrenceOrderPlugin(),
-        new webpack.optimize.UglifyJsPlugin({
-            compress: { warnings: false },
-            comments: false,
-            sourceMap: false
-        }),
+        // new webpack.optimize.UglifyJsPlugin({
+        //     compress: { warnings: false },
+        //     comments: false,
+        //     exclude: /\.min\.js$/
+        // }),
         new webpack.optimize.LimitChunkCountPlugin({maxChunks: 15}),
         new webpack.optimize.MinChunkSizePlugin({minChunkSize: 100000})
     ]

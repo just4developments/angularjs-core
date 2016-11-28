@@ -1,10 +1,10 @@
 banner {
     .banner {
         background-image: url(../../assets/images/banner.jpg);
-        background-size: 100%;
+        background-size: cover;
         background-position: center;
         height: 250px;
-        margin: 8px;
+        margin: 8px 16px 32px;
         border: solid 1px #ccc;
     }
 }

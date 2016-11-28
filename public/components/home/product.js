@@ -4,6 +4,10 @@ app.component('product', {
     controller: ['$config', 'Product', 'Category', '$scope', 'Upload', '$window', '$rootScope', '$mdDialog', '$mdMedia', '$location', function ($config, Product, Category, $scope, Upload, $window, $rootScope, $mdDialog, $mdMedia, $location) {
         require('./product.scss');
         this.today = new Date();
+        this.channels = [
+            {code: 'facebook', name: 'Facebook'},
+            {code: 'shopee', name: 'Shopee'}
+        ];
         this.deviceSize = $mdMedia('xs') ? 'list.mob' : ($mdMedia('sm') ? 'list.tab' : 'list.pc');
         var clone = (obj, ignores) => {
             if (obj === null || typeof(obj) !== 'object' || 'isActiveClone' in obj)

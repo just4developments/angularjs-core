@@ -4,8 +4,8 @@ window.app = angular.module('myApp', [
 		'duScroll'
 	])
 	.constant('$config', {
-		apiUrl: 'http://api.nanacloset.com'
-		// apiUrl: 'http://localhost:9000'
+		// apiUrl: 'http://api.nanacloset.com'
+		apiUrl: 'http://localhost:9000'
 	})
 	.value('$routerRootComponent', 'myApp')
 	.config(['$locationProvider', '$config', '$httpProvider', function ($locationProvider, $config, $httpProvider) {

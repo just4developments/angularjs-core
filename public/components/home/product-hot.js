@@ -4,6 +4,7 @@ app.component('productHot', {
     controller: ['$config', 'Product', 'Category', '$scope', 'Upload', '$window', '$rootScope', '$mdDialog', '$mdMedia', function ($config, Product, Category, $scope, Upload, $window, $rootScope, $mdDialog, $mdMedia) {
         require('./product-hot.scss');
         let self = this;
+        this.deviceSize = $mdMedia('xs') ? 'list.mob' : ($mdMedia('sm') ? 'list.tab' : 'list.pc');
         let recordsPerPage = $mdMedia('xs') ? 3 : ($mdMedia('sm') ? 4 : 8);
         let maxSize = $mdMedia('xs') ? 1 : ($mdMedia('sm') ? 2 : 5);
         let getRandomInt = (min, max) => {

@@ -36,10 +36,18 @@
                         <input ng-model="$ctrl.trans.buyer" placeholder="Buyer name">
                     </md-input-container>
                     <md-input-container class="md-block" flex="100" md-no-float>
-                        <textarea ng-model="$ctrl.trans.address" md-maxlength="150" rows="2" md-select-on-focus placeholder="Address"></textarea>
+                        <textarea ng-model="$ctrl.trans.address" md-maxlength="150" rows="1" md-select-on-focus placeholder="Address"></textarea>
                     </md-input-container>
                     <md-input-container class="md-block" flex="50" md-no-float>
                         <input ng-model="$ctrl.trans.quantity" placeholder="Quantity">
+                    </md-input-container>
+                    <md-input-container style="width: 100%" class="md-block">
+                    <label>Nhóm buôn bán</label>
+                    <md-select ng-model="$ctrl.trans.channel_name">
+                            <md-option ng-repeat="c in $ctrl.channels" ng-value="c.code">
+                                {{c.name}}
+                            </md-option>
+                        </md-select>
                     </md-input-container>
                     <div flex>
                         <md-button ng-click="$ctrl.sell()" class="md-primary">
@@ -94,11 +102,17 @@
                 <md-input-container class="md-block" ng-init="$ctrl.p.sizes=[{size: '', quantity: ''}];">
                     <label>Mô tả sản phẩm</label>
                     <textarea ng-model="$ctrl.p.des" md-maxlength="300" rows="2"></textarea>
-                </md-input-container>                
-                <md-input-container class="md-block">
-                    <label>Tiền</label>
-                    <input ng-model="$ctrl.p.money" type="number" placeholder="$">
-                </md-input-container>
+                </md-input-container>          
+                <div layout="row">      
+                    <md-input-container class="md-block" flex="50">
+                        <label>Bán ra</label>
+                        <input ng-model="$ctrl.p.money" type="number" placeholder="$">
+                    </md-input-container>
+                    <md-input-container class="md-block" flex="50">
+                        <label>Nhập vào</label>
+                        <input ng-model="$ctrl.p.money0" type="number" placeholder="$">
+                    </md-input-container>
+                </div>
                 <md-input-container style="width: 100%" class="md-block">
                     <label>Nhóm buôn bán</label>
                     <md-select ng-model="$ctrl.p.category_id" ng-if="$ctrl.categories">

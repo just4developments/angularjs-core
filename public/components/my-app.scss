@@ -84,16 +84,18 @@ md-dialog {
     z-index: 1;
     border-radius: 100%;
 }
-
-my-app {
-    .card-des {
-        color: #4f4e4f;
-    }
-    .card-name {
-        color: #02b8e3;
-    }
-    .card-money {
-        color: #4f4e4f;
+.card-des {
+    color: #4f4e4f;
+}
+.card-name {
+    color: #02b8e3;
+}
+.card-money {
+    color: #4f4e4f;
+}
+my-app {    
+    .avatar {
+        border-radius: 100%;
     }
     .nana-theme {
         md-toolbar {

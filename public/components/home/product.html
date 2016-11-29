@@ -7,7 +7,7 @@
                 </span>
             </div>       
             <div class="card-image" ng-class="{'ng-hide-add': 0 === sizeIndex, 'ng-hide-remove': 0 !== sizeIndex}">
-                <div ng-repeat="img in item.images" class="img" ng-class="{'ng-hide-add': $index === imgIndex, 'ng-hide-remove': $index !== imgIndex}" background-src="img" ng-click="$ctrl.viewImage(item.images, imgIndex)" size="$ctrl.deviceSize"></div>
+                <div ng-repeat="img in item.images" class="img" ng-class="{'ng-hide-add': $index === imgIndex, 'ng-hide-remove': $index !== imgIndex}" background-src="img" ng-click="$ctrl.viewImage(item, imgIndex)" size="$ctrl.deviceSize"></div>
                 <div class="nav">
                     <md-radio-group ng-model="imgIndex" layout="row">
                         <md-radio-button ng-value="$index" ng-repeat="img in item.images" aria-label="{{item.name}}"></md-radio-button>

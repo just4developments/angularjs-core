@@ -7,7 +7,7 @@ app.component('myApp', {
         {path: '/policy', name: 'Policy', component: 'policy'},
         {path: '/:categoryId/...', name: 'HomeNewestByCategoryId', component: 'home'}
     ],
-    controller: ['$config', 'Category', '$scope', '$location', '$window', '$mdSidenav', '$rootScope', function ($config, Category, $scope, $location, $window, $mdSidenav, $rootScope) {
+    controller: ['$config', 'Category', '$scope', '$location', '$window', '$mdSidenav', '$rootScope', '$facebook', function ($config, Category, $scope, $location, $window, $mdSidenav, $rootScope, $facebook) {
         let self = this;
         this.activeIndex = 0;
         Category.find().then((resp) => {
@@ -32,6 +32,17 @@ app.component('myApp', {
             $mdSidenav('left').close();
             self.activeIndex = index;
             $location.path(path);
+        }        
+        this.login = () => {
+            $facebook.login().then((resp) => {
+                if(resp.status !== 'connected'){
+                    return alert('Không thể login facebook');
+                }
+                $window.localStorage.userId = resp.authResponse.userID;
+                $rootScope.userID = $window.localStorage.userId;
+            }).catch((err) => {
+                console.error(err);
+            });
         }
     }]
 });

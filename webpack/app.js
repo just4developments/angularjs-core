@@ -19,7 +19,8 @@ require(['../public/js/1.angular.min.js',
 	'../public/js/3.material.min.js',
 	'../public/js/5.ng-file-upload-shim.min.js',
 	'../public/js/6.ng-file-upload.min.js',
-	'../public/js/7.angularjs-datetime-picker.min.js'], (require) => {
+	'../public/js/7.angularjs-datetime-picker.min.js',
+	'../public/js/9.ngFacebook.js'], (require) => {
     require(['../public/components/1.index.js',
 		'../public/components/2.cuz.filter.js',
 		'../public/components/3.cuz.directive.js',

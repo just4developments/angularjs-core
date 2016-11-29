@@ -1,30 +1,43 @@
 window.app = angular.module('myApp', [
 		'ngMaterial',
 		'ngComponentRouter',
-		'duScroll'
+		'duScroll',
+		'ngFacebook'
 	])
 	.constant('$config', {
-		apiUrl: 'http://api.nanacloset.com'
-		// apiUrl: 'http://localhost:9000'
+		// apiUrl: 'http://api.nanacloset.com'
+		apiUrl: 'http://localhost:9000'
 	})
 	.value('$routerRootComponent', 'myApp')
+	.config(['$facebookProvider', function ($facebookProvider) {
+		$facebookProvider.setAppId(1010798415647065);
+		$facebookProvider.setVersion("v2.5");
+		$facebookProvider.setCustomInit({
+			xfbml      : true
+		});
+	}])
 	.config(['$locationProvider', '$config', '$httpProvider', function ($locationProvider, $config, $httpProvider) {
 		//$locationProvider.hashPrefix('!');    
 		// $httpProvider.interceptors.push('AuthInterceptor');
-		$locationProvider.html5Mode(true);
+		$locationProvider.html5Mode(true);		
 	}])
 	.run(['$rootScope', '$location', '$config', 'Category', '$window', '$mdMedia', '$http', function ($rootScope, $location, $config, Category, $window, $mdMedia, $http) {
 		$rootScope.config = $config;
+		$rootScope.userID = $window.localStorage.userId;
 		if($window.localStorage.isAuth){
 			$rootScope.isAuth = $window.localStorage.isAuth;
 			$http.defaults.headers.common.IsNana = $rootScope.isAuth;
 		}
-		$rootScope.deviceCss = $mdMedia('xs') ? 'xs' : ($mdMedia('sm') ? 'sm' : 'md');
-		// $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
-		//   $rootScope.title = current.$$route.title;
-		//   $rootScope.navicon = current.$$route.originalPath;
-		//   delete $rootScope.onNavEvent;
-		// });
+		$rootScope.deviceCss = $mdMedia('xs') ? 'xs' : ($mdMedia('sm') ? 'sm' : 'md');		
+	}])
+	.run([function(){
+		(function(d, s, id){
+			var js, fjs = d.getElementsByTagName(s)[0];
+			if (d.getElementById(id)) {return;}
+			js = d.createElement(s); js.id = id;
+			js.src = "//connect.facebook.net/en_US/sdk.js";
+			fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));
 	}])
 	// .factory('AuthInterceptor', ['$q', '$window', function ($q, $window) {
 	//   return {

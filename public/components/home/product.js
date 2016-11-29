@@ -120,49 +120,5 @@ app.component('product', {
                 self.isAdd = true;
             });
         }
-        this.viewImage = (item, index) => {
-            self.item = {
-                item: item,
-                index: index
-            };
-            $mdDialog.show({
-                template: `<md-dialog aria-label="Image dialog">
-             <md-dialog-content layout="row" layout-padding>
-               <div style="position: relative; padding: 0px; margin: 0px;" flex="70">
-                <img image-src="item.images[index]" width="100%" ng-click="next()" watch="true" />
-                <div layout-padding style="position: fixed; bottom: 0px; right: 0px; color: #d92469; font-size: 0.9em;">{{index+1}}/{{item.images.length}}</div>
-               </div>
-               <div flex>
-                    <h3 class="card-name">{{item.name}}</h3>
-                    <p class="card-des">{{item.des}}</p>
-                    <div class="card-money" style="font-size: 1.1em">Giá: {{item.money | money}}</div>
-                    <br/><br/>
-                    <div ng-init="loadComment()" class="fb-comments" data-href="{{href}}" data-width="100%" data-numposts="5" data-colorscheme="light" data-include-parent="false"></div>
-               </div>
-             </md-dialog-content>             
-           </md-dialog>`,
-                parent: angular.element(document.body),
-                locals: {
-                    item: self.item
-                },
-                clickOutsideToClose: true,
-                escapeToClose: true,
-                controller: ['$scope', '$mdDialog', 'item', '$window', ($scope, $mdDialog, item, $window) => {
-                    $scope.item = item.item;
-                    $scope.index = item.index;   
-                    $scope.href= $window.location.href;
-                    $scope.next = () => {
-                        if(++$scope.index > $scope.item.images.length-1){
-                            $scope.index = 0;
-                        }
-                    }
-                    $scope.loadComment = () => {
-                        setTimeout(() => {
-                            $window.FB.XFBML.parse(); 
-                        });                        
-                    };
-                }]
-            });
-        }
     }]
 });

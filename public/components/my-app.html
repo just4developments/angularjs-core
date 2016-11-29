@@ -19,7 +19,7 @@
     <md-content flex layout-padding class="main">
         <md-button ng-click="$ctrl.openMenu()" class="md-icon-button icon-menu" show-xs hide><md-icon>menu</md-icon></md-button>
         <div style="position: absolute; top: 0px; right: 16px;">
-            <a href="#" ng-click="$ctrl.login()" ng-if="!$root.userID">Login</a>
+            <a href="#" ng-click="$ctrl.login()" ng-if="!$root.userID" class="card-name"><small>Đăng nhập qua facebook</small></a>
             <img ng-src="http://graph.facebook.com/{{$root.userID}}/picture" ng-if="$root.userID" class="avatar" />
         </div>
         <header layout="row" layout-align="center center" layout-wrap>

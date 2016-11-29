@@ -77,6 +77,7 @@ app.component('product', {
         }
         this.addSell = (item, index) => {
             self.trans = {
+                channel_name: 'facebook',
                 product: item,
                 quantity: 1,
                 status: 2,

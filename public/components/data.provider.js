@@ -2,7 +2,7 @@ app
     .factory('Product', ['$http', '$rootScope', '$config', '$q', function ($http, $rootScope, $config, $q) {
         return {
             find: (categoryId, type, recordsPerPage) => {                
-                return $http.get(`${$config.apiUrl}/product?categoryId=${categoryId ? categoryId : ''}&type=${type}${$rootScope.isAuth ? '&status=-1' : ''}${$rootScope.isAuth ? '&quantity=-1' : ''}${recordsPerPage ? ('&recordsPerPage=' + recordsPerPage) : ''}`);
+                return $http.get(`${$config.apiUrl}/product?categoryId=${categoryId||''}&type=${type}&recordsPerPage=${recordsPerPage||''}`);
             },
             delete: (id) => {
                 return $http.delete(`${$config.apiUrl}/product/${id}`);

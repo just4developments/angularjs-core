@@ -4,8 +4,8 @@ window.app = angular.module('myApp', [
 		'duScroll'
 	])
 	.constant('$config', {
-		// apiUrl: 'http://api.nanacloset.com'
-		apiUrl: 'http://localhost:9000'
+		apiUrl: 'http://api.nanacloset.com'
+		// apiUrl: 'http://localhost:9000'
 	})
 	.value('$routerRootComponent', 'myApp')
 	.config(['$locationProvider', '$config', '$httpProvider', function ($locationProvider, $config, $httpProvider) {
@@ -13,9 +13,12 @@ window.app = angular.module('myApp', [
 		// $httpProvider.interceptors.push('AuthInterceptor');
 		$locationProvider.html5Mode(true);
 	}])
-	.run(['$rootScope', '$location', '$config', 'Category', '$window', '$mdMedia', function ($rootScope, $location, $config, Category, $window, $mdMedia) {
+	.run(['$rootScope', '$location', '$config', 'Category', '$window', '$mdMedia', '$http', function ($rootScope, $location, $config, Category, $window, $mdMedia, $http) {
 		$rootScope.config = $config;
-		$rootScope.isAuth = $window.localStorage.isAuth;
+		if($window.localStorage.isAuth){
+			$rootScope.isAuth = $window.localStorage.isAuth;
+			$http.defaults.headers.common.IsNana = $rootScope.isAuth;
+		}
 		$rootScope.deviceCss = $mdMedia('xs') ? 'xs' : ($mdMedia('sm') ? 'sm' : 'md');
 		// $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
 		//   $rootScope.title = current.$$route.title;

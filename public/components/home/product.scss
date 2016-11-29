@@ -94,6 +94,12 @@ product {
         position: relative;
         border: solid 1px #ccc;
     }
+    .md-errors-spacer {
+        min-height: 0px;
+    }
+    .des md-input-container {
+        padding: 0px;
+    }
     .des {
         .card-des {
             font-size: 1em;

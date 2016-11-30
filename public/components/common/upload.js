@@ -47,7 +47,7 @@ app.service('Upload', ['$http', function ($http) {
 app.component('uploadFile', {
   template: require('./upload.html'),
   bindings: {
-    imgSrc: '<',
+    imgSrc: '=',
     fileModel: '=',
     name: '@'
   },

@@ -22,7 +22,7 @@ app
              <md-dialog-content layout="row" layout-wrap>
                <div flex="70" flex-xs="100" flex-sm="100" class="content">
                 <img image-src="item.images[index]" width="100%" ng-click="next()" watch="true" />
-                <div layout-padding style="position: absolute; bottom: 0px; right: 8px; color: #d92469; font-size: 0.9em;">{{index+1}}/{{item.images.length}}</div>
+                <div class="num">{{index+1}}/{{item.images.length}}</div>
                </div>
                <div flex class="comment">
                     <h3 class="card-name" style="font-size: 1.2em">{{item.name}}</h3>

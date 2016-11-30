@@ -25,19 +25,38 @@ md-dialog {
     max-height: 98%;
 }
 
-.details .comment {
-    padding: 8px 16px;
+.details {
     background: #eaeaea;
 }
+
+.details .comment {
+    padding: 8px 16px;
+}
+
 .details .content img {
     outline: none;
     cursor: pointer;
 }
+
 .details .content {
     position: relative;
     padding: 8px 8px 0px 8px;
     margin: 0px;
     box-shadow: 1px 1px 3px #333;
+    height: 100%;
+}
+
+.details .num {
+    position: fixed;
+    top: 8px;
+    left: 8px;
+    color: #d92469;
+    text-shadow: 0px 0px 1px #fff;
+    font-size: 0.8em;
+    padding: 8px 16px;
+    border-radius: 0px 0px 8px 0px;
+    box-shadow: 1px 1px 1px #868686;
+    background: #eaeaea;
 }
 
 .contact {

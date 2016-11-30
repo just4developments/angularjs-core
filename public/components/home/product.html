@@ -64,7 +64,7 @@
                         <md-icon aria-label="menu">gavel</md-icon>
                     </md-button>
                     <div ng-show="isOpen" style="position: absolute; bottom: 50px; z-index: 1; left: 16px;">             
-                        <md-button class="md-icon-button" aria-label="Edit" ng-click="isOpen = !isOpen; $ctrl.edit(item)">
+                        <md-button class="md-icon-button" aria-label="Edit" ng-click="isOpen = !isOpen; $ctrl.edit(item)" du-smooth-scroll="addItem">
                             <md-icon>edit</md-icon>
                         </md-button><br/>
                         <md-button class="md-icon-button" aria-label="Delete" ng-click="isOpen = !isOpen; $ctrl.delete(item)">
@@ -85,7 +85,7 @@
             </md-card-actions>
         </md-card>
     </div>
-    <div class="card-item-wrap" flex-xs="100" flex-sm="50" flex="25">
+    <div class="card-item-wrap" flex-xs="100" flex-sm="50" flex="25" id="addItem">
         <md-card class="card-item add">
             <md-card-content ng-if="$ctrl.isAdd">
                 <div align="right">
@@ -93,7 +93,7 @@
                         <md-icon>close</md-icon>
                     </md-button>
                 </div>
-                <upload-file file-model="$ctrl.p.images" name="images" img-src="$ctrl.p.images ? $ctrl.p.images[0] : undefined"></upload-file>
+                <upload-file file-model="$ctrl.p.images" name="images" img-src="$ctrl.p.images ? $ctrl.p.images[0] : undefined" ></upload-file>
                 <md-switch class="md-primary" md-no-ink aria-label="Special" ng-model="$ctrl.p.special">
                     Hàng bán chạy ?
                 </md-switch>

@@ -1,6 +1,6 @@
 <div class="image-upload" align="center">
     <div ng-click="$ctrl.open()" ng-touch="$ctrl.open()">
-        <img id="imageUpload" ng-if="$ctrl.imgSrc" image-src="$ctrl.imgSrc" width="100%"/>
+        <img id="imageUpload" ng-if="$ctrl.imgSrc" image-src="$ctrl.imgSrc" width="100%" watch="true"/>
         <img id="imageUpload" ng-if="!$ctrl.imgSrc" src="../../assets/images/upload-file.png" width="100%"/>
     </div>
     <input id="{{$ctrl.name}}" name="{{$ctrl.name}}" type="file" multiple="true" />

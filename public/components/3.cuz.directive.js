@@ -17,14 +17,14 @@ app
       link: function (scope, element, attributes) {
         element.on("click", () => {
           $mdDialog.show({
-            template: `<md-dialog aria-label="Image dialog">
-            <md-button class="md-icon-button" style="position: absolute; right: 4px; z-index: 2; top: 0px; cursor: pointer; text-shadow: 0px 0px 1px #fff;" ng-click="close()"><md-icon>close</md-icon></md-button>
-             <md-dialog-content layout="row" layout-padding layout-wrap>
-               <div style="position: relative; padding: 0px; margin: 0px;" flex="70" flex-xs="100" flex-sm="100">
+            template: `<md-dialog aria-label="Image dialog" class="details">
+             <md-button class="md-icon-button" style="position: absolute; right: 4px; z-index: 2; top: 0px; cursor: pointer; text-shadow: 0px 0px 1px #fff;" ng-click="close()"><md-icon>close</md-icon></md-button>
+             <md-dialog-content layout="row" layout-wrap>
+               <div flex="70" flex-xs="100" flex-sm="100" class="content">
                 <img image-src="item.images[index]" width="100%" ng-click="next()" watch="true" />
-                <div layout-padding style="position: fixed; bottom: 0px; right: 0px; color: #d92469; font-size: 0.9em;">{{index+1}}/{{item.images.length}}</div>
+                <div layout-padding style="position: absolute; bottom: 0px; right: 8px; color: #d92469; font-size: 0.9em;">{{index+1}}/{{item.images.length}}</div>
                </div>
-               <div flex>
+               <div flex class="comment">
                     <h3 class="card-name" style="font-size: 1.2em">{{item.name}}</h3>
                     <p class="card-des">{{item.des}}</p>
                     <div class="card-money" style="font-size: 1.1em">Giá: {{item.money | money}}</div>

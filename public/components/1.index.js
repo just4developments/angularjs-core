@@ -9,18 +9,19 @@ window.app = angular.module('myApp', [
 		// apiUrl: 'http://localhost:9000'
 	})
 	.value('$routerRootComponent', 'myApp')
+	.config(['$locationProvider', '$config', '$httpProvider', '$compileProvider', function ($locationProvider, $config, $httpProvider, $compileProvider) {
+		//$locationProvider.hashPrefix('!');    
+		// $httpProvider.interceptors.push('AuthInterceptor');
+		$compileProvider.debugInfoEnabled(false);
+		$locationProvider.html5Mode(true);				
+	}])
 	.config(['$facebookProvider', function ($facebookProvider) {
 		$facebookProvider.setAppId(1010798415647065);
 		$facebookProvider.setVersion("v2.5");
 		$facebookProvider.setCustomInit({
 			xfbml      : true
 		});
-	}])
-	.config(['$locationProvider', '$config', '$httpProvider', function ($locationProvider, $config, $httpProvider) {
-		//$locationProvider.hashPrefix('!');    
-		// $httpProvider.interceptors.push('AuthInterceptor');
-		$locationProvider.html5Mode(true);		
-	}])
+	}])	
 	.run(['$rootScope', '$location', '$config', 'Category', '$window', '$mdMedia', '$http', function ($rootScope, $location, $config, Category, $window, $mdMedia, $http) {
 		$rootScope.config = $config;
 		$rootScope.userID = $window.localStorage.userId;

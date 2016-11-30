@@ -1,7 +1,7 @@
 app.component('product', {
     template: require('./product.html'),
     bindings: { $router: '<' },
-    controller: ['$config', 'Product', 'Category', '$scope', 'Upload', '$window', '$rootScope', '$mdDialog', '$mdMedia', '$location', function ($config, Product, Category, $scope, Upload, $window, $rootScope, $mdDialog, $mdMedia, $location) {
+    controller: ['$config', 'Product', 'Category', '$scope', 'Upload', '$window', '$rootScope', '$mdDialog', '$mdMedia', '$location', '$facebook', function ($config, Product, Category, $scope, Upload, $window, $rootScope, $mdDialog, $mdMedia, $location, $facebook) {
         require('./product.scss');
         this.today = new Date();
         this.channels = [

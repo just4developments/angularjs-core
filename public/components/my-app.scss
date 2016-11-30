@@ -134,6 +134,13 @@ md-dialog {
     color: #4f4e4f;
 }
 
+.xs header {
+    margin-bottom: 16px;
+}
+header {
+    margin-bottom: 50px;
+}
+
 my-app {
     .avatar {
         border-radius: 100%;
@@ -233,10 +240,7 @@ my-app {
         max-width: 1000px;
         margin: auto;
         margin-bottom: 32px;
-    }
-    header {
-        margin-bottom: 50px;
-    }
+    }    
     footer li {
         overflow: hidden;
     }

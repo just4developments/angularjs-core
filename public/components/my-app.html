@@ -18,7 +18,7 @@
     </md-sidenav>
     <md-content flex layout-padding class="main">
         <md-button ng-click="$ctrl.openMenu()" class="md-icon-button icon-menu" show-xs hide><md-icon>menu</md-icon></md-button>
-        <div style="position: absolute; top: 0px; right: 16px;">
+        <div style="position: absolute; top: 0px; right: 16px;">            
             <a href="#" ng-click="$ctrl.login()" ng-if="!$root.userID" class="card-name"><small>Đăng nhập qua facebook</small></a>
             <img ng-src="http://graph.facebook.com/{{$root.userID}}/picture" ng-if="$root.userID" class="avatar" />
         </div>
@@ -26,10 +26,12 @@
             <div flex-xs="100" flex-sm="40" flex="30">
                 <img src="../assets/images/logo.png" width="100%" />
             </div>
-            <div flex-xs="100" flex class="search" layout="row" align="right" layout-align="center center">                                
+            <div flex-xs="100" align="center" layout-align="center center" flex>
+                <div class="fb-like" data-href="https://www.facebook.com/Menana198/" data-layout="{{$ctrl.followType}}" data-action="like" data-size="small" data-show-faces="true" data-share="true" ng-init="$ctrl.genFacebook()"></div>                
+            <!--<div flex-xs="100" flex class="search" layout="row" align="right" layout-align="center center">                                
                 <input type="search" flex />
                 <md-icon>search</md-icon flex="10">
-            </div>            
+            </div-->
             </div>
         </header>
         <ul class="tab" hide-xs>

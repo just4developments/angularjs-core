@@ -20,7 +20,7 @@ module.exports = {
                     presets: ['es2015']
                 }
             },
-            { test: /\.(jpe?g|png|gif|svg)$/i, loader: "url-loader?name=images/[name].[ext]" },
+            { test: /\.(jpe?g|png|gif)$/i, loader: "url-loader?name=images/[name].[ext]" },
             { test: /\.(ttf|otf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/, loader: 'file-loader?name=fonts/[name].[ext]' },
             { test: /\.html$/, loader: 'html-loader' },
             { test: /\.htm$/, loaders: ['file-loader?name=[name].[ext]', 'extract-loader', 'html-loader'] }

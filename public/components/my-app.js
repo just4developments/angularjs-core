@@ -7,7 +7,7 @@ app.component('myApp', {
         {path: '/policy', name: 'Policy', component: 'policy'},
         {path: '/:categoryId/...', name: 'HomeNewestByCategoryId', component: 'home'}
     ],
-    controller: ['$config', 'Category', '$scope', '$location', '$window', '$mdSidenav', '$rootScope', '$facebook', function ($config, Category, $scope, $location, $window, $mdSidenav, $rootScope, $facebook) {
+    controller: ['$config', 'Category', '$scope', '$location', '$window', '$mdSidenav', '$rootScope', '$facebook', '$mdMedia', function ($config, Category, $scope, $location, $window, $mdSidenav, $rootScope, $facebook, $mdMedia) {
         let self = this;
         this.activeIndex = 0;
         Category.find().then((resp) => {
@@ -44,5 +44,11 @@ app.component('myApp', {
                 console.error(err);
             });
         }
+        this.genFacebook = () => {
+            setTimeout(() => {
+                if($window.FB) $window.FB.XFBML.parse();
+            }, 500);
+        }
+        this.followType = $mdMedia('xs') ? 'button_count' : 'standard';
     }]
 });

@@ -27,6 +27,15 @@ html::-webkit-scrollbar-thumb:window-inactive {
 }
 
 product {
+    .hot {
+        font-size: 0.5em;
+        font-family: Arial, Helvetica, sans-serif;
+        background: red;
+        color: white;
+        font-weight: bold;
+        padding: 2px 4px;
+        border-radius: 4px;
+    }
     .md-whiteframe-z1 {
         box-shadow: none !important;
     }
@@ -59,11 +68,16 @@ product {
         z-index: 1;
         right: -3px;
     }
+    .sale-label.notavail {
+        background: #b9b6b5;
+    }
     .sale-label {
         background: #8dca00;
         color: white;
         display: block;
-        font: 700 14px/12px Arial, Helvetica, sans-serif;
+        font-weight: 700;
+        font-size: 12px;
+        font-family: Arial, Helvetica, sans-serif;
         padding: 9px 0 7px;
         perspective: 1px;
         position: absolute;

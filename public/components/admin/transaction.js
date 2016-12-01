@@ -3,6 +3,7 @@ app.component('transaction', {
     controller: ['$config', 'Transaction', 'Category', '$scope', 'Upload', '$window', '$rootScope', '$mdMedia', function ($config, Transaction, Category, $scope, Upload, $window, $rootScope, $mdMedia) {
         require('./transaction.scss');
         let self =this;
+        this.qcmoney=50000;
         this.fromDate = new Date();
         this.toDate = new Date();        
         this.statusFilter;
@@ -41,25 +42,27 @@ app.component('transaction', {
                         tempDate = item.created_date;
                         self.list.push({created_date: item.created_date, list: [], spending: 0, successed: 0});
                     }
+                    console.log(item.product.money0, item.quantity);
                     if(item.status === 2) {
                         self.summary.spending.num++;
-                        self.summary.spending.money+= +item.money;
-                        self.summary.spending.money0+= +item.product.money0 * item.quantity;
+                        self.summary.spending.money+= item.money;
+                        self.summary.spending.money0+= (item.product.money0 * item.quantity);
                         self.list[self.list.length-1].spending += +item.money;
                     }else if(item.status === 1) {
                         self.summary.successed.num++;
-                        self.summary.successed.money+= +item.money;
-                        self.summary.successed.money0+= +item.product.money0 * item.quantity;
+                        self.summary.successed.money+= item.money;
+                        self.summary.successed.money0+= (item.product.money0 * item.quantity);
                         self.list[self.list.length-1].successed += +item.money;
                     }else if(item.status === -1) {
                         self.summary.canceled.num++;
-                        self.summary.canceled.money+= +item.money;
+                        self.summary.canceled.money+= item.money;
                     }
 
                     self.list[self.list.length-1].list.push(item);
                 }
+                console.log(self.summary.spending, self.summary.successed);
                 self.summary.got = self.summary.spending.money + self.summary.successed.money;
-                self.summary.loss = self.summary.spending.money0 * self.summary.successed.money0;          
+                self.summary.loss = self.summary.spending.money0 + self.summary.successed.money0;          
             });
         }
         this.$routerOnActivate = (next) => {

@@ -3,7 +3,7 @@ transaction {
         opacity: 0.5;
     }
     .card-1 .sale-label {
-        background: red;
+        background: #e34343;
     }
     .card2 .sale-label {
         background: orange;
@@ -11,9 +11,15 @@ transaction {
     .card1 .sale-label {
         background: green;
     }
+    .status100 {
+        color: #d92d6e;
+    }
+    .status99 {
+        color: #5145c1;
+    }
     .status-1,
     .status-1 .md-text {
-        color: red !important;
+        color: #e34343 !important;
     }
     .status2,
     .status2 .md-text {

@@ -8,6 +8,7 @@ app.component('myApp', {
         {path: '/policy', name: 'Policy', component: 'policy'},
         {path: '/:categoryId/...', name: 'HomeNewestByCategoryId', component: 'home'}
     ],
+    bindings: { $router: '<' },
     controller: ['$config', 'Category', '$scope', '$location', '$window', '$mdSidenav', '$rootScope', '$facebook', '$mdMedia', 'FacebookLoader', function ($config, Category, $scope, $location, $window, $mdSidenav, $rootScope, $facebook, $mdMedia, FacebookLoader) {
         let self = this;
         this.activeIndex = 0;
@@ -25,6 +26,9 @@ app.component('myApp', {
         this.goTo = (id, index) => {
             self.activeIndex = index;
             $location.path(`${id}/moi-nhat`);
+        }
+        this.goAboutus = (url) => {
+            self.$router.navigate(['AboutUs']);
         }
         this.openMenu = () => {
             $mdSidenav('left').toggle();

@@ -5,8 +5,8 @@ window.app = angular.module('myApp', [
 		'ngFacebook'
 	])
 	.constant('$config', {
-		apiUrl: 'http://api.nanacloset.com',
-		// apiUrl: 'http://localhost:9000',
+		// apiUrl: 'http://api.nanacloset.com',
+		apiUrl: 'http://localhost:9000',
 		webUrl: 'http://www.nanacloset.com',
 	})
 	.value('$routerRootComponent', 'myApp')
@@ -32,8 +32,7 @@ window.app = angular.module('myApp', [
 		}
 		$rootScope.deviceCss = $mdMedia('xs') ? 'xs' : ($mdMedia('sm') ? 'sm' : 'md');
 		$rootScope.$on('fb.load', function (event, data) {
-			console.log('why');
-			$window.isFbLoaded = true;
+			$window.isFbLoaded = true;			
 			setTimeout(function() {
 				FacebookLoader.load();
 			});     

@@ -6,30 +6,10 @@ app.component('product', {
         this.today = new Date();
         this.channels = [
             {code: 'facebook', name: 'Facebook'},
-            {code: 'shopee', name: 'Shopee'}
+            {code: 'shopee', name: 'Shopee'},
+            {code: 'cometo', name: 'Đến lấy hàng'},
         ];
-        this.deviceSize = $mdMedia('xs') ? 'list.mob' : ($mdMedia('sm') ? 'list.tab' : 'list.pc');
-        var clone = (obj, ignores) => {
-            if (obj === null || typeof(obj) !== 'object' || 'isActiveClone' in obj)
-                return obj;
-            var temp;            
-            if (obj instanceof Date){
-                temp = new obj.constructor(); //or new Date(obj);
-            }else {
-                temp = obj.constructor();
-            }
-
-            for (var key in obj) {
-                if(ignores && ignores.indexOf(key) !== -1) continue;
-                if (Object.prototype.hasOwnProperty.call(obj, key)) {
-                    obj['isActiveClone'] = null;
-                    temp[key] = clone(obj[key]);
-                    delete obj['isActiveClone'];
-                }
-            }
-
-            return temp;
-        }
+        this.deviceSize = $mdMedia('xs') ? 'list.mob' : ($mdMedia('sm') ? 'list.tab' : 'list.pc');        
         var self = this;
         this.isAdd = false;
         this.$routerOnActivate = (next) => {
@@ -63,7 +43,7 @@ app.component('product', {
         }
         this.edit = (item) => {
             self.isAdd = true;
-            self.p = clone(item);           
+            self.p = $window._.clone(item);   
         }
         this.delete = (item) => {
             if(!$window.confirm('Bạn có chắc muốn xóa sản phẩm này ?')) return; 
@@ -104,7 +84,7 @@ app.component('product', {
         this.save = () => {
             self.isAdd = false;
             var method = self.p._id ? 'PUT' : 'POST';
-            var p0 = clone(self.p, ['images']);
+            var p0 = $window._.clone(self.p);
             p0.images = self.p.images;
             if(p0.sizes) p0.sizes = angular.toJson(p0.sizes);
             Upload.uploadFileToUrl(p0, $config.apiUrl + '/product', method).then((resp) => {

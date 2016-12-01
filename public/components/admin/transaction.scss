@@ -103,6 +103,18 @@ transaction {
         left: 0px;
         top: 0px;
     }
+    h4 {
+        font-size: 1.2em;
+        padding: 0px; 
+        margin: 0px;
+    }
+    .summary {
+        padding: 0px; 
+        margin: 0px 24px;
+    }
+    .summary li {
+        padding: 8px;
+    }
     md-radio-button {
         margin: 0px !important;
     }

@@ -30,6 +30,14 @@ app
                 return $http.put(`${$config.apiUrl}/transaction/${item._id}`, item);
             }
         };
+    }]).factory('FacebookLoader', ['$window', function($window){
+        return {
+            load: (el) => {
+                if($window.isFbLoaded) {
+                    $window.FB.XFBML.parse(el);                    
+                }  
+            }
+        }
     }]);
 
 // app.utils = {

@@ -29,7 +29,7 @@ app
                     <p class="card-des">{{item.des}}</p>
                     <div class="card-money" style="font-size: 1.1em">Giá: {{item.money | money}}</div>
                     <br/><br/>
-                    <div ng-init="loadComment()" class="fb-comments" data-href="{{href}}" data-width="100%" data-numposts="5" data-colorscheme="light" data-include-parent="false"></div>
+                    <div id="{{id}}" ng-init="loadComment()" class="fb-comments" data-href="{{href}}" data-width="100%" data-numposts="5" data-colorscheme="light" data-include-parent="false"></div>
                </div>
              </md-dialog-content>             
            </md-dialog>`,
@@ -40,10 +40,11 @@ app
             },
             clickOutsideToClose: true,
             escapeToClose: true,
-            controller: ['$scope', '$mdDialog', 'item', 'index', '$window', '$config', ($scope, $mdDialog, item, index, $window, $config) => {
+            controller: ['$scope', '$mdDialog', 'item', 'index', '$window', '$config', 'FacebookLoader', ($scope, $mdDialog, item, index, $window, $config, FacebookLoader) => {
               $scope.item = item;
               $scope.index = index;
-              $scope.href = $config.apiUrl + '/product/' + item._id;
+              $scope.id = "com" + new Date().getTime();
+              $scope.href = $config.webUrl + '/product/' + item._id;
               $scope.next = () => {
                 if (++$scope.index > $scope.item.images.length - 1) {
                   $scope.index = 0;
@@ -53,9 +54,9 @@ app
                 $mdDialog.hide();
               }
               $scope.loadComment = () => {
-                setTimeout(() => {
-                  $window.FB.XFBML.parse();
-                });
+                setTimeout(function() {
+                  FacebookLoader.load($window.document.querySelector('#'+$scope.id)[0]);
+                });                                
               };
             }]
           });

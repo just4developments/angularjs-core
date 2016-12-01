@@ -36,11 +36,12 @@
         </header>
         <ul class="tab" hide-xs>
             <li ng-class="{'active' : $index == $ctrl.activeIndex}" ng-repeat="c in $ctrl.categories" ng-click="$ctrl.goTo(c._id, $index)">{{c.name}}</li>
+            <li go-to="/aboutus">Khách hàng</li>
         </ul>
         <div class="tab-content">
-            <div align="right" style="margin: 0px 16px 8px 16px">
+            <div align="right" style="padding: 8px 16px 8px 16px">
                 <div class="fb-like" data-href="https://www.facebook.com/Menana198/" data-layout="button_count" data-action="like" data-size="small"
-                    data-show-faces="true" data-share="true" ng-init="$ctrl.genFacebook()"></div>
+                    data-show-faces="true" data-share="true"></div>
             </div>
             <banner></banner>
             <ng-outlet></ng-outlet>

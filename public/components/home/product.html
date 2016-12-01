@@ -31,14 +31,19 @@
                         </span>
                     </div>
                 </md-card-content>
-                <md-card-content ng-show="$ctrl.isSell" layout="row" layout-wrap>
-                    <div align="right" style="width: 100%"><a href="#" ng-click="$ctrl.isSell = 0;"><span class="card-name">{{$ctrl.sizeName}}</span></a></div>
-                    <md-datepicker ng-model="$ctrl.trans.created_date" md-placeholder="Enter date" md-max-date="$ctrl.today" style="width: 100%"></md-datepicker>
-                    <md-input-container class="md-block" flex="100" md-no-float>
-                        <input ng-model="$ctrl.trans.buyer" placeholder="Buyer name">
+                <md-card-content ng-show="$ctrl.isSell" layout="row" layout-wrap layout-align="end center">
+                    <md-input-container class="md-block" flex="70" md-no-float>
+                        <md-datepicker ng-model="$ctrl.trans.created_date" md-placeholder="Enter date" md-max-date="$ctrl.today"></md-datepicker>
+                    </md-input-container>
+                    <div align="right" flex="30"><a href="#" ng-click="$ctrl.isSell = 0;"><span class="card-name">{{$ctrl.sizeName}}</span></a></div>
+                    <md-input-container class="md-block" flex="50" md-no-float>
+                        <input ng-model="$ctrl.trans.buyer" placeholder="ID người mua">
+                    </md-input-container>
+                    <md-input-container class="md-block" flex="50" md-no-float>
+                        <input ng-model="$ctrl.trans.phone" placeholder="Điện thoại">
                     </md-input-container>
                     <md-input-container class="md-block" flex="100" md-no-float>
-                        <textarea ng-model="$ctrl.trans.address" md-maxlength="150" rows="1" md-select-on-focus placeholder="Address"></textarea>
+                        <textarea ng-model="$ctrl.trans.address" md-maxlength="150" rows="1" md-select-on-focus placeholder="Địa chỉ"></textarea>
                     </md-input-container>                    
                     <md-input-container style="width: 100%" class="md-block">
                         <label>Nhóm buôn bán</label>
@@ -101,7 +106,7 @@
                     <label>Tên sản phẩm</label>
                     <input ng-model="$ctrl.p.name">
                 </md-input-container>
-                <md-input-container class="md-block" ng-init="$ctrl.p.sizes=[{size: '', quantity: ''}];">
+                <md-input-container class="md-block">
                     <label>Mô tả sản phẩm</label>
                     <textarea ng-model="$ctrl.p.des" md-maxlength="300" rows="2"></textarea>
                 </md-input-container>          

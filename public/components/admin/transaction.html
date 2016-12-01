@@ -1,11 +1,13 @@
-<div ng-if="$root.isAuth">
-    <div layout="row" layout-wrap layout-padding>
-        <md-slider-container flex="70" flex-xs="100" flex-sm="60">
-            <md-icon>date_ranged</md-icon>
-            <md-slider ng-model="$ctrl.dayFilter" step="1" min="1" max="{{$ctrl.todayDate}}" aria-label="Số ngày gần nhất" flex md-discrete ng-change="$ctrl.filter()"></md-slider>
-        </md-slider-container>
-        <md-input-container flex="30" flex-xs="100" flex-sm="40">    
-            <md-select ng-model="$ctrl.statusFilter" ng-change="$ctrl.filter()" class="status{{$ctrl.statusFilter}}">
+<div ng-if="$root.isAuth" layout-padding>
+    <div layout="row" layout-wrap>
+        <div flex="40" flex-xs="50" flex-sm="40">
+            <md-datepicker ng-model="$ctrl.fromDate" md-placeholder="Từ ngày" ng-change="$ctrl.filter()" md-max-date="$ctrl.toDate"></md-datepicker>
+        </div>
+        <div flex="40" flex-xs="50" flex-sm="40">
+            <md-datepicker ng-model="$ctrl.toDate" md-placeholder="Đến ngày" ng-change="$ctrl.filter()" md-min-date="$ctrl.fromDate"></md-datepicker>
+        </div>
+        <md-input-container flex>    
+            <md-select ng-model="$ctrl.statusFilter" ng-change="$ctrl.filter()" class="status{{$ctrl.statusFilter}}" aria-label="Filter by status">
                 <md-option ng-value="undefined"><em># Trạng thái đơn hàng</em></md-option>
                 <md-option ng-repeat="(key, value) in $ctrl.status" ng-value="key" class="status{{key}}">
                     {{value}}
@@ -13,6 +15,20 @@
             </md-select>
         </md-input-container>
     </div>
+    <md-divider></md-divider>    
+    <h4>Tổng hợp</h4>
+    <ol ng-if="$ctrl.summary" class="summary">
+        <li>
+            Tổng tiền: <span>{{($ctrl.summary.spending.money + $ctrl.summary.successed.money) | money}}</span> / {{$ctrl.summary.spending.num + $ctrl.summary.successed.num}} chiếc
+        </li>
+        <li>
+            Đang gửi: <span class="status2">{{$ctrl.summary.spending.money | money}}</span> / {{$ctrl.summary.spending.num}} chiếc
+        </li>
+        <li>
+            Đã nhận tiền: <span class="status1">{{$ctrl.summary.successed.money | money}}</span> / {{$ctrl.summary.successed.num}} chiếc
+        </li>
+    </ol>
+    <md-divider></md-divider>
     <div layout="row" layout-wrap class="product-list" ng-repeat="date in $ctrl.list">
         <h3 flex="100">
             <md-icon>dashboard</md-icon> <small>{{date.created_date | date:'dd/MM/yyyy'}} ( <small><em class="status2">{{date.spending | money}}</em> + <em class="status1">{{date.successed | money}}</em> = <em>{{(date.spending + date.successed) | money}}</em> )</small></small>
@@ -26,7 +42,7 @@
                 </div>
                 <div class="card-image">
                     <div ng-repeat="img in item.product.images" class="img" ng-class="{'ng-hide-add': $index === imgIndex, 'ng-hide-remove': $index !== imgIndex}"
-                        background-src="img"></div>
+                        background-src="img" size="$ctrl.deviceSize"></div>
                     <div class="nav">
                         <md-radio-group ng-model="imgIndex" layout="row">
                             <md-radio-button ng-value="$index" ng-repeat="img in item.product.images" aria-label="{{item.name}}"></md-radio-button>

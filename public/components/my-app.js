@@ -3,11 +3,12 @@ require('./my-app.scss');
 app.component('myApp', {
     template: require('./my-app.html'),
     $routeConfig: [
+        {path: '/aboutus', name: 'AboutUs', component: 'aboutus'},
         {path: '/transaction', name: 'Transaction', component: 'transaction'},
         {path: '/policy', name: 'Policy', component: 'policy'},
         {path: '/:categoryId/...', name: 'HomeNewestByCategoryId', component: 'home'}
     ],
-    controller: ['$config', 'Category', '$scope', '$location', '$window', '$mdSidenav', '$rootScope', '$facebook', '$mdMedia', function ($config, Category, $scope, $location, $window, $mdSidenav, $rootScope, $facebook, $mdMedia) {
+    controller: ['$config', 'Category', '$scope', '$location', '$window', '$mdSidenav', '$rootScope', '$facebook', '$mdMedia', 'FacebookLoader', function ($config, Category, $scope, $location, $window, $mdSidenav, $rootScope, $facebook, $mdMedia, FacebookLoader) {
         let self = this;
         this.activeIndex = 0;
         Category.find().then((resp) => {
@@ -43,11 +44,6 @@ app.component('myApp', {
             }).catch((err) => {
                 console.error(err);
             });
-        }
-        this.genFacebook = () => {
-            setTimeout(() => {
-                if($window.FB) $window.FB.XFBML.parse();
-            }, 500);
         }
         this.followType = $mdMedia('xs') ? 'button_count' : 'standard';
     }]

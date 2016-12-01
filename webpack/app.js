@@ -10,7 +10,8 @@ require.ensure(['../public/css/1.font.css',
 	'../public/css/4.angularjs-datetime-picker.css']);
 })
 
-require(['../public/js/1.angular.min.js',
+require(['../public/js/0.lodash.min.js',
+	'../public/js/1.angular.min.js',
 	'../public/js/2.angular-animate.min.js',
 	'../public/js/2.angular-aria.min.js',
 	'../public/js/2.angular-messages.min.js',
@@ -28,6 +29,7 @@ require(['../public/js/1.angular.min.js',
 		'../public/components/my-app.js',
 		'../public/components/admin/transaction.js',
 		'../public/components/common/upload.js',
+		'../public/components/home/aboutus.js',
 		'../public/components/home/banner.js',
 		'../public/components/home/home.js',
 		'../public/components/home/product-hot.js',

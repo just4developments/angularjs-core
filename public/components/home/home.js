@@ -15,7 +15,7 @@ app.component('home', {
         }
     }],
     $routeConfig: [
-        {path: '/', name: 'ProductNewest', component: 'product', useAsDefault: true},
+        {path: '/', name: 'ProductNewest', component: 'product', useAsDefault: true},        
         {path: '/:filter', name: 'ProductNewestByFilter', component: 'product'}
     ]
 });

@@ -5,8 +5,9 @@ window.app = angular.module('myApp', [
 		'ngFacebook'
 	])
 	.constant('$config', {
-		apiUrl: 'http://api.nanacloset.com'
-		// apiUrl: 'http://localhost:9000'
+		apiUrl: 'http://api.nanacloset.com',
+		// apiUrl: 'http://localhost:9000',
+		webUrl: 'http://www.nanacloset.com',
 	})
 	.value('$routerRootComponent', 'myApp')
 	.config(['$locationProvider', '$config', '$httpProvider', '$compileProvider', function ($locationProvider, $config, $httpProvider, $compileProvider) {
@@ -22,14 +23,21 @@ window.app = angular.module('myApp', [
 			xfbml      : true
 		});
 	}])	
-	.run(['$rootScope', '$location', '$config', 'Category', '$window', '$mdMedia', '$http', function ($rootScope, $location, $config, Category, $window, $mdMedia, $http) {
+	.run(['$rootScope', '$location', '$config', 'Category', '$window', '$mdMedia', '$http', 'FacebookLoader', function ($rootScope, $location, $config, Category, $window, $mdMedia, $http, FacebookLoader) {
 		$rootScope.config = $config;
 		$rootScope.userID = $window.localStorage.userId;
 		if($window.localStorage.isAuth){
 			$rootScope.isAuth = $window.localStorage.isAuth;
 			$http.defaults.headers.common.IsNana = $rootScope.isAuth;
 		}
-		$rootScope.deviceCss = $mdMedia('xs') ? 'xs' : ($mdMedia('sm') ? 'sm' : 'md');		
+		$rootScope.deviceCss = $mdMedia('xs') ? 'xs' : ($mdMedia('sm') ? 'sm' : 'md');
+		$rootScope.$on('fb.load', function (event, data) {
+			console.log('why');
+			$window.isFbLoaded = true;
+			setTimeout(function() {
+				FacebookLoader.load();
+			});     
+		});		
 	}])
 	.run([function(){
 		(function(d, s, id){

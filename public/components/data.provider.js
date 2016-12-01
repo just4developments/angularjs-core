@@ -28,6 +28,9 @@ app
             },
             update: (item) => {
                 return $http.put(`${$config.apiUrl}/transaction/${item._id}`, item);
+            },
+            suggestBuyer: (name) => {
+                return $http.get(`${$config.apiUrl}/transaction/buyer?name=${name}`);
             }
         };
     }]).factory('FacebookLoader', ['$window', function($window){

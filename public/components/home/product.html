@@ -26,7 +26,7 @@
                     <div class="card-name">{{item.name}}</div>
                     <div class="card-des">{{item.des}}</div>
                     <div class="card-des" ng-if="$root.isAuth">Các size còn:<br/> 
-                        <span class="card-name" ng-repeat="s in item.sizes" title="Remain {{s.quantity}}/{{s.quantity0}}" ng-if="s.quantity > 0">
+                        <span class="card-name" ng-repeat="s in item.sizes" title="Remain {{s.quantity}}/ {{s.quantity0}}" ng-if="s.quantity > 0">
                             <a href="#" ng-if="s.quantity > 0" class="card-name" ng-click="$ctrl.addSell(item, $index)">{{s.size}}</a>
                         </span>
                     </div>
@@ -36,22 +36,34 @@
                         <md-datepicker ng-model="$ctrl.trans.created_date" md-placeholder="Enter date" md-max-date="$ctrl.today"></md-datepicker>
                     </md-input-container>
                     <div align="right" flex="30"><a href="#" ng-click="$ctrl.isSell = 0;"><span class="card-name">{{$ctrl.sizeName}}</span></a></div>
-                    <md-input-container class="md-block" flex="50" md-no-float>
-                        <input ng-model="$ctrl.trans.buyer" placeholder="ID người mua">
+                    <md-input-container class="md-block" flex="100" md-no-float style="margin: 0px 0px 16px 0px">
+                        <md-autocomplete
+                            md-no-cache="false"
+                            md-search-text="$ctrl.searchText"
+                            md-items="item in $ctrl.querySearchBuyer($ctrl.searchText)"
+                            md-search-text-change="$ctrl.searchTextChange($ctrl.searchText)"
+                            md-selected-item-change="$ctrl.selectedItemChange(item)"
+                            md-item-text="item.buyer"
+                            md-min-length="0"
+                            placeholder="Tên khách hàng">
+                            <md-item-template>
+                                <span md-highlight-text="$ctrl.searchText" md-highlight-flags="^i">{{item.buyer}} - {{item.phone}}</span>
+                            </md-item-template>
+                        </md-autocomplete>
                     </md-input-container>
                     <md-input-container class="md-block" flex="50" md-no-float>
                         <input ng-model="$ctrl.trans.phone" placeholder="Điện thoại">
                     </md-input-container>
-                    <md-input-container class="md-block" flex="100" md-no-float>
-                        <textarea ng-model="$ctrl.trans.address" md-maxlength="150" rows="1" md-select-on-focus placeholder="Địa chỉ"></textarea>
-                    </md-input-container>                    
-                    <md-input-container style="width: 100%" class="md-block">
+                    <md-input-container class="md-block" flex="50">
                         <label>Nhóm buôn bán</label>
-                        <md-select ng-model="$ctrl.trans.channel_name">
+                        <md-select ng-model="$ctrl.trans.channel_name" style="width: 100%">
                             <md-option ng-repeat="c in $ctrl.channels" ng-value="c.code">
                                 {{c.name}}
                             </md-option>
                         </md-select>
+                    </md-input-container>
+                    <md-input-container class="md-block" flex="100" md-no-float>
+                        <textarea ng-model="$ctrl.trans.address" md-maxlength="150" rows="1" md-select-on-focus placeholder="Địa chỉ"></textarea>
                     </md-input-container>
                     <md-input-container class="md-block" flex="50" md-no-float>
                         <input ng-model="$ctrl.trans.quantity" placeholder="Quantity">
@@ -90,7 +102,7 @@
             </md-card-actions>
         </md-card>
     </div>
-    <div class="card-item-wrap" flex-xs="100" flex-sm="50" flex="25" id="addItem">
+    <div class="card-item-wrap" flex-xs="100" flex-sm="50" flex="40" id="addItem">
         <md-card class="card-item add">
             <md-card-content ng-if="$ctrl.isAdd">
                 <div align="right">
@@ -134,25 +146,31 @@
                     </md-button>                    
                 </div>
                 <div layout="row" ng-repeat="s in $ctrl.p.sizes" ng-if="$ctrl.p && $ctrl.p.sizes">
-                    <md-input-container class="md-block">
+                    <md-input-container class="md-block" flex>
                         <label>Kích cỡ</label>
                         <input ng-model="s.size" type="text" placeholder="S">
                     </md-input-container>
-                    <md-input-container class="md-block">
-                        <label>Số lượng</label>
+                    <md-input-container class="md-block" flex="25">
+                        <label>SL còn lại</label>
                         <input ng-model="s.quantity" type="number" placeholder="0">
+                    </md-input-container>
+                    <md-input-container class="md-block" flex="25">
+                        <label>SL ban đầu</label>
+                        <input ng-model="s.quantity0" type="number" placeholder="0">                        
+                    </md-input-container>
+                    <md-input-container class="md-block" flex="10">
                         <md-icon class="button" ng-click="$ctrl.p.sizes.splice($index, 1);">remove</md-icon>
                     </md-input-container>
                 </div>
                 <br/><br/>
-                <div layout="row">   
+                <div layout="row">
                     <md-input-container class="md-block" flex="50">
                         <label>Nhập vào</label>
                         <input ng-model="$ctrl.p.money0" type="number" placeholder="$">
                     </md-input-container>
                     <md-input-container class="md-block" flex="50">
                         <label>Số lượng nhập</label>
-                        <input ng-model="$ctrl.p.piece" type="number" placeholder="Chiếc">
+                        <input ng-model="$ctrl.p.quantity0" type="number" readonly />
                     </md-input-container>
                 </div>
             </md-card-content>

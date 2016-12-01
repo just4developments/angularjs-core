@@ -14,12 +14,20 @@ app.component('transaction', {
                 self.summary = {
                     spending: {
                         num: 0,
-                        money: 0
+                        money: 0,
+                        money0: 0
                     },
                     successed: {
                         num: 0,
+                        money: 0,
+                        money0: 0
+                    },
+                    canceled: {
+                        num: 0,
                         money: 0
-                    }
+                    },
+                    got: 0,
+                    loss: 0
                 };
                 var isSameDay = function(d, d1) {
                     if(!d || !d1) return false;
@@ -36,15 +44,22 @@ app.component('transaction', {
                     if(item.status === 2) {
                         self.summary.spending.num++;
                         self.summary.spending.money+= +item.money;
+                        self.summary.spending.money0+= +item.product.money0 * item.quantity;
                         self.list[self.list.length-1].spending += +item.money;
-                    }
-                    if(item.status === 1) {
+                    }else if(item.status === 1) {
                         self.summary.successed.num++;
                         self.summary.successed.money+= +item.money;
+                        self.summary.successed.money0+= +item.product.money0 * item.quantity;
                         self.list[self.list.length-1].successed += +item.money;
+                    }else if(item.status === -1) {
+                        self.summary.canceled.num++;
+                        self.summary.canceled.money+= +item.money;
                     }
+
                     self.list[self.list.length-1].list.push(item);
                 }
+                self.summary.got = self.summary.spending.money + self.summary.successed.money;
+                self.summary.loss = self.summary.spending.money0 * self.summary.successed.money0;          
             });
         }
         this.$routerOnActivate = (next) => {

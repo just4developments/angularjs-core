@@ -27,6 +27,9 @@ html::-webkit-scrollbar-thumb:window-inactive {
 }
 
 product {
+    .md-whiteframe-z1 {
+        box-shadow: none !important;
+    }
     md-card-actions input {
         padding: 4px;
         margin: 0px 4px;

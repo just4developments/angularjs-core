@@ -1,7 +1,7 @@
 app.component('product', {
     template: require('./product.html'),
     bindings: { $router: '<' },
-    controller: ['$config', 'Product', 'Category', '$scope', 'Upload', '$window', '$rootScope', '$mdDialog', '$mdMedia', '$location', '$facebook', function ($config, Product, Category, $scope, Upload, $window, $rootScope, $mdDialog, $mdMedia, $location, $facebook) {
+    controller: ['$config', 'Product', 'Category', '$scope', 'Upload', '$window', '$rootScope', '$mdDialog', '$mdMedia', '$location', '$facebook', 'Transaction', '$q', function ($config, Product, Category, $scope, Upload, $window, $rootScope, $mdDialog, $mdMedia, $location, $facebook, Transaction, $q) {
         require('./product.scss');
         this.today = new Date();
         this.channels = [
@@ -21,12 +21,30 @@ app.component('product', {
                 });
             });
         };
+        this.searchTextChange = (text) => {
+            self.trans.buyer = text;
+        }
+        this.selectedItemChange = (item) => {
+            self.trans.address = item.address;
+            self.trans.buyer = item.buyer;
+            self.trans.phone = item.phone;
+        }
+        this.querySearchBuyer = (txt) => {
+            let deferred = $q.defer();
+            Transaction.suggestBuyer(txt).then((rs) => {
+                deferred.resolve(rs.data);
+            }).catch((err) => {
+                deferred.resolve([]);
+                console.error(err);
+            });
+            return deferred.promise;
+        }
         this.toSizes = (sizes) => {
             return sizes.filter(e=>e.quantity > 0).map(e=>e.size).join(', ');
         }
         this.createNew = () => {
             self.isAdd = true;
-            self.p = { category_id : $rootScope.categoryId, special: self.type === 'hot', sizes: [{size: '', quantity: 0}], piece: 0, money0: 0, };
+            self.p = { category_id : $rootScope.categoryId, special: self.type === 'hot', sizes: [{size: '', quantity: 0}], money0: 0 };
         }
         this.toggleVisible = (item) => {
             item.status = item.status === 0 ? 1 : 0;

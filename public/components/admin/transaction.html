@@ -17,23 +17,31 @@
     </div>
     <md-divider></md-divider>    
     <h4>Tổng hợp</h4>
-    <ol ng-if="$ctrl.summary" class="summary">
+    <ul ng-if="$ctrl.summary" class="summary">
         <li>
-            Tổng tiền: <span>{{($ctrl.summary.spending.money + $ctrl.summary.successed.money) | money}}</span> / {{$ctrl.summary.spending.num + $ctrl.summary.successed.num}} chiếc
+            Tiền lãi: <small class="status1">{{$ctrl.summary.got | money }}</small> - <small class="status-1">{{$ctrl.summary.loss | money }}</small> = <strong>{{($ctrl.summary.got - $ctrl.summary.loss) | money}}</strong>
         </li>
-        <li>
-            Đang gửi: <span class="status2">{{$ctrl.summary.spending.money | money}}</span> / {{$ctrl.summary.spending.num}} chiếc
-        </li>
-        <li>
-            Đã nhận tiền: <span class="status1">{{$ctrl.summary.successed.money | money}}</span> / {{$ctrl.summary.successed.num}} chiếc
-        </li>
-    </ol>
+        <ol class="summary" style="font-size: 0.8em">
+            <li>
+                Tổng tiền: <span>{{($ctrl.summary.got) | money}}</span> / {{$ctrl.summary.spending.num + $ctrl.summary.successed.num}} chiếc
+            </li>
+            <li>
+                Đang gửi: <span class="status2">{{$ctrl.summary.spending.money | money}}</span> / {{$ctrl.summary.spending.num}} chiếc
+            </li>
+            <li>
+                Đã nhận tiền: <span class="status1">{{$ctrl.summary.successed.money | money}}</span> / {{$ctrl.summary.successed.num}} chiếc
+            </li>
+            <li>
+                Đã hủy: <span class="status-1">{{$ctrl.summary.canceled.money | money}}</span> / {{$ctrl.summary.canceled.num}} chiếc
+            </li>
+        </ol>
+    </ul>
     <md-divider></md-divider>
     <div layout="row" layout-wrap class="product-list" ng-repeat="date in $ctrl.list">
         <h3 flex="100">
             <md-icon>dashboard</md-icon> <small>{{date.created_date | date:'dd/MM/yyyy'}} ( <small><em class="status2">{{date.spending | money}}</em> + <em class="status1">{{date.successed | money}}</em> = <em>{{(date.spending + date.successed) | money}}</em> )</small></small>
         </h3>
-        <div ng-if="$ctrl.list" ng-repeat="item in date.list" flex-xs="100" flex-sm="50" flex="25" ng-init="imgIndex=0;" class="card-item-wrap card{{item.status}}">
+        <div ng-if="$ctrl.list" ng-repeat="item in date.list" flex-xs="100" flex-sm="50" flex="20" ng-init="imgIndex=0;" class="card-item-wrap card{{item.status}}">
             <md-card class="card-item">
                 <div class="sale-box" ng-if="item.size">
                     <span class="sale-label">
@@ -51,8 +59,9 @@
                 </div>
                 <div>                
                     <div class="card-money">{{item.money | money}} / {{item.quantity}}</div>
-                    <div class="card-name">* <small>{{item.buyer}}</small></div>
-                    <div class="card-des">* <small>{{item.address}}</small></div>
+                    <div class="card-name">{{item.buyer}}</div>
+                    <div class="card-des">{{item.phone}}</div>
+                    <div class="card-des"><small>{{item.address}}</small></div>
                 </div>
                 <br/>
                 <md-card-actions layout="row" layout-align="end center">

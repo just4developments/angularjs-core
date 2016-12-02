@@ -17,7 +17,7 @@ app
     }])
     .factory('Category', ['$http', '$rootScope', '$config', '$q', function ($http, $rootScope, $config, $q) {
         return {
-            find: () => {
+            find: (type) => {
                 return $http.get(`${$config.apiUrl}/category`);
             }
         };

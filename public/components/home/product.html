@@ -112,12 +112,15 @@
                 </div>
                 <upload-file file-model="$ctrl.p.images" name="images" img-src="$ctrl.p.images ? $ctrl.p.images[0] : undefined" ></upload-file>
                 <md-switch class="md-primary" md-no-ink aria-label="Special" ng-model="$ctrl.p.special">
-                    Hàng bán chạy ?
+                    Hàng HOT ?
                 </md-switch>
-                <md-input-container>
-                    <label>Tên sản phẩm</label>
-                    <input ng-model="$ctrl.p.name">
-                </md-input-container>
+                <div layout="row">  
+                    <md-input-container flex="50">
+                        <label>Tên sản phẩm</label>
+                        <input ng-model="$ctrl.p.name">
+                    </md-input-container>
+                    <md-datepicker ng-model="$ctrl.p.created_date" md-placeholder="Ngày nhập" md-max-date="$ctrl.today" flex="50"></md-datepicker>
+                </div>
                 <md-input-container class="md-block">
                     <label>Mô tả sản phẩm</label>
                     <textarea ng-model="$ctrl.p.des" md-maxlength="300" rows="2"></textarea>
@@ -173,6 +176,16 @@
                         <input ng-model="$ctrl.p.quantity0" type="number" readonly />
                     </md-input-container>
                 </div>
+                <fieldset class="standard" >
+                    <legend>Tags</legend>
+                    <div layout="row" layout-wrap flex>
+                        <div flex="100" ng-repeat="t in $ctrl.tags">
+                            <md-checkbox ng-checked="$ctrl.exists(t)" ng-click="$ctrl.toggle(t)">
+                                {{ t.name }}
+                            </md-checkbox>
+                        </div>
+                    </div>
+                </fieldset>
             </md-card-content>
             <md-card-actions layout="row" layout-align="end center">
                 <md-button class="md-icon-button" aria-label="Favorite" ng-click="$ctrl.save($ctrl.p)" ng-if="$ctrl.isAdd">

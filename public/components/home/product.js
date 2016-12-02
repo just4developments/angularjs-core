@@ -18,6 +18,7 @@ app.component('product', {
                 self.list = resp.data;
                 Category.find().then((resp) => {
                     self.categories = resp.data;
+                    self.tags = resp.data;
                 });
             });
         };
@@ -44,7 +45,19 @@ app.component('product', {
         }
         this.createNew = () => {
             self.isAdd = true;
-            self.p = { category_id : $rootScope.categoryId, special: self.type === 'hot', sizes: [{size: '', quantity: 0}], money0: 0 };
+            self.p = { category_id : $rootScope.categoryId, special: self.type === 'hot', sizes: [{size: '', quantity: 0}], money0: 0, created_date: new Date(), tags: [] };
+        }
+        this.exists = function (item) {
+            return _.findIndex(self.p.tags, (e) => {
+                return e._id == item._id;
+            }) > -1;
+        }
+        this.toggle = function (item) {
+            var idx = _.findIndex(self.p.tags, (e) => {
+                return e._id == item._id;
+            });
+            if (idx > -1) self.p.tags.splice(idx, 1);
+            else self.p.tags.push(item);
         }
         this.toggleVisible = (item) => {
             item.status = item.status === 0 ? 1 : 0;
@@ -61,7 +74,9 @@ app.component('product', {
         }
         this.edit = (item) => {
             self.isAdd = true;
-            self.p = $window._.clone(item);   
+            self.p = $window._.cloneDeep(item);
+            if(!self.p.tags) self.p.tags = []; 
+            self.p.created_date = new Date(self.p.created_date);
         }
         this.delete = (item) => {
             if(!$window.confirm('Bạn có chắc muốn xóa sản phẩm này ?')) return; 
@@ -102,10 +117,10 @@ app.component('product', {
         this.save = () => {
             self.isAdd = false;
             var method = self.p._id ? 'PUT' : 'POST';
-            var p0 = $window._.clone(self.p);
-            p0.images = self.p.images;
-            if(p0.sizes) p0.sizes = angular.toJson(p0.sizes);
-            Upload.uploadFileToUrl(p0, $config.apiUrl + '/product', method).then((resp) => {
+            if(self.p.sizes) self.p.sizes = angular.toJson(self.p.sizes);
+            if(self.p.tags) self.p.tags = angular.toJson(self.p.tags);
+            self.p.created_date = new Date(self.p.created_date);
+            Upload.uploadFileToUrl(self.p, $config.apiUrl + '/product', method).then((resp) => {
                 if(self.p._id){
                     self.p.images = resp.data.images;
                     self.list[self.list.findIndex(e=>e._id === self.p._id)] = self.p;

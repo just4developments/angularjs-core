@@ -9,10 +9,6 @@
                     <p> {{ c.name }} </p>
                     <md-icon class="md-secondary" ng-show="$index == $ctrl.activeIndex">done</md-icon>
                 </md-list-item>
-                <md-list-item ng-click="$ctrl.closeGoTo('transaction', $ctrl.categories.length)" ng-if="$root.isAuth">
-                    <p> Giao dịch </p>
-                    <md-icon class="md-secondary" ng-show="$ctrl.categories.length == $ctrl.activeIndex">done</md-icon>
-                </md-list-item>
             </md-list>
         </md-content>
     </md-sidenav>

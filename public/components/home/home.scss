@@ -1,3 +1,6 @@
+.xs .tabf li {
+    display: block;
+}
 home {      
     .bref-container {
         box-shadow: 0px 0px 5px #ccc;
@@ -53,7 +56,6 @@ home {
         border-radius: 0px 0px 16px;
     }
     .tabf li {        
-        position: relative;        
         color: #4f4e4f;
         cursor: pointer;
         display: inline;

@@ -2,7 +2,7 @@
 <div class="bref-container">
     <div ng-click="show=!show;" class="bref" ng-class="{'show': show}"><md-icon>arrow_drop_down</md-icon> Tìm kiếm chi tiết </div>
     <div layout="row" layout-wrap ng-show="show" class="bref-content" layout-align="start center">
-        <div flex ng-repeat="tag in $ctrl.tags">
+        <div flex="20" flex-sm="25" flex-xs="100" ng-repeat="tag in $ctrl.tags">
             <md-checkbox ng-click="$ctrl.addFilter(tag)" ng-checked="$ctrl.exists(tag)">
                 {{ tag.name }}
             </md-checkbox>

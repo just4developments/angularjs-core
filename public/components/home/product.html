@@ -1,5 +1,5 @@
 <div layout="row" layout-wrap class="product-list" ng-class="{'active' : $ctrl.list}">  
-    <div ng-if="$ctrl.list" ng-repeat="item in $ctrl.list" flex-xs="100" flex-sm="50" flex="25" ng-init="imgIndex=0; sizeIndex=0;" class="card-item-wrap" ng-class="{'removed': item.status == 0}">
+    <div ng-if="$ctrl.list" ng-repeat="item in $ctrl.list" flex-xs="100" flex-sm="50" flex="25" ng-init="imgIndex=0; sizeIndex=0;" class="card-item-wrap" ng-class="{'removed': item.status == 0, 'hide': !$ctrl.isShow(item.tags)}">
         <md-card class="card-item">
             <div class="sale-box" ng-if="0 === sizeIndex">
                 <span class="sale-label" ng-class="{'notavail': item.quantity <= 0}">

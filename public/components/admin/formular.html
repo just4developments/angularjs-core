@@ -1,0 +1,74 @@
+<div ng-if="$root.isAuth">
+  <md-content>
+    <md-tabs md-dynamic-height md-border-bottom>
+      <md-tab label="Tính gía trung bình SP">
+        <md-content class="md-padding">
+          <h2>Hung Thinh <small style="color: #ccc; font-size: 0.5em;">dathangtrungquoc.com.vn</small></h2>
+          <div layout="row" layout-wrap layout-padding>
+            <md-input-container ng-hide="$ctrl.isQuick == 0" flex="100">
+                <label>Quick</label>
+                <textarea ng-model="$ctrl.pars" rows="5"></textarea>
+            </md-input-container>
+            <div flex="100" align="right">
+                <md-button class="md-raised md-warn" ng-click="$ctrl.autoparse()">Quick Add</md-button>
+            </div>
+            <md-input-container flex="20" flex-xs="100">
+                <label>Tỉ giá (1NDT = ?VND)</label>
+                <input ng-model="$ctrl.rate" type="number" />
+            </md-input-container>
+            <md-input-container flex="10" flex-xs="100">
+                <label>Số KG</label>
+                <input ng-model="$ctrl.kg" type="number" />
+            </md-input-container>
+            <md-input-container flex="15" flex-xs="100">
+                <label>? VND/1 KG</label>
+                <input ng-model="$ctrl.kgMoney" type="number" />
+            </md-input-container>
+            <md-input-container flex="10" flex-xs="100">
+                <label>Phí DV(%)</label>
+                <input ng-model="$ctrl.percent" type="number" />
+            </md-input-container>
+            <md-input-container flex="15" flex-xs="100">
+                <label>Tiền DV(NDT)</label>
+                <input ng-model="$ctrl.taxService" type="number" disabled/>
+            </md-input-container>
+            <md-input-container flex>
+                <label>Tổng tệ trong excel(NDT)</label>
+                <input ng-model="$ctrl.total" type="number" />
+            </md-input-container>
+            <h4 flex="100">Sản phẩm</h4>
+            <div ng-repeat="item in $ctrl.products" flex="100" layout="row">
+                <md-input-container flex="5">
+                    <label>{{$index+1}}.</label>
+                </md-input-container>
+                <md-input-container flex="20">
+                    <label>SL (NDT)</label>
+                    <input ng-model="item.sl" type="number" />
+                </md-input-container>
+                <md-input-container flex="20">
+                    <label>Gía (NDT)</label>
+                    <input ng-model="item.money" type="number" />
+                </md-input-container>
+                <md-input-container flex="20">
+                    <label>Ship (NDT)</label>
+                    <input ng-model="item.ship" type="number" />
+                </md-input-container>
+                <md-input-container flex>
+                    <label>Giá trung bình (VND)</label>
+                    <input value="{{item.price | money}}/1 chiếc" type="text" disabled />
+                </md-input-container>
+            </div>
+            <md-button ng-click="$ctrl.addProduct()" class="md-raised">Manual Add</md-button>
+            <md-button ng-click="$ctrl.calculate()" class="md-raised md-primary">Calculator</md-button>
+        </div>
+        </md-content>
+      </md-tab>
+      <md-tab label="...">
+        <md-content class="md-padding">
+          <h1 class="md-display-2">Tab One</h1>
+          <p>Tab tinh toan</p>
+        </md-content>
+      </md-tab>
+    </md-tabs>
+  </md-content>
+</div>

@@ -1,4 +1,30 @@
-home {        
+home {      
+    .bref-container {
+        box-shadow: 0px 0px 5px #ccc;
+    }  
+    .bref {
+        outline: none; 
+        cursor: pointer; 
+        padding: 4px 0px 2px;
+        background-color: #efefef;
+        border-bottom: solid 1px #ccc;
+        font-size: 0.9em;
+    }
+    .bref-content {
+        background-color: #fefefe;
+        padding: 12px 48px 0px;
+    }
+    .bref md-icon {
+        margin-left: 16px;
+        -ms-transform: rotate(-90deg); /* IE 9 */
+        -webkit-transform: rotate(-90deg); /* Chrome, Safari, Opera */
+        transform: rotate(-90deg);
+    }
+    .bref.show md-icon {
+        -ms-transform: rotate(0deg); /* IE 9 */
+        -webkit-transform: rotate(0deg); /* Chrome, Safari, Opera */
+        transform: rotate(0deg);
+    }
     .elipsis2 {
         overflow: hidden;
         display: -webkit-box;
@@ -6,29 +32,25 @@ home {
         -webkit-box-orient: vertical;
     }
     .tabf {
-        margin: 0px;
         padding: 0px;        
         list-style-type: none;
-        height:30px;
-        overflow: hidden;
-        margin: 30px 0px;
+        margin: 30px 16px;
+        overflow: visible;
     }
-    .tabf li.active,
+    .tabf li.active {
+        // background-color: #02b8e3;
+        // color: white;
+        border: solid 5px #02b8e3;
+        color: #02b8e3;
+    }
     .tabf li:hover {
         color: #02b8e3;        
     }
-    .tabf li.active hr,
-    .tabf li:hover hr {
-        bottom: -3px;
+    .tabf li:first-child{
+        border-radius: 16px 0px 0px;
     }
-    .tabf hr {
-        position: absolute;
-        bottom: -16px;
-        left: 16px;  
-        width: 126px;
-        -webkit-transition: 0.3s;
-        -o-transition: 0.3s;
-        transition: 0.3s;
+    .tabf li:last-child{
+        border-radius: 0px 0px 16px;
     }
     .tabf li {        
         position: relative;        
@@ -36,6 +58,7 @@ home {
         cursor: pointer;
         display: inline;
         padding: 8px 16px;
+        box-shadow: 0px 0px 5px #ccc;
         font-size: 1.2em;
         -webkit-transition: 0.3s;
         -o-transition: 0.3s;

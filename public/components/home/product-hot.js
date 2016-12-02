@@ -21,7 +21,7 @@ app.component('productHot', {
                 }
             };
             getRdItem(maxSize);
-            self.list = rs;
+            self.listHot = rs;
         });
         this.goTo = (filter) => {
             setTimeout(() => {

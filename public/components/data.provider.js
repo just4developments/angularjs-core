@@ -18,7 +18,7 @@ app
     .factory('Category', ['$http', '$rootScope', '$config', '$q', function ($http, $rootScope, $config, $q) {
         return {
             find: (type) => {
-                return $http.get(`${$config.apiUrl}/category`);
+                return $http.get(`${$config.apiUrl}/category?type=${type}`);
             }
         };
     }]).factory('Transaction', ['$http', '$rootScope', '$config', '$q', function ($http, $rootScope, $config, $q) {

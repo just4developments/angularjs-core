@@ -126,6 +126,9 @@ product {
         font-size: 1.2em;
         text-align: center;
     }
+    .card-item-wrap.hide {
+        display: none;
+    }
     .card-item-wrap.removed {
         opacity: 0.3;
         filter: alpha(opacity=50);

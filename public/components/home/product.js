@@ -16,12 +16,28 @@ app.component('product', {
             self.type = next.params.filter;
             Product.find($rootScope.categoryId, self.type).then((resp) => {
                 self.list = resp.data;
-                Category.find().then((resp) => {
+                Category.find(1).then((resp) => {
                     self.categories = resp.data;
-                    self.tags = resp.data;
+                    Category.find(2).then((resp) => {
+                        self.tags = resp.data;
+                    });
                 });
             });
         };
+        this.isShow = (tags) => {
+            if($rootScope.tagFilter.length === 0) return true;
+            for(var i in $rootScope.tagFilter){
+                let isOk = false;
+                for(var j in tags){                
+                    if(tags[j]._id == $rootScope.tagFilter[i]._id){
+                        isOk = true;
+                        break;
+                    }                        
+                }
+                if(!isOk) return false;
+            }
+            return true;
+        }
         this.searchTextChange = (text) => {
             self.trans.buyer = text;
         }

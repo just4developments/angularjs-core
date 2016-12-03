@@ -5,8 +5,8 @@ window.app = angular.module('myApp', [
 		'ngFacebook'
 	])
 	.constant('$config', {
-		apiUrl: 'http://api.nanacloset.com',
-		// apiUrl: 'http://localhost:9000',
+		// apiUrl: 'http://api.nanacloset.com',
+		apiUrl: 'http://localhost:9000',
 		webUrl: 'http://www.nanacloset.com',
 	})
 	.value('$routerRootComponent', 'myApp')

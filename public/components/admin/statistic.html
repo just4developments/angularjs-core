@@ -1,0 +1,25 @@
+<div layout="row" layout-wrap>
+    <div flex="40" flex-xs="50" flex-sm="40">
+        <md-datepicker ng-model="$ctrl.fromDate" md-placeholder="Từ ngày" ng-change="$ctrl.filter()" md-max-date="$ctrl.toDate"></md-datepicker>
+    </div>
+    <div flex="40" flex-xs="50" flex-sm="40">
+        <md-datepicker ng-model="$ctrl.toDate" md-placeholder="Đến ngày" ng-change="$ctrl.filter()" md-min-date="$ctrl.fromDate"></md-datepicker>
+    </div>    
+</div>
+<br/> 
+<br/> 
+<md-tabs md-dynamic-height md-border-bottom>
+    <md-tab label="Tiền bán hàng" md-on-select="$ctrl.chartMoneyByTime()">
+        <md-content class="md-padding">
+            <div id="chartContainer1" style="height: 300px; width: 100%;"></div>
+            <br/>
+            <br/>
+            <div id="chartContainer1-1" style="height: 300px; width: 100%;"></div>
+        </md-content>
+    </md-tab>
+    <md-tab label="Loại mặt hàng" md-on-select="$ctrl.chartByProductType()">
+        <md-content class="md-padding">
+            <div id="chartContainer2" style="height: 400px; width: 100%;"></div>
+        </md-content>
+    </md-tab>
+</md-tabs>

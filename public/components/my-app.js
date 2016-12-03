@@ -4,6 +4,7 @@ app.component('myApp', {
     template: require('./my-app.html'),
     $routeConfig: [
         {path: '/aboutus', name: 'AboutUs', component: 'aboutus'},
+        {path: '/statistic', name: 'Statistic', component: 'statistic'},
         {path: '/formula', name: 'Formula', component: 'formular'},
         {path: '/transaction', name: 'Transaction', component: 'transaction'},
         {path: '/policy', name: 'Policy', component: 'policy'},

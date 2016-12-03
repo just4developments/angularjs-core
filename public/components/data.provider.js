@@ -31,6 +31,21 @@ app
             },
             suggestBuyer: (name) => {
                 return $http.get(`${$config.apiUrl}/transaction/buyer?name=${name}`);
+            },
+            statisticByDate(from, to){
+                return $http.get(`${$config.apiUrl}/transaction?chartByDate=1&from=${from}&to=${to}`);
+            },
+            statisticByMonth(from, to){
+                return $http.get(`${$config.apiUrl}/transaction?chartByMonth=1&from=${from}&to=${to}`);
+            },
+            statisticByYear(from, to){
+                return $http.get(`${$config.apiUrl}/transaction?chartByYear=1&from=${from}&to=${to}`);
+            },
+            statisticByDayOfWeek(from, to){
+                return $http.get(`${$config.apiUrl}/transaction?chartByDayOfWeek=1&from=${from}&to=${to}`);
+            },
+            statisticByType(from, to){
+                return $http.get(`${$config.apiUrl}/transaction?chartByType=1&from=${from}&to=${to}`);
             }
         };
     }]).factory('FacebookLoader', ['$window', function($window){

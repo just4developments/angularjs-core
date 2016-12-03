@@ -82,7 +82,7 @@ app.component('statistic', {
             tabIndex = -1;
             let drawChart = (title, name, xformat, res) => {
                 let data = res.data.map((e) => {
-                    e.x = new Date(+e._id.year, +e._id.month || 0, +e._id.day || 1);
+                    e.x = new Date(+e._id.year, (+e._id.month-1) || 0, +e._id.day || 1);
                     delete e._id;
                     return e;
                 });

@@ -1,9 +1,9 @@
 <div layout="row" layout-wrap>
     <div flex="40" flex-xs="50" flex-sm="40">
-        <md-datepicker ng-model="$ctrl.fromDate" md-placeholder="Từ ngày" ng-change="$ctrl.filter()" md-max-date="$ctrl.toDate"></md-datepicker>
+        <md-datepicker ng-model="$ctrl.fromDate" aria-label="Từ ngày" md-placeholder="Từ ngày" ng-change="$ctrl.filter()" md-max-date="$ctrl.toDate"></md-datepicker>
     </div>
     <div flex="40" flex-xs="50" flex-sm="40">
-        <md-datepicker ng-model="$ctrl.toDate" md-placeholder="Đến ngày" ng-change="$ctrl.filter()" md-min-date="$ctrl.fromDate"></md-datepicker>
+        <md-datepicker ng-model="$ctrl.toDate" aria-label="Đến ngày" md-placeholder="Đến ngày" ng-change="$ctrl.filter()" md-min-date="$ctrl.fromDate"></md-datepicker>
     </div>    
 </div>
 <br/> 

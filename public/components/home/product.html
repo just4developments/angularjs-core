@@ -33,7 +33,7 @@
                 </md-card-content>
                 <md-card-content ng-show="$ctrl.isSell" layout="row" layout-wrap layout-align="end center">
                     <md-input-container class="md-block" flex="70" md-no-float>
-                        <md-datepicker ng-model="$ctrl.trans.created_date" md-placeholder="Enter date" md-max-date="$ctrl.today"></md-datepicker>
+                        <md-datepicker ng-model="$ctrl.trans.created_date" aria-label="Ngày mua" md-placeholder="Ngày mua" md-max-date="$ctrl.today"></md-datepicker>
                     </md-input-container>
                     <div align="right" flex="30"><a href="#" ng-click="$ctrl.isSell = 0;"><span class="card-name">{{$ctrl.sizeName}}</span></a></div>
                     <md-input-container class="md-block" flex="100" md-no-float style="margin: 0px 0px 16px 0px">
@@ -121,7 +121,7 @@
                         <label>Tên sản phẩm</label>
                         <input ng-model="$ctrl.p.name">
                     </md-input-container>
-                    <md-datepicker ng-model="$ctrl.p.created_date" md-placeholder="Ngày nhập" md-max-date="$ctrl.today" flex="50"></md-datepicker>
+                    <md-datepicker ng-model="$ctrl.p.created_date" aria-label="Ngày nhập" md-placeholder="Ngày nhập" md-max-date="$ctrl.today" flex="50"></md-datepicker>
                 </div>
                 <md-input-container class="md-block">
                     <label>Mô tả sản phẩm</label>

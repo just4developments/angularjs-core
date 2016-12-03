@@ -10,9 +10,10 @@ window.app = angular.module('myApp', [
 		webUrl: 'http://www.nanacloset.com',
 	})
 	.value('$routerRootComponent', 'myApp')
-	.config(['$locationProvider', '$config', '$httpProvider', '$compileProvider', function ($locationProvider, $config, $httpProvider, $compileProvider) {
+	.config(['$locationProvider', '$config', '$httpProvider', '$compileProvider', '$mdAriaProvider', function ($locationProvider, $config, $httpProvider, $compileProvider, $mdAriaProvider) {
 		//$locationProvider.hashPrefix('!');    
 		// $httpProvider.interceptors.push('AuthInterceptor');
+		$mdAriaProvider.disableWarnings();
 		$compileProvider.debugInfoEnabled(false);
 		$locationProvider.html5Mode(true);				
 	}])

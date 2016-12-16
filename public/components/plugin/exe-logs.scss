@@ -1,0 +1,31 @@
+exe-logs {
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+    td,
+    th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+    .plf-install {
+        color: #FFB752 !important;
+    }
+    .plf-execute {
+        color: #6FB3E0 !important;
+    }
+    .plf-success {
+        color: #87B87F !important;
+    }
+    .plf-fail {
+        color: #d3413b!important;
+    }
+    .plf-running {
+        color: #FEE188!important;
+    }
+}

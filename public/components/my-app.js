@@ -5,6 +5,7 @@ module.exports = {
     $routeConfig: [
         { path: '/', name: 'Execute Logs', component: 'exeLogs', useAsDefault: true },
         { path: '/plugin-form', name: 'Plugin Form', component: 'pluginForm' },
-        { path: '/upload-package', name: 'Upload Package', component: 'uploadPackage' }
+        { path: '/upload-package', name: 'Upload Package', component: 'uploadPackage' },
+        { path: '/add-instance/:id', name: 'Add Instance', component: 'addInstance' }
     ]
 }

@@ -41,18 +41,42 @@ module.exports = {
             execute: (id, data) => {
                 return $http.post(`${$config.apiUrl}/ShellClass/execute/${id}`, data);
             },
-            getScripts: () => {
+            addInstance: (data) => {
+                return $http.post(`${$config.apiUrl}/ShellInstance`, data);
+            },
+            deleteInstance: (id) => {
+                return $http.delete(`${$config.apiUrl}/ShellInstance/${id}`);
+            },
+            deploy: (id) => {
+                return $http.post(`${$config.apiUrl}/ShellInstance/deploy/${id}`);
+            },
+            unDeploy: (id) => {
+                return $http.delete(`${$config.apiUrl}/ShellInstance/deploy/${id}`);
+            },
+            getSuccessPlugins: () => {
+                return $http.get(`${$config.apiUrl}/ShellClass?status=1`);
+            },
+            getAllPlugins: () => {
                 return $http.get(`${$config.apiUrl}/ShellClass`);
             },
             deleteScript: (id) => {
                 return $http.delete(`${$config.apiUrl}/ShellClass/${id}`);
+            },
+            getInstancesByClass: (id) => {
+                return $http.get(`${$config.apiUrl}/ShellInstanceByClass/${id}`);
+            },
+            getInfoInstance: (instanceId) => {
+                return $http.get(`${$config.apiUrl}/ShellInstance/information/${instanceId}`);
+            },
+            restart: (instanceId) => {
+                return $http.post(`${$config.apiUrl}/ShellInstance/execute-script/${instanceId}/restart`);
             }
         };
     }],
     UploadPackage: ['$http', '$rootScope', '$config', '$q', function($http, $rootScope, $config, $q) {
 
         return {
-            uploadUrl: `${$config.apiUrl}/ShellClass/upload`,
+            uploadUrl: `${$config.apiUrl}/ShellClass`,
             maxUpload: 12, // max uploading file
         };
     }],
@@ -66,5 +90,38 @@ module.exports = {
                 return $http.get(`${$config.apiUrl}/ExecutingLogs?recordsPerPage=${count}&page=1`);
             }
         };
+    }],
+    SocketIO: ['$http', '$rootScope', '$config', '$q', function($http, $rootScope, $config, $q) {
+
+        var self = {
+            bind: (sessionId, fcConnected, fcCompleted) => {
+                if (!$rootScope.socket) {
+                    $rootScope.socket = io($config.apiUrl);
+                    $rootScope.socket.on('connected', function(data) {
+                        $rootScope.$broadcast('iosocket.connected', data);
+                        $rootScope.socket.emit('bind', sessionId);
+                    });
+                    $rootScope.socket.on('completed', function(data) {
+                        $rootScope.$broadcast('iosocket.completed', data);
+                    });
+                } else {
+                    $rootScope.socket.emit('bind', sessionId);
+                }
+                return self;
+            },
+            completed: (fcCompleted) => {
+                $rootScope.$on('iosocket.completed', (evt, data) => {
+                    fcCompleted(data);
+                });
+                return self;
+            },
+            connected: (fcConnected) => {
+                $rootScope.$on('iosocket.connected', (evt, data) => {
+                    fcConnected(data);
+                });
+                return self;
+            }
+        };
+        return self;
     }]
 }

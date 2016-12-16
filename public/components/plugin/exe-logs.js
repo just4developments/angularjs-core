@@ -5,16 +5,14 @@ module.exports = {
         data: '<'
     },
     controller: ['$config', 'ExecuteLogs', function($config, ExecuteLogs) {
-        require('./exe-logs.css');
+        require('./exe-logs.scss');
 
         ExecuteLogs.getTopLogs(10).then((res) => {
             this.logs = res.data;
         });
 
         this.transfer = (data) => {
-            return JSON.stringify(data, null, '\n');
+            return JSON.parse(data);
         }
-
-
     }]
 }

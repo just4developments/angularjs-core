@@ -6,7 +6,7 @@
             <th>event_type</th>
             <th>status</th>
             <th>title</th>
-            <th>shellclass_id</th>
+            <th>shellinstance_id</th>
             <th>started_time</th>
             <th>finished_time</th>
             <th>Results</th>
@@ -20,7 +20,7 @@
             <td ng-class="cell.event_type==0?'plf-install':'plf-execute'">{{cell.event_type==0?'Installed':'Executed'}}</td>
             <td ng-class="cell.status==1?'plf-success':(cell.status==-1?'plf-fail':'plf-running')">{{cell.status==1?'Successed':(cell.status==-1?'Failed':'Running')}}</td>
             <td>{{cell.title}}</td>
-            <td>{{cell.shellclass_id}}</td>
+            <td>{{cell.shellinstance_id}}</td>
             <td>{{cell.started_time | date:'yyyy-MM-dd HH:mm:ss'}}</td>
             <td>{{cell.finished_time | date:'yyyy-MM-dd HH:mm:ss'}}</td>
             <td>{{$ctrl.transfer(cell.result)}}</td>

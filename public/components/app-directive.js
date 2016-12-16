@@ -4,7 +4,6 @@ module.exports = {
         return {
             link: function(scope, element, attributes) {
                 element.on("click", () => {
-                    console.log("abc");
                     scope.$apply(() => {
                         $location.path(attributes.goTo);
                     });

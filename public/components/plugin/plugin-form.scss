@@ -1,0 +1,75 @@
+plugin-form {
+    .pl-text-transform {
+        text-transform: uppercase;
+    }
+    .pl-w80 {
+        width: 80% !important;
+    }
+    .pl-description {
+        color: #31708f;
+    }
+    .pl-fsize25 {
+        font-size: 25px;
+    }
+    .pl-mrtop25 {
+        margin-top: 25px;
+    }
+    .pl-bradius20 {
+        border-radius: 20px;
+    }
+    .pl-effect {
+        cursor: pointer;
+        color: #A9A9A9;
+    }
+    .pl-effect:hover {
+        cursor: pointer;
+        color: #808080;
+    }
+    .pl-add-instance {
+        font-size: 55px;
+        padding: 10px;
+    }
+    .pl-bg-white {
+        background-color: #C9DAF8;
+    }
+    .pl-row-content {
+        margin-left: 0px;
+        margin-right: 0px;
+        background-color: #FFF;
+        margin-bottom: 10px;
+        padding: 10px 10px;
+        border-radius: 20px;
+    }
+    .pl-icon-img {
+        font-size: 60px;
+        color: darkgray;
+        padding-top: 8px;
+    }
+    .pl-text-info font {
+        font-size: 16px;
+        font-family: sans-serif;
+    }
+    .pl-layout-icons {
+        text-align: center;
+        margin: 7px auto;
+    }
+    .pl-mright10 {
+        margin-right: 10px;
+    }
+    .pl-fs40 {
+        font-size: 40px;
+    }
+    .pl-layout-test-ins {
+        margin-left: 0px;
+        margin-right: 0px;
+        background-color: #FFF;
+        margin-bottom: 10px;
+        padding: 10px 10px;
+        border-radius: 20px;
+        cursor: pointer;
+    }
+    .pl-btn-test-ins {
+        font-size: 55px;
+        width: 100%;
+    }
+}

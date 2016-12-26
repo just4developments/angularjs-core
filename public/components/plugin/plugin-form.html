@@ -70,27 +70,27 @@
                                                 <!-- Select box -->
                                                 <div class="form-group" ng-if="i.component=='select-box'">
                                                     <label>{{i.label}}</label>
-                                                    <select class="form-control" ng-model="$ctrl.currentData.inputData[i.param]" ng-init="$ctrl.currentData.inputData[i.param]=i.default">
+                                                    <select class="form-control" ng-model="$ctrl.currentData.input_data[i.param]" ng-init="$ctrl.currentData.input_data[i.param]=i.default">
                                                     <option ng-repeat="(ikey, ivalue) in i.data" value="{{ikey}}">{{ivalue[ikey]}}</option>
                                                 </select>
                                                 </div>
                                                 <!-- Input Text -->
                                                 <div class="form-group" ng-if="i.component=='text'">
                                                     <label>{{i.label}}</label>
-                                                    <input class="form-control" ng-init="$ctrl.currentData.inputData[i.param]=i.default" type="text" ng-model="$ctrl.currentData.inputData[i.param]">
+                                                    <input class="form-control" ng-init="$ctrl.currentData.input_data[i.param]=i.default" type="text" ng-model="$ctrl.currentData.input_data[i.param]">
                                                 </div>
                                                 <!-- Date -->
                                                 <div class="form-group" ng-if="i.component=='date'">
                                                     <p>{{i.label}}</p>
-                                                    <input class="form-control" ng-init="$ctrl.currentData.inputData[i.param]=i.default" type="text" ng-model="$ctrl.currentData.inputData[i.param]">
+                                                    <input class="form-control" ng-init="$ctrl.currentData.input_data[i.param]=i.default" type="text" ng-model="$ctrl.currentData.input_data[i.param]">
                                                 </div>
                                                 <!-- Radio -->
                                                 <div class="control-group" ng-if="i.component=='radio'">
                                                     <label class="control-label bolder blue">{{i.label}}</label>
 
-                                                    <div ng-repeat="(ikey, ivalue) in i.data" class="radio" ng-init="$ctrl.currentData.inputData[i.param]=i.default">
+                                                    <div ng-repeat="(ikey, ivalue) in i.data" class="radio" ng-init="$ctrl.currentData.input_data[i.param]=i.default">
                                                         <label>
-                                                        <input name="form-field-radio" type="radio" class="ace" ng-model="$ctrl.currentData.inputData[i.param]" value="{{ikey}}"/>
+                                                        <input name="form-field-radio" type="radio" class="ace" ng-model="$ctrl.currentData.input_data[i.param]" value="{{ikey}}"/>
                                                         <span class="lbl"> {{ivalue[ikey]}}</span>
                                                     </label>
                                                     </div>
@@ -98,7 +98,7 @@
                                                 <!-- Multiple choice -->
                                                 <div class="control-group" ng-if="i.component=='multi-choice'">
                                                     <label>{{i.label}}</label>
-                                                    <select class="form-control" ng-model="$ctrl.currentData.inputData[i.param]" ng-init="$ctrl.currentData.inputData[i.param]=i.default" multiple>
+                                                    <select class="form-control" ng-model="$ctrl.currentData.input_data[i.param]" ng-init="$ctrl.currentData.input_data[i.param]=i.default" multiple>
                                                     <option ng-repeat="(ikey, ivalue) in i.data" ng-value="{{ikey}}" class="md-primary">{{ivalue[ikey]}}</option>
                                                  </select>
                                                 </div>

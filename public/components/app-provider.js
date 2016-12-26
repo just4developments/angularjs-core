@@ -88,6 +88,9 @@ module.exports = {
             },
             getTopLogs: (count) => {
                 return $http.get(`${$config.apiUrl}/ExecutingLogs?recordsPerPage=${count}&page=1`);
+            }, 
+            run: (testcaseId) => {
+                return $http.post(`${$config.apiUrl}/Testcase/run/${testcaseId}`);
             }
         };
     }],
@@ -101,12 +104,21 @@ module.exports = {
                         $rootScope.$broadcast('iosocket.connected', data);
                         $rootScope.socket.emit('bind', sessionId);
                     });
+                    $rootScope.socket.on('log', function(data) {
+                        $rootScope.$broadcast('iosocket.log', data);
+                    });
                     $rootScope.socket.on('completed', function(data) {
                         $rootScope.$broadcast('iosocket.completed', data);
                     });
                 } else {
                     $rootScope.socket.emit('bind', sessionId);
                 }
+                return self;
+            },
+            log: (fcLog) => {
+                $rootScope.$on('iosocket.log', (evt, data) => {
+                    fcLog(data);
+                });
                 return self;
             },
             completed: (fcCompleted) => {

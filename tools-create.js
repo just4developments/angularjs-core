@@ -36,7 +36,8 @@ try{
     console.error(`File ${jsFile} was existed!`);
 }catch(e){
     fs.writeFileSync(jsFile, 
-`app.component('${handleComName(comName)}', {
+`module.exports = {
+    name: '${handleComName(comName)}',
     template: require('./${comName}.html'),
     controller: ['$config', function ($config) {
         require('./${comName}.scss');
@@ -45,7 +46,7 @@ try{
         }
         
     }]
-});
+}
 `);
 }
 

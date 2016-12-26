@@ -1,0 +1,66 @@
+<div class="col-xs-12 col-sm-6 widget-container-col" id="widget-container-col-3">
+    <div class="widget-box widget-color-orange" id="widget-box-3">
+        <div class="widget-header widget-header-small">
+            <h6 class="widget-title">
+                Upload plugin
+            </h6>
+        </div>
+
+        <div class="widget-body">
+            <div class="widget-main">
+                <upload-file url="$ctrl.url" name="shells" accept=".zip" on-finished="$ctrl.uploadDone({error, resp})"></upload-file>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-xs-12 col-sm-6 widget-container-col" id="widget-container-col-2">
+    <div class="widget-box widget-color-blue" id="widget-box-2">
+        <div class="widget-header">
+            <h5 class="widget-title bigger lighter">
+                <i class="ace-icon fa fa-table"></i>Table plugin
+            </h5>
+        </div>
+
+        <div class="widget-body">
+            <div class="widget-main no-padding">
+                <table class="table table-striped table-bordered table-hover">
+                    <thead class="thin-border-bottom">
+                        <tr>
+                            <th>
+                                VNF
+                            </th>
+                            <th>
+                                <i>VNF</i> Test
+                            </th>
+                            <th>
+                                Status
+                            </th>
+                            <!--<th class="cellClass"></th>-->
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr ng-repeat="item in $ctrl.obj">
+                            <td><a href="#">{{item.name}}</a></td>
+                            <td>
+                                <i ng-repeat="i in item.plugins"><a href="#">{{i.name}}, </a></i>
+                            </td>
+                            <td>
+                                <i ng-show="item.status==0"><a href="#"><span class="label label-warning">Running</span></a></i>
+                                <i ng-show="item.status==1"><a href="#"><span class="label label-success arrowed-in arrowed-in-right">Success</span></a></i>
+                                <i ng-show="item.status==-1"><a href="#"><span class="label label-inverse arrowed">Fail</span></a></i>
+                            </td>
+                            <!--<td>
+                                <button class="btn btn-white btn-warning btn-bold">
+                                    <i class="ace-icon fa fa-trash-o bigger-120 orange"></i>
+                                    Delete
+                                </button>
+                            </td>-->
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

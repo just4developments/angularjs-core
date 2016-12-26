@@ -1,88 +1,154 @@
-<md-button class="md-raised md-warn" ng-click="$ctrl.exec()">Run</md-button>
-<md-input-container class="pf-w300">
-  <label>Plugin Choice</label>
-  <md-select ng-model="$ctrl.plugin_index" ng-change="$ctrl.SelectPlugin()">
-    <md-option ng-repeat="p in $ctrl.obj" ng-value="$index">{{p.name}}</md-option>
-  </md-select>
-</md-input-container>
-<div layout="column" layout-padding ng-cloak>
-  <md-content class="md-no-momentum">
-    
-    
-    <md-input-container class="md-icon-float md-block pf-w300">
-      <label>_id</label>
-      <input ng-model="$ctrl.currentData._id" ng-value="$ctrl.current._id" type="text">
-    </md-input-container>
-    <md-input-container class="md-icon-float md-block pf-w300">
-      <label>Name</label>
-      <input ng-model="$ctrl.currentData.name" ng-value="$ctrl.current.name" type="text">
-    </md-input-container>
-    <md-input-container class="md-icon-float md-block pf-w300">
-      <label>Description</label>
-      <input ng-model="$ctrl.currentData.des" ng-value="$ctrl.current.des" type="text">
-    </md-input-container>
-    <md-input-container class="md-icon-float md-block pf-w300">
-      <label>File Attached</label>
-      <input ng-model="$ctrl.currentData.content" ng-value="$ctrl.current.content" type="text">
-    </md-input-container>
-    
-    
-    <fieldset class="standard pf-w300" style="background-color: darkgray;">
-      <legend>Input form</legend>
-      <div ng-repeat="(key, value) in $ctrl.current.input[0]">
-        
-        
-        <!-- Select box -->
-        <div ng-if="value.component=='select-box'">
-          <md-input-container class="pf-w300">
-            <label>{{key}}</label>
-            <md-select ng-model="$ctrl.currentData.data[key]" >
-              <md-option ng-repeat="(ikey, ivalue) in value.data" value="{{ikey}}">{{ivalue[ikey]}}</md-option>
-            </md-select>
-          </md-input-container>
+<h3 class="header smaller lighter blue">List Plugins</h3>
+
+<div class="row">
+    <div class="col-sm-3">
+        <div class="col-sm-12">
+            <form class="form-inline">
+
+                <select ng-model="$ctrl.slIndex" ng-change="$ctrl.SelectPlugin()" class="form-control pl-w80">
+                    <option ng-repeat="item in $ctrl.obj" value="{{$index}}">{{item.name}}</option>
+                </select>
+                <span ng-show="$ctrl.slIndex">
+                    <button type="button" class="btn spinbox-down btn-sm btn-danger" ng-click="$ctrl.removeScript($ctrl.obj[$ctrl.slIndex])">						
+                        <i class="icon-only ace-icon fa fa-minus bigger-110"></i>					
+                    </button>
+                </span>
+            </form>
+            <hr />
+
+            <div class="well" ng-show="$ctrl.slIndex">
+                <h4 class="green smaller lighter pl-text-transform">{{$ctrl.obj[$ctrl.slIndex].name}}</h4>
+                <p class="pl-description">{{$ctrl.obj[$ctrl.slIndex].des}}</p>
+            </div>
         </div>
+    </div>
+    <div class="col-sm-9">
+
+        <div class="tabbable">
+            <ul class="nav nav-tabs" id="myTab">
+                <li ng-repeat="item in $ctrl.lstInstances" id="li{{$index}}" ng-class="$index==0?'active':''" style="{{item._id==$ctrl.tempTab._id ? $ctrl.tempTab.style : ''}}">
+                    <a data-toggle="tab" href="#t{{$index}}">
+                        <div><i>VNF: {{item.name}}</i></div>
+                        <div><i>Status : {{item.status | instanceStatus}}</i></div>
+                        <div class="pl-layout-icons">
+                            <i class="brow ace-icon fa fa-info-circle pl-fsize25 pl-effect" ng-click="$ctrl.getInfor(item._id)"></i>
+                            <i ng-show="item.status==0 || item.status==2 || item.status==4 || item.status==6" class="ace-icon fa fa-spinner fa-spin orange pl-fsize25 pl-effect"></i>
+                            <i ng-show="item.status==1 || item.status==5 || item.status==-3 || item.status==-7" class="brow ace-icon fa fa-rocket pl-fsize25 pl-effect" ng-click="$ctrl.deploy($index)"></i>
+                            <i ng-show="item.status==3 || item.status==-5" class="brow ace-icon fa fa-reply pl-fsize25 pl-effect" ng-click="$ctrl.unDeploy($index)"></i>
+                            <i ng-show="item.status==1 || item.status==5 || item.status==-3 || item.status==-1 || item.status==-7" class="brow ace-icon fa fa-trash-o pl-fsize25 pl-effect" ng-click="$ctrl.remove($index)"></i>
+                        </div>
+                    </a>
+                </li>
+
+                <li id="tUpload">
+                    <a>
+                        <i ng-show="$ctrl.slIndex" data-toggle="modal" data-target="#myModal" class="ace-icon fa fa-plus-circle pl-add-instance "></i>
+                        <i ng-show="!$ctrl.slIndex" class="ace-icon fa fa-plus-circle pl-add-instance "></i>
+                    </a>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="myModal" role="dialog">
+                        <div class="modal-dialog">
+
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Create {{$ctrl.obj[$ctrl.slIndex].name}} Instance</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div ng-show="$ctrl.obj[$ctrl.slIndex].input">
+                                        <form>
+                                            <div class="form-group">
+                                                <label>Instance name</label>
+                                                <input class="form-control" type="text" ng-model="$ctrl.currentData.name">
+                                            </div>
 
 
-        <!-- Input Text -->
-        <div ng-if="value.component=='text'">
-          <md-input-container class="md-icon-float md-block pf-w300">
-            <label>{{key}}</label>
-            <input value="{{value.default}}" type="text" ng-model="$ctrl.currentData.data[key]">
-          </md-input-container>
+
+                                            <div ng-repeat="i in $ctrl.obj[$ctrl.slIndex].input">
+                                                <!-- Select box -->
+                                                <div class="form-group" ng-if="i.component=='select-box'">
+                                                    <label>{{i.label}}</label>
+                                                    <select class="form-control" ng-model="$ctrl.currentData.input_data[i.param]" ng-init="$ctrl.currentData.input_data[i.param]=i.default">
+                                                    <option ng-repeat="(ikey, ivalue) in i.data" value="{{ikey}}">{{ivalue[ikey]}}</option>
+                                                </select>
+                                                </div>
+                                                <!-- Input Text -->
+                                                <div class="form-group" ng-if="i.component=='text'">
+                                                    <label>{{i.label}}</label>
+                                                    <input class="form-control" ng-init="$ctrl.currentData.input_data[i.param]=i.default" type="text" ng-model="$ctrl.currentData.input_data[i.param]">
+                                                </div>
+                                                <!-- Date -->
+                                                <div class="form-group" ng-if="i.component=='date'">
+                                                    <p>{{i.label}}</p>
+                                                    <input class="form-control" ng-init="$ctrl.currentData.input_data[i.param]=i.default" type="text" ng-model="$ctrl.currentData.input_data[i.param]">
+                                                </div>
+                                                <!-- Radio -->
+                                                <div class="control-group" ng-if="i.component=='radio'">
+                                                    <label class="control-label bolder blue">{{i.label}}</label>
+
+                                                    <div ng-repeat="(ikey, ivalue) in i.data" class="radio" ng-init="$ctrl.currentData.input_data[i.param]=i.default">
+                                                        <label>
+                                                        <input name="form-field-radio" type="radio" class="ace" ng-model="$ctrl.currentData.input_data[i.param]" value="{{ikey}}"/>
+                                                        <span class="lbl"> {{ivalue[ikey]}}</span>
+                                                    </label>
+                                                    </div>
+                                                </div>
+                                                <!-- Multiple choice -->
+                                                <div class="control-group" ng-if="i.component=='multi-choice'">
+                                                    <label>{{i.label}}</label>
+                                                    <select class="form-control" ng-model="$ctrl.currentData.input_data[i.param]" ng-init="$ctrl.currentData.input_data[i.param]=i.default" multiple>
+                                                    <option ng-repeat="(ikey, ivalue) in i.data" ng-value="{{ikey}}" class="md-primary">{{ivalue[ikey]}}</option>
+                                                 </select>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <button class="btn btn-success" type="button" ng-click="$ctrl.addInstancePlugin();">Submit</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+            <div class="tab-content pl-bg-white">
+                <div ng-repeat="item in $ctrl.lstInstances" id="t{{$index}}" class="tab-pane fade in {{$index==0?'active':''}}">
+                    <div class="row pl-row-content">
+                        <div class="col-sm-1 text-center">
+                            <i class="fa fa-picture-o pl-icon-img"></i>
+                        </div>
+                        <div class="col-sm-3 text-left pl-text-info">
+                            <font>Testcase : L2fwd</font><br>
+                            <font>VNF: Crucio1</font><br>
+                            <font>Status: Running</font>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="pl-mrtop25">
+                                <div class="progress pos-rel progress-striped pl-bradius20" data-percent="66%">
+                                    <div class="progress-bar progress-bar-success" style="width: 66%;"></div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-sm-2 text-center">
+                            <div style="margin-top: 13px;">
+                                <i class="brow ace-icon fa fa-info-circle pl-effect pl-fs40 pl-mright10"></i>
+                                <i class="brow ace-icon fa fa-play-circle pl-effect pl-fs40"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row pl-layout-test-ins">
+                        <i class="brow ace-icon fa fa-plus-circle pl-btn-test-ins pl-effect"></i>
+                    </div>
+                </div>
+            </div>
         </div>
-
-
-        <!-- Date -->
-        <div ng-if="value.component=='date'">
-          <div flex-gt-xs class="pf-w300">
-            <p>{{key}}</p>
-            <md-datepicker ng-model="$ctrl.currentData.data[key]" md-placeholder="Enter date"></md-datepicker>
-          </div>
-        </div>
-
-
-        <!-- Radio -->
-        <div ng-if="value.component=='radio'">
-          <md-input-container class="md-icon-float md-block pf-w300">
-            <p>{{key}}</p>
-            <md-radio-group ng-model="$ctrl.currentData.data[key]">
-              <md-radio-button ng-repeat="(ikey, ivalue) in value.data" value="{{ikey}}" class="md-primary">{{ivalue[ikey]}}</md-radio-button>
-            </md-radio-group>
-          </md-input-container>
-        </div>
-
-
-        <!-- Multiple choice -->
-        <div ng-if="value.component=='multi-choice'">
-          <md-input-container class="md-icon-float md-block pf-w300">
-            <label>{{key}}</label>
-            <md-select ng-model="$ctrl.currentData.data[key]" multiple>
-              <md-option ng-repeat="(ikey, ivalue) in value.data" ng-value="{{ikey}}" class="md-primary">{{ivalue[ikey]}}</md-option>
-            </md-select>
-          </md-input-container>
-        </div>
-
-      </div>
-    </fieldset>
-  </md-content>
+    </div>
 </div>

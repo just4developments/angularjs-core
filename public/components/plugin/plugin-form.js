@@ -10,7 +10,7 @@ module.exports = {
         var self = this;
         self.tempTab = {};
         self.currentData = {};
-        self.currentData.inputData = {};
+        self.currentData.input_data = {};
         self.isExecute = 0;
         self.myFile;
         self.url = UploadPackage.uploadUrl;
@@ -33,7 +33,7 @@ module.exports = {
 
         this.SelectPlugin = () => {
             self.currentData = {};
-            self.currentData.inputData = {};
+            self.currentData.input_data = {};
             if (self.obj[self.slIndex]) {
                 ShellClass.getInstancesByClass(self.obj[self.slIndex]._id).then((res) => {
                     self.lstInstances = res.data;
@@ -130,21 +130,21 @@ module.exports = {
                 }
             }
 
-            // console.log(JSON.stringify(this.currentData));
+            console.log(JSON.stringify(this.currentData));
             ShellClass.addInstance(this.currentData).then((res) => {
-                // console.log(JSON.stringify(res));
+                console.log(JSON.stringify(res));
                 if (!res.data.error) {
                     // opacity: 0.4;
                 }
                 $('#myModal').modal('hide');
                 // Success : opacity: 1.4;
-                self.lstInstances.push(res.data.instance);
+                self.lstInstances.push(res.data.shellInstance);
 
                 self.tempTab = {};
-                self.tempTab._id = res.data.instance._id;
+                self.tempTab._id = res.data.shellInstance._id;
                 self.tempTab.style = "opacity: 0.5;";
 
-                SocketIO.bind(res.data.session).connected((resp) => {
+                SocketIO.bind(res.data.sessionId).connected((resp) => {
                     // connected
                 }).completed((resp) => {
                     // done
@@ -153,11 +153,11 @@ module.exports = {
                     if (resp.event_type == 1 && resp.status == 1) {
                         $scope.$apply(function() {
                             self.tempTab.style = "opacity: 1.5;";
-                            self.lstInstances[self.lstInstances.indexOf(res.data.instance)].status = 1;
+                            self.lstInstances[self.lstInstances.indexOf(res.data.shellInstance)].status = 1;
                         });
                     } else if (resp.event_type == 1 && resp.status == -1) {
                         $scope.$apply(function() {
-                            self.lstInstances.splice(self.lstInstances.indexOf(res.data.instance), 1);
+                            self.lstInstances.splice(self.lstInstances.indexOf(res.data.shellInstance), 1);
                         });
                     }
                 });

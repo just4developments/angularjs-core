@@ -63,7 +63,7 @@ module.exports = {
                 return $http.delete(`${$config.apiUrl}/ShellClass/${id}`);
             },
             getInstancesByClass: (id) => {
-                return $http.get(`${$config.apiUrl}/ShellInstanceByClass/${id}`);
+                return $http.get(`${$config.apiUrl}/ShellInstancesByClass/${id}`);
             },
             getInfoInstance: (instanceId) => {
                 return $http.get(`${$config.apiUrl}/ShellInstance/information/${instanceId}`);

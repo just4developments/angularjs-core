@@ -1,5 +1,18 @@
-<ul class="tabf">
-    <li ng-class="{'active' : 0 == $ctrl.activeIndex}" ng-click="$ctrl.goTo('newest', 0)">Hàng mới nhất<hr size="3" color="#02b8e3"/></li>
-    <li ng-class="{'active' : 1 == $ctrl.activeIndex}" ng-click="$ctrl.goTo('hot', 1)">Hàng bán chạy<hr size="3" color="#02b8e3"/></li>
+<product-hot category-id="$ctrl.categoryId" ng-if="$ctrl.categoryId"></product-hot>
+<div class="bref-container">
+    <div ng-click="show=!show;" class="bref" ng-class="{'show': show}"><md-icon>arrow_drop_down</md-icon> Tìm kiếm chi tiết </div>
+    <div layout="row" layout-wrap ng-show="show" class="bref-content" layout-align="start center">
+        <div flex="20" flex-sm="25" flex-xs="100" ng-repeat="tag in $ctrl.tags">
+            <md-checkbox ng-click="$ctrl.addFilter(tag)" ng-checked="$ctrl.exists(tag)">
+                {{ tag.name }}
+            </md-checkbox>
+        </div>
+    </div>
+</div>
+<ul class="tabf" align="center">
+    <li ng-class="{'active' : 0 == $ctrl.activeIndex}" ng-click="$ctrl.goTo('newest', 0)">Hàng mới nhất</li>
+    <li ng-class="{'active' : 1 == $ctrl.activeIndex}" ng-click="$ctrl.goTo('hot', 1)" id="proSpecial">Sản phẩm nổi bật</li>    
 </ul>    
-<ng-outlet></ng-outlet>
+<div style="padding: 8px">
+    <ng-outlet></ng-outlet>
+</div>

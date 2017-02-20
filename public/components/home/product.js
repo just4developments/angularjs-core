@@ -1,56 +1,98 @@
 app.component('product', {
     template: require('./product.html'),
     bindings: { $router: '<' },
-    controller: ['$config', 'Product', 'Category', '$scope', 'Upload', '$window', '$rootScope', '$mdDialog', '$mdMedia', function ($config, Product, Category, $scope, Upload, $window, $rootScope, $mdDialog, $mdMedia) {
+    controller: ['$config', 'Product', 'Category', '$scope', 'Upload', '$window', '$rootScope', '$mdDialog', '$mdMedia', '$location', '$facebook', 'Transaction', '$q', function ($config, Product, Category, $scope, Upload, $window, $rootScope, $mdDialog, $mdMedia, $location, $facebook, Transaction, $q) {
         require('./product.scss');
         this.today = new Date();
-        this.deviceSize = $mdMedia('xs') ? 'list.mob' : ($mdMedia('sm') ? 'list.tab' : 'list.pc');
-        var clone = (obj, ignores) => {
-            if (obj === null || typeof(obj) !== 'object' || 'isActiveClone' in obj)
-                return obj;
-            var temp;            
-            if (obj instanceof Date){
-                temp = new obj.constructor(); //or new Date(obj);
-            }else {
-                temp = obj.constructor();
-            }
-
-            for (var key in obj) {
-                if(ignores && ignores.indexOf(key) !== -1) continue;
-                if (Object.prototype.hasOwnProperty.call(obj, key)) {
-                    obj['isActiveClone'] = null;
-                    temp[key] = clone(obj[key]);
-                    delete obj['isActiveClone'];
-                }
-            }
-
-            return temp;
-        }
+        this.channels = [
+            {code: 'facebook', name: 'Facebook'},
+            {code: 'shopee', name: 'Shopee'},
+            {code: 'cometo', name: 'Đến lấy hàng'},
+        ];
+        this.deviceSize = $mdMedia('xs') ? 'list.mob' : ($mdMedia('sm') ? 'list.tab' : 'list.pc');        
         var self = this;
         this.isAdd = false;
         this.$routerOnActivate = (next) => {
             self.type = next.params.filter;
             Product.find($rootScope.categoryId, self.type).then((resp) => {
                 self.list = resp.data;
-                Category.find().then((resp) => {
+                Category.find(1).then((resp) => {
                     self.categories = resp.data;
+                    Category.find(2).then((resp) => {
+                        self.tags = resp.data;
+                    });
                 });
             });
         };
+        this.isShow = (tags) => {
+            if($rootScope.tagFilter.length === 0) return true;
+            for(var i in $rootScope.tagFilter){
+                let isOk = false;
+                for(var j in tags){                
+                    if(tags[j]._id == $rootScope.tagFilter[i]._id){
+                        isOk = true;
+                        break;
+                    }                        
+                }
+                if(!isOk) return false;
+            }
+            return true;
+        }
+        this.searchTextChange = (text) => {
+            self.trans.buyer = text;
+        }
+        this.selectedItemChange = (item) => {
+            self.trans.address = item.address;
+            self.trans.buyer = item.buyer;
+            self.trans.phone = item.phone;
+        }
+        this.querySearchBuyer = (txt) => {
+            let deferred = $q.defer();
+            Transaction.suggestBuyer(txt).then((rs) => {
+                deferred.resolve(rs.data);
+            }).catch((err) => {
+                deferred.resolve([]);
+                console.error(err);
+            });
+            return deferred.promise;
+        }
         this.toSizes = (sizes) => {
             return sizes.filter(e=>e.quantity > 0).map(e=>e.size).join(', ');
         }
         this.createNew = () => {
             self.isAdd = true;
-            setTimeout(() => {
-                self.p = { category_id : $rootScope.categoryId, special: self.type === 'hot', sizes: [{size: '', quantity: 0}] };
+            self.p = { category_id : $rootScope.categoryId, special: self.type === 'hot', sizes: [{size: '', quantity: 0}], money0: 0, created_date: new Date(), tags: [] };
+        }
+        this.exists = function (item) {
+            return _.findIndex(self.p.tags, (e) => {
+                return e._id == item._id;
+            }) > -1;
+        }
+        this.toggle = function (item) {
+            var idx = _.findIndex(self.p.tags, (e) => {
+                return e._id == item._id;
+            });
+            if (idx > -1) self.p.tags.splice(idx, 1);
+            else self.p.tags.push(item);
+        }
+        this.toggleVisible = (item) => {
+            item.status = item.status === 0 ? 1 : 0;
+            Product.update(item).then((resp) => {
+                console.log(resp);
             });
         }  
+        this.update = (item) => {
+            Product.update(item).then((resp) => {
+                self.list.sort((a, b) => {
+                   return a.position - b.position; 
+                });
+            })
+        }
         this.edit = (item) => {
             self.isAdd = true;
-            setTimeout(() => {
-                self.p = clone(item); 
-            });            
+            self.p = $window._.cloneDeep(item);
+            if(!self.p.tags) self.p.tags = []; 
+            self.p.created_date = new Date(self.p.created_date);
         }
         this.delete = (item) => {
             if(!$window.confirm('Bạn có chắc muốn xóa sản phẩm này ?')) return; 
@@ -60,6 +102,7 @@ app.component('product', {
         }
         this.addSell = (item, index) => {
             self.trans = {
+                channel_name: 'facebook',
                 product: item,
                 quantity: 1,
                 status: 2,
@@ -88,49 +131,22 @@ app.component('product', {
             });
         }
         this.save = () => {
+            self.isAdd = false;
             var method = self.p._id ? 'PUT' : 'POST';
-            var p0 = clone(self.p, ['images']);
-            p0.images = self.p.images;
-            if(p0.sizes) p0.sizes = angular.toJson(p0.sizes);
-            Upload.uploadFileToUrl(p0, $config.apiUrl + '/product', method).then((resp) => {
+            if(self.p.sizes) self.p.sizes = angular.toJson(self.p.sizes);
+            if(self.p.tags) self.p.tags = angular.toJson(self.p.tags);
+            self.p.created_date = new Date(self.p.created_date);
+            Upload.uploadFileToUrl(self.p, $config.apiUrl + '/product', method).then((resp) => {
                 if(self.p._id){
+                    self.p.images = resp.data.images;
                     self.list[self.list.findIndex(e=>e._id === self.p._id)] = self.p;
                 }else{                    
                     self.list.push(resp.data);
                 }
-                self.isAdd = false;
+                $location.path($location.path());
             }).catch((err) => {
                 alert(err.data.message);
-            });
-        }
-        this.viewImage = (imgs, index) => {
-            self.images = {
-                imgs: imgs,
-                index: index
-            };
-            $mdDialog.show({
-                template: `<md-dialog aria-label="Image dialog">
-             <md-dialog-content>
-               <div style="position: relative; padding: 0px; margin: 0px;">
-                <img image-src="images.imgs[images.index]" width="100%" ng-click="next()" watch="true" />
-                <div layout-padding style="position: absolute; bottom: 0px; right: 0px; color: white; text-shadow: 1px 1px 1px #000; font-size: 0.8em;">{{images.index+1}}/{{images.imgs.length}}</div>
-               </div>
-             </md-dialog-content>             
-           </md-dialog>`,
-                parent: angular.element(document.body),
-                locals: {
-                    images: self.images
-                },
-                clickOutsideToClose: true,
-                escapeToClose: true,
-                controller: ($scope, $mdDialog, images) => {
-                    $scope.images = images;                    
-                    $scope.next = () => {
-                        if(++$scope.images.index > $scope.images.imgs.length-1){
-                            $scope.images.index = 0;
-                        }
-                    }
-                }
+                self.isAdd = true;
             });
         }
     }]

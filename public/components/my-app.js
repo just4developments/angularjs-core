@@ -3,11 +3,15 @@ require('./my-app.scss');
 app.component('myApp', {
     template: require('./my-app.html'),
     $routeConfig: [
+        {path: '/aboutus', name: 'AboutUs', component: 'aboutus'},
+        {path: '/statistic', name: 'Statistic', component: 'statistic'},
+        {path: '/formula', name: 'Formula', component: 'formular'},
         {path: '/transaction', name: 'Transaction', component: 'transaction'},
         {path: '/policy', name: 'Policy', component: 'policy'},
         {path: '/:categoryId/...', name: 'HomeNewestByCategoryId', component: 'home'}
     ],
-    controller: ['$config', 'Category', '$scope', '$location', '$window', '$mdSidenav', '$rootScope', function ($config, Category, $scope, $location, $window, $mdSidenav, $rootScope) {
+    bindings: { $router: '<' },
+    controller: ['$config', 'Category', '$scope', '$location', '$window', '$mdSidenav', '$rootScope', '$facebook', '$mdMedia', 'FacebookLoader', function ($config, Category, $scope, $location, $window, $mdSidenav, $rootScope, $facebook, $mdMedia, FacebookLoader) {
         let self = this;
         this.activeIndex = 0;
         Category.find().then((resp) => {
@@ -25,6 +29,9 @@ app.component('myApp', {
             self.activeIndex = index;
             $location.path(`${id}/moi-nhat`);
         }
+        this.goAboutus = (url) => {
+            self.$router.navigate(['AboutUs']);
+        }
         this.openMenu = () => {
             $mdSidenav('left').toggle();
         }
@@ -32,6 +39,18 @@ app.component('myApp', {
             $mdSidenav('left').close();
             self.activeIndex = index;
             $location.path(path);
+        }        
+        this.login = () => {
+            $facebook.login().then((resp) => {
+                if(resp.status !== 'connected'){
+                    return alert('Không thể login facebook');
+                }
+                $window.localStorage.userId = resp.authResponse.userID;
+                $rootScope.userID = $window.localStorage.userId;
+            }).catch((err) => {
+                console.error(err);
+            });
         }
+        this.followType = $mdMedia('xs') ? 'button_count' : 'standard';
     }]
 });

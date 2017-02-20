@@ -1,21 +1,24 @@
 app
     .factory('Product', ['$http', '$rootScope', '$config', '$q', function ($http, $rootScope, $config, $q) {
         return {
-            find: (categoryId, type) => {
-                return $http.get(`${$config.apiUrl}/product?categoryId=${categoryId}&type=${type}`);
+            find: (categoryId, type, recordsPerPage) => {                
+                return $http.get(`${$config.apiUrl}/product?categoryId=${categoryId||''}&type=${type}&recordsPerPage=${recordsPerPage||''}`);
             },
             delete: (id) => {
                 return $http.delete(`${$config.apiUrl}/product/${id}`);
             },
             sell: (trans) => {
                 return $http.post(`${$config.apiUrl}/product/sell`, trans);
+            },
+            update: (item) => {
+                return $http.put(`${$config.apiUrl}/product/${item._id}`, item);
             }
         };
     }])
     .factory('Category', ['$http', '$rootScope', '$config', '$q', function ($http, $rootScope, $config, $q) {
         return {
-            find: () => {
-                return $http.get(`${$config.apiUrl}/category`);
+            find: (type) => {
+                return $http.get(`${$config.apiUrl}/category?type=${type}`);
             }
         };
     }]).factory('Transaction', ['$http', '$rootScope', '$config', '$q', function ($http, $rootScope, $config, $q) {
@@ -25,8 +28,34 @@ app
             },
             update: (item) => {
                 return $http.put(`${$config.apiUrl}/transaction/${item._id}`, item);
+            },
+            suggestBuyer: (name) => {
+                return $http.get(`${$config.apiUrl}/transaction/buyer?name=${name}`);
+            },
+            statisticByDate(from, to){
+                return $http.get(`${$config.apiUrl}/transaction?chartByDate=1&from=${from}&to=${to}`);
+            },
+            statisticByMonth(from, to){
+                return $http.get(`${$config.apiUrl}/transaction?chartByMonth=1&from=${from}&to=${to}`);
+            },
+            statisticByYear(from, to){
+                return $http.get(`${$config.apiUrl}/transaction?chartByYear=1&from=${from}&to=${to}`);
+            },
+            statisticByDayOfWeek(from, to){
+                return $http.get(`${$config.apiUrl}/transaction?chartByDayOfWeek=1&from=${from}&to=${to}`);
+            },
+            statisticByType(from, to){
+                return $http.get(`${$config.apiUrl}/transaction?chartByType=1&from=${from}&to=${to}`);
             }
         };
+    }]).factory('FacebookLoader', ['$window', function($window){
+        return {
+            load: (el) => {
+                if($window.isFbLoaded) {
+                    $window.FB.XFBML.parse(el);                    
+                }  
+            }
+        }
     }]);
 
 // app.utils = {

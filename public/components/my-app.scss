@@ -1,3 +1,11 @@
+.xs .tab-content {
+    padding: 0px;
+}
+
+.xs md-content {
+    padding: 0px;
+}
+
 html,
 body {
     height: 100%;
@@ -9,12 +17,48 @@ body {
 
 md-content {
     background-color: transparent;
+    overflow: hidden;
 }
 
 md-dialog {
     max-width: 90%;
     max-height: 98%;
 }
+
+.details {
+    background: #eaeaea;
+}
+
+.details .comment {
+    padding: 8px 16px;
+}
+
+.details .content img {
+    outline: none;
+    cursor: pointer;
+}
+
+.details .content {
+    position: relative;
+    padding: 8px 8px 0px 8px;
+    margin: 0px;
+    box-shadow: 1px 1px 3px #333;
+    height: 100%;
+}
+
+.details .num {
+    position: fixed;
+    top: 8px;
+    left: 8px;
+    color: #d92469;
+    text-shadow: 0px 0px 1px #fff;
+    font-size: 0.8em;
+    padding: 8px 16px;
+    border-radius: 0px 0px 8px 0px;
+    box-shadow: 1px 1px 1px #868686;
+    background: #eaeaea;
+}
+
 .contact {
     cursor: pointer;
 }
@@ -78,7 +122,30 @@ md-dialog {
     border-radius: 100%;
 }
 
+.card-des {
+    color: #4f4e4f;
+}
+
+.card-name {
+    color: #02b8e3;
+}
+
+.card-money {
+    color: #4f4e4f;
+}
+
+.xs header {
+    margin-bottom: 16px;
+}
+header {
+    margin-bottom: 50px;
+}
+
 my-app {
+    .avatar {
+        border-radius: 100%;
+        box-shadow: 0px 1px 1px #191919;
+    }
     .nana-theme {
         md-toolbar {
             background-color: rgb(2, 184, 227);
@@ -99,11 +166,17 @@ my-app {
             font-weight: bold;
         }
     }
+    .icon-menu md-icon {
+        text-shadow: 0px 0px 2px #fff;
+    }
     .icon-menu {
-        position: absolute;
+        position: fixed;
         top: 0px;
         left: 0px;
-        z-index: 1;
+        z-index: 9;
+    }
+    md-sidenav {
+        z-index: 100;
     }
     .tab {
         position: relative;
@@ -113,7 +186,7 @@ my-app {
         padding-left: 24px;
     }
     .tab li:nth-child(1) {
-        background-color: #d92469;        
+        background-color: #d92469;
     }
     .tab li:nth-child(2) {
         background-color: #02b8e3;
@@ -136,9 +209,9 @@ my-app {
     .tab li.active {
         padding: 24px 24px;
         font-size: 1.1em;
-        font-weight:bold;
+        font-weight: bold;
     }
-    .tab li:first-child{
+    .tab li:first-child {
         border-radius: 4px 0px 0px 0px;
     }
     .tab li:last-child {
@@ -158,6 +231,7 @@ my-app {
         box-shadow: 0px -1px 20px #cacaca;
         z-index: 1;
         background-color: white;
+        padding: 8px 0px;
     }
     .button {
         cursor: pointer;
@@ -166,10 +240,7 @@ my-app {
         max-width: 1000px;
         margin: auto;
         margin-bottom: 32px;
-    }
-    header {
-        margin-bottom: 50px;
-    }
+    }    
     footer li {
         overflow: hidden;
     }
@@ -238,6 +309,7 @@ my-app {
         padding: 16px 8px;
         border: none;
         outline: none;
+        border-radius: 16px;
     }
     /* When the input field gets focus, change its width to 100% */
     .search:focus {

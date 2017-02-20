@@ -8,6 +8,62 @@ app
       }
     };
   }])
+  .directive("showDetails", ['$location', '$mdDialog', '$window', function ($location, $mdDialog, $window) {
+    return {
+      scope: {
+        item: "<",
+        index: "<"
+      },
+      link: function (scope, element, attributes) {
+        element.on("click", () => {
+          $mdDialog.show({
+            template: `<md-dialog aria-label="Image dialog" class="details">
+             <md-button class="md-icon-button" style="position: absolute; right: 4px; z-index: 2; top: 0px; cursor: pointer; text-shadow: 0px 0px 1px #fff;" ng-click="close()"><md-icon>close</md-icon></md-button>
+             <md-dialog-content layout="row" layout-wrap>
+               <div flex="70" flex-xs="100" flex-sm="100" class="content">
+                <img image-src="item.images[index]" width="100%" ng-click="next()" watch="true" />
+                <div class="num">{{index+1}}/{{item.images.length}}</div>
+               </div>
+               <div flex class="comment">
+                    <h3 class="card-name" style="font-size: 1.2em">{{item.name}}</h3>
+                    <p class="card-des">{{item.des}}</p>
+                    <div class="card-money" style="font-size: 1.1em">Giá: {{item.money | money}}</div>
+                    <br/><br/>
+                    <div id="{{id}}" ng-init="loadComment()" class="fb-comments" data-href="{{href}}" data-width="100%" data-numposts="5" data-colorscheme="light" data-include-parent="false"></div>
+               </div>
+             </md-dialog-content>             
+           </md-dialog>`,
+            parent: angular.element($window.document.body),
+            locals: {
+              item: scope.item,
+              index: scope.index
+            },
+            clickOutsideToClose: true,
+            escapeToClose: true,
+            controller: ['$scope', '$mdDialog', 'item', 'index', '$window', '$config', 'FacebookLoader', ($scope, $mdDialog, item, index, $window, $config, FacebookLoader) => {
+              $scope.item = item;
+              $scope.index = index;
+              $scope.id = "com" + new Date().getTime();
+              $scope.href = $config.webUrl + '/product/' + item._id;
+              $scope.next = () => {
+                if (++$scope.index > $scope.item.images.length - 1) {
+                  $scope.index = 0;
+                }
+              }
+              $scope.close = () => {
+                $mdDialog.hide();
+              }
+              $scope.loadComment = () => {
+                setTimeout(function() {
+                  FacebookLoader.load($window.document.querySelector('#'+$scope.id)[0]);
+                });                                
+              };
+            }]
+          });
+        });
+      }
+    };
+  }])
   .directive("goBack", ['$window', function ($window) {
     return {
       link: function (scope, element, attributes) {
@@ -30,27 +86,37 @@ app
     return {
       scope: {
         backgroundSrc: "=",
-        size: "<"
+        size: "<",
+        watch: "<"
       },
       link: function (scope, element, attributes) {
-        var backgroundSrc = scope.backgroundSrc;
-        if(typeof scope.backgroundSrc !== 'string') return;
-        for (var i = 0; i < element.length; i++) {          
-          if (backgroundSrc.startsWith("http://") || backgroundSrc.startsWith("https://")) {
-            element[i].style.backgroundImage = 'url(' + backgroundSrc + '), url(' + require('../assets/images/no-photo.png') + ')';
-          } else {
-            if (backgroundSrc) {
-              if (scope.size) {
-                var ii = backgroundSrc.lastIndexOf('.');
-                backgroundSrc = backgroundSrc.substr(0, ii) + '.' + scope.size + backgroundSrc.substr(ii);
-                element[i].style.backgroundImage = 'url(' + $config.apiUrl + backgroundSrc + '), url(' + require('../assets/images/no-photo.png') + ')';
-              } else {
-                element[i].style.backgroundImage = 'url(' + $config.apiUrl + backgroundSrc + ')';
-              }
+        var handle = () => {
+          var backgroundSrc = scope.backgroundSrc;
+          if (typeof scope.backgroundSrc !== 'string') return;
+          for (var i = 0; i < element.length; i++) {
+            if (backgroundSrc.startsWith("http://") || backgroundSrc.startsWith("https://")) {
+              element[i].style.backgroundImage = 'url(' + backgroundSrc + '), url(' + require('../assets/images/no-photo.png') + ')';
             } else {
-              element[i].style.backgroundImage += 'url(' + require('../assets/images/no-photo.png') + ')';
+              if (backgroundSrc) {
+                if (scope.size) {
+                  var ii = backgroundSrc.lastIndexOf('.');
+                  backgroundSrc = backgroundSrc.substr(0, ii) + '.' + scope.size + backgroundSrc.substr(ii);
+                  element[i].style.backgroundImage = 'url(' + $config.apiUrl + backgroundSrc + '), url(' + require('../assets/images/no-photo.png') + ')';
+                } else {
+                  element[i].style.backgroundImage = 'url(' + $config.apiUrl + backgroundSrc + ')';
+                }
+              } else {
+                element[i].style.backgroundImage += 'url(' + require('../assets/images/no-photo.png') + ')';
+              }
             }
           }
+        };
+        if (scope.watch) {
+          scope.$watch('backgroundSrc', function () {
+            handle();
+          });
+        } else {
+          handle();
         }
       }
     };
@@ -70,7 +136,7 @@ app
               ee.setAttribute('src', require('../assets/images/no-photo.png'));
             });
             if (typeof scope.imageSrc != 'undefined' && scope.imageSrc != null) {
-              if(typeof scope.imageSrc !== 'string') return;
+              if (typeof scope.imageSrc !== 'string') return;
               if (scope.imageSrc.startsWith("http://") || scope.imageSrc.startsWith("https://")) {
                 ee.setAttribute('src', scope.imageSrc);
               } else {
@@ -84,13 +150,13 @@ app
             } else {
               ee.setAttribute('src', require('../assets/images/no-photo.png'));
             }
-          } 
+          }
         };
-        if(scope.watch){
-          scope.$watch('imageSrc', function(){
-            handle(); 
+        if (scope.watch) {
+          scope.$watch('imageSrc', function () {
+            handle();
           });
-        }else{
+        } else {
           handle();
         }
       }

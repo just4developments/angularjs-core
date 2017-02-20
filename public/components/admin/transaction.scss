@@ -1,6 +1,9 @@
 transaction {
+    .card-1 {
+        opacity: 0.5;
+    }
     .card-1 .sale-label {
-        background: red;
+        background: #e34343;
     }
     .card2 .sale-label {
         background: orange;
@@ -8,9 +11,15 @@ transaction {
     .card1 .sale-label {
         background: green;
     }
+    .status100 {
+        color: #d92d6e;
+    }
+    .status99 {
+        color: #5145c1;
+    }
     .status-1,
     .status-1 .md-text {
-        color: red !important;
+        color: #e34343 !important;
     }
     .status2,
     .status2 .md-text {
@@ -95,13 +104,26 @@ transaction {
         width: 100%;
         height: 200px;
         background-position: center center;
-        background-size: 100%;
+        background-size: cover;
         background-repeat: no-repeat;
     }
     .card-image .img:nth-child(n+2) {
         position: absolute;
         left: 0px;
         top: 0px;
+    }
+    h4 {
+        font-size: 1.2em;
+        padding: 0px; 
+        margin: 0px;
+    }
+    ul.summary {
+        padding: 0px; 
+        margin: 0px 24px;
+        list-style-type: circle;
+    }
+    .summary li {
+        padding: 8px;
     }
     md-radio-button {
         margin: 0px !important;

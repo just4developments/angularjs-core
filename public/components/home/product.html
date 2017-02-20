@@ -5,7 +5,7 @@
                 <span class="sale-label" ng-class="{'notavail': item.quantity <= 0}">
                     {{item.quantity > 0 ? item.size : 'Tạm hết'}}
                 </span>
-            </div>       
+            </div>                   
             <div class="card-image" ng-class="{'ng-hide-add': 0 === sizeIndex, 'ng-hide-remove': 0 !== sizeIndex}">
                 <div ng-repeat="img in item.images" class="img" ng-class="{'ng-hide-add': $index === imgIndex, 'ng-hide-remove': $index !== imgIndex}" background-src="img" size="$ctrl.deviceSize">
                     <div show-details item="item" index="imgIndex" style="width: 100%; height: 100%"></div>

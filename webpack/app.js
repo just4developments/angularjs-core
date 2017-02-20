@@ -26,6 +26,7 @@ require(['../public/js/1.angular.min.js',
 		'../public/components/my-app.js',
 		'../public/components/admin/transaction.js',
 		'../public/components/common/upload.js',
+		'../public/components/home/banner.js',
 		'../public/components/home/home.js',
 		'../public/components/home/product.js',
 		'../public/components/static/policy.js'], (require) => {

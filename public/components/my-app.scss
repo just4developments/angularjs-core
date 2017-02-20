@@ -1,14 +1,86 @@
-html, body {
-    height: 100%; width: 100%; margin: 0;
+html,
+body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
     background-image: url(../assets/images/bg.jpg);
     font-family: 'Comic'
 }
+
 md-content {
-    background-color: transparent;    
+    background-color: transparent;
 }
+
+md-dialog {
+    max-width: 90%;
+    max-height: 98%;
+}
+.contact {
+    cursor: pointer;
+}
+
+.contact .info div:nth-child(n+2) {
+    font-size: 0.8em;
+}
+
+.contact .info div:nth-child(n+2) md-icon {
+    font-size: 1em;
+}
+
+.contact .info div {
+    font-size: 1.5em;
+}
+
+.contact .info md-icon {
+    color: #02b8e3;
+    font-size: 1.5em;
+    min-height: auto;
+    min-width: auto;
+    width: auto;
+    height: auto;
+    margin: 1px 4px;
+}
+
+.contact .info a {
+    text-decoration: none;
+    font-size: 1em;
+    color: #555;
+}
+
+.contact:hover .info {
+    right: 4px;
+}
+
+.contact .info {
+    position: absolute;
+    right: -350px;
+    bottom: -65px;
+    width: 240px;
+    padding: 2px 16px 2px 4px;
+    background-color: white;
+    border-radius: 10px;
+    border: solid 1px #ccc;
+    -webkit-transition: top 0.3s;
+    transition: right 0.3s;
+}
+
+.contact img:hover {
+    box-shadow: none;
+}
+
+.contact img {
+    box-shadow: 1px 1px 1px #333;
+    width: 60px;
+    position: absolute;
+    right: 8px;
+    top: 0px;
+    z-index: 1;
+    border-radius: 100%;
+}
+
 my-app {
-    .nana-theme{
-        md-toolbar{
+    .nana-theme {
+        md-toolbar {
             background-color: rgb(2, 184, 227);
         }
         md-list-item:nth-child(1) {
@@ -33,15 +105,15 @@ my-app {
         left: 0px;
         z-index: 1;
     }
-    .tab {        
-        position: relative;  
+    .tab {
+        position: relative;
         margin: 0px;
-        padding-top: 8px;   
-        height: 35px;   
+        padding-top: 8px;
+        height: 35px;
         padding-left: 24px;
     }
     .tab li:nth-child(1) {
-        background-color: #7e57cc;
+        background-color: #d92469;        
     }
     .tab li:nth-child(2) {
         background-color: #02b8e3;
@@ -53,25 +125,33 @@ my-app {
         background-color: #fe9400;
     }
     .tab li:nth-child(5) {
-        background-color: #d92469;
+        background-color: #7e57cc;
     }
     .tab li:nth-child(6) {
         background-color: #f8c40d;
     }
     .tab li:hover {
-        padding: 30px 24px;
+        padding: 22px 24px;
     }
     .tab li.active {
-        padding: 35px 24px;
+        padding: 24px 24px;
+        font-size: 1.1em;
+        font-weight:bold;
+    }
+    .tab li:first-child{
+        border-radius: 4px 0px 0px 0px;
+    }
+    .tab li:last-child {
+        border-radius: 0px 4px 0px 0px;
     }
     .tab li {
-        color:white;
+        color: white;
         list-style: none;
         display: inline;
-        padding: 24px 24px;        
-        font-size: 1.1em;
-        border-radius: 4px 4px 0px 0px;
+        padding: 20px 24px;
+        font-size: 1em;
         cursor: pointer;
+        outline: none;
     }
     .tab-content {
         position: relative;
@@ -85,36 +165,45 @@ my-app {
     .main {
         max-width: 1000px;
         margin: auto;
-        margin-bottom: 32px;        
+        margin-bottom: 32px;
     }
     header {
         margin-bottom: 50px;
     }
     footer li {
         overflow: hidden;
-    }    
-    footer a:hover {
-        color: #02b8e3;
-        left: 0px;
     }
     footer ul {
-        padding: 0px 8px;
+        padding: 0px 10px;
         margin: 0px;
     }
     footer {
         margin-top: 50px;
         font-size: 0.9em;
-        color: #969494;
-        padding: 8px;
+        padding: 16px 8px;
+        color: #fab8d1;
+        text-shadow: 0px 0px 1px #78173c;
+        background: #cf3871;
+        box-shadow: -1px -1px 1px #5d0c2b;
+    }
+    footer img {
+        border: solid 1px #9b1648;
+        border-radius: 4px;
     }
     footer md-icon {
-        color: #02b8e3;
-    }    
+        color: #efefef;
+    }
     footer h4 {
         font-size: 1.2em;
         font-weight: 400;
-        color: #4f4e4f;
+        color: white;
         margin: 16px 0px;
+    }
+    footer .padding-more md-icon {
+        font-size: 20px;
+    }
+    footer .padding-more a {
+        margin-left: 12px;
     }
     footer .padding-more li {
         padding: 2px 0px;
@@ -122,16 +211,21 @@ my-app {
     footer li {
         padding: 1px 0px;
     }
+    footer a:hover {
+        color: #65092c;
+        left: 0px;
+    }
     footer a {
         font-size: 0.9em;
         position: relative;
         left: -8px;
         text-decoration: none;
-        color: #969494;
-        -webkit-transition: 0.3s;
-        -o-transition: 0.3s;
-        transition: 0.3s;
-    }    
+        color: #fab8d1;
+        text-shadow: 0px 0px 1px #78173c;
+        -webkit-transition: 0.2s;
+        -o-transition: 0.2s;
+        transition: 0.2s;
+    }
     .search {
         border: solid 1px #ccc;
         border-radius: 6px;
@@ -141,11 +235,10 @@ my-app {
         margin: 3px;
     }
     .search input {
-        padding: 16px 8px;  
+        padding: 16px 8px;
         border: none;
-        outline: none;      
+        outline: none;
     }
-
     /* When the input field gets focus, change its width to 100% */
     .search:focus {
         width: 100%;

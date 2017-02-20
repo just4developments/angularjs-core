@@ -41,8 +41,8 @@ app
           } else {
             if (backgroundSrc) {
               if (scope.size) {
-                var ii = backgroundSrc.lastIndexOf('/');
-                backgroundSrc = backgroundSrc.substr(0, ii + 1) + scope.size + backgroundSrc.substr(ii);
+                var ii = backgroundSrc.lastIndexOf('.');
+                backgroundSrc = backgroundSrc.substr(0, ii) + '.' + scope.size + backgroundSrc.substr(ii);
                 element[i].style.backgroundImage = 'url(' + $config.apiUrl + backgroundSrc + '), url(' + require('../assets/images/no-photo.png') + ')';
               } else {
                 element[i].style.backgroundImage = 'url(' + $config.apiUrl + backgroundSrc + ')';
@@ -76,8 +76,8 @@ app
               } else {
                 var imageSrc = scope.imageSrc;
                 if (imageSrc && scope.size) {
-                  var ii = imageSrc.lastIndexOf('/');
-                  imageSrc = imageSrc.substr(0, ii + 1) + scope.size + imageSrc.substr(ii);
+                  var ii = imageSrc.lastIndexOf('.');
+                  imageSrc = imageSrc.substr(0, ii) + '.' + scope.size + imageSrc.substr(ii);
                 }
                 ee.setAttribute('src', $config.apiUrl + imageSrc);
               }

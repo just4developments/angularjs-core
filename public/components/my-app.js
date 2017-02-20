@@ -5,7 +5,6 @@ app.component('myApp', {
     $routeConfig: [
         {path: '/transaction', name: 'Transaction', component: 'transaction'},
         {path: '/policy', name: 'Policy', component: 'policy'},
-        {path: '/...', name: 'HomeNewest', component: 'home', useAsDefault: true},
         {path: '/:categoryId/...', name: 'HomeNewestByCategoryId', component: 'home'}
     ],
     controller: ['$config', 'Category', '$scope', '$location', '$window', '$mdSidenav', '$rootScope', function ($config, Category, $scope, $location, $window, $mdSidenav, $rootScope) {
@@ -18,6 +17,9 @@ app.component('myApp', {
                     self.activeIndex = i;
                 }
             }
+            if($location.path() === '/'){
+                $location.path(`/${self.categories[0]._id}/moi-nhat`);
+            }
         });
         this.goTo = (id, index) => {
             self.activeIndex = index;
@@ -26,10 +28,10 @@ app.component('myApp', {
         this.openMenu = () => {
             $mdSidenav('left').toggle();
         }
-        this.closeGoTo = (id, index) => {
+        this.closeGoTo = (path, index) => {
             $mdSidenav('left').close();
             self.activeIndex = index;
-            $location.path(`${id}/moi-nhat`);
+            $location.path(path);
         }
     }]
 });

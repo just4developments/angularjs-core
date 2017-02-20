@@ -1,9 +1,10 @@
 app.component('product', {
     template: require('./product.html'),
     bindings: { $router: '<' },
-    controller: ['$config', 'Product', 'Category', '$scope', 'Upload', '$window', '$rootScope', '$mdDialog', function ($config, Product, Category, $scope, Upload, $window, $rootScope, $mdDialog) {
+    controller: ['$config', 'Product', 'Category', '$scope', 'Upload', '$window', '$rootScope', '$mdDialog', '$mdMedia', function ($config, Product, Category, $scope, Upload, $window, $rootScope, $mdDialog, $mdMedia) {
         require('./product.scss');
         this.today = new Date();
+        this.deviceSize = $mdMedia('xs') ? 'list.mob' : ($mdMedia('sm') ? 'list.tab' : 'list.pc');
         var clone = (obj, ignores) => {
             if (obj === null || typeof(obj) !== 'object' || 'isActiveClone' in obj)
                 return obj;

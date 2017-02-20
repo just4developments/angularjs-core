@@ -5,9 +5,13 @@
         </md-toolbar>
         <md-content>
             <md-list>
-            <md-list-item ng-repeat="c in $ctrl.categories" ng-click="$ctrl.closeGoTo(c._id, $index)">
+            <md-list-item ng-repeat="c in $ctrl.categories" ng-click="$ctrl.closeGoTo(c._id + '/moi-nhat', $index)">
                 <p> {{ c.name }} </p>
                 <md-icon class="md-secondary" ng-show="$index == $ctrl.activeIndex">done</md-icon>
+            </md-list-item>
+            <md-list-item ng-click="$ctrl.closeGoTo('transaction', $ctrl.categories.length)">
+                <p> Giao dịch </p>
+                <md-icon class="md-secondary" ng-show="$ctrl.categories.length == $ctrl.activeIndex">done</md-icon>
             </md-list-item>
             </md-list>
         </md-content>
@@ -28,39 +32,51 @@
             <li ng-class="{'active' : $index == $ctrl.activeIndex}" ng-repeat="c in $ctrl.categories" ng-click="$ctrl.goTo(c._id, $index)">{{c.name}}</li>
         </ul>    
         <div class="tab-content">
-            <div class="banner" layout-padding hide-xs>
-                <img src="../assets/images/banner.jpg" width="100%" />
-            </div>
-            <ng-outlet></ng-outlet>
-            <footer>
-                <div layout="row" layout-wrap>
-                    <section flex-xs="100" flex-sm="20" flex="20">
-                        <h4>Category</h4>
-                        <ul>
-                            <li ng-repeat="c in $ctrl.categories"><a href="#" ng-click="$ctrl.closeGoTo(c._id, $index)"> - {{c.name}}</a></li>
-                        </ul>
-                    </section>
-                    <section flex-xs="100" flex-sm="40" flex="40">
-                        <h4>Policy</h4>
-                        <ul>
-                            <li><a href="https://www.facebook.com/Menana198/" target="_blank">- Fanpage Menana198</a></li>
-                            <li><a href="https://m.facebook.com/messages/read/?fbid=1722718674613640" target="_blank">- Inbox</a></li>
-                            <li>0962.925.790</li>
-                        </ul>
-                    </section>
-                    <section flex flex-xs="100">
-                        <h4>Store information</h4>
-                        <ul class="padding-more">
-                            <li><md-icon>location_on</md-icon><a href="#">&nbsp;&nbsp;&nbsp;Lương Yên, Hai Bà Trưng, Hà Nội</a></li>
-                            <li><md-icon>phone</md-icon><a href="#">&nbsp;&nbsp;&nbsp;0962.925.790</a></li>
-                            <li><md-icon>email</md-icon><a href="#">&nbsp;&nbsp;&nbsp;www.nanacloset@gmail.com</a></li>
-                        </ul>
-                    </section>
-                </div>
-            </footer>
+            <banner></banner>
+            <ng-outlet></ng-outlet>            
         </div>    
-    </md-content>
-
+    </md-content>    
 </section>
+<footer>
+    <div layout="row" layout-wrap class="main">
+        <section flex-xs="100" flex-sm="50" flex="30">
+            <h4><md-icon>shopping_basket</md-icon> Chính sách bán hàng</h4>
+            <ul>
+                <li><a href="/policy"><b>- Hướng dẫn mua hàng của nanacloset</b></a></li>
+                <li><a href="/policy"><b>- Quy định đổi trả hàng</b></a></li>
+                <li><a href="/policy"><b>- Cách thức liên hệ mua hàng, tư vấn</b></a></li>
+            </ul>
+            <h4><md-icon>menu</md-icon> Danh mục dịch vụ</h4>
+            <ul>
+                <li ng-repeat="c in $ctrl.categories"><a href="#" ng-click="$ctrl.closeGoTo(c._id, $index)"> - {{c.name}}</a></li>
+            </ul>
+        </section>
+        <section flex flex-xs="100">
+            <h4><md-icon>info_outline</md-icon> Thông tin về shop</h4>
+            <ul class="padding-more">
+                <li><md-icon>location_on</md-icon> Phố Lương Yên, P.Bạch Đằng, Q.Hai Bà Trưng, Hà Nội</li>
+                <li><md-icon>phone</md-icon><a href="tel:0962925790">0962.925.790</a></li>
+                <li><md-icon>email</md-icon><a href="mailto:www.nanacloset@gmail.com">www.nanacloset@gmail.com</a></li>
+                <li><md-icon>pageview</md-icon><a href="https://www.facebook.com/Menana198/" target="_blank">Fanpage Menana198</a></li>
+                <li><md-icon>inbox</md-icon><a href="https://m.facebook.com/messages/read/?fbid=1722718674613640" target="_blank">Inbox Facebook</a></li>
+            </ul>
+        </section>
+        <section flex-xs="100" flex-sm="50" flex="30">
+            <h4><md-icon>directions</md-icon> Bản đồ tới shop</h4>
+            <img src="../assets/images/map.jpg" width="100%" onclick="window.open('https://goo.gl/maps/HGP1AVYxMpJ2', '_blank');" style="cursor: pointer"/>
+        </section>
+    </div>
+</footer>
+</div>
 
+<div style="position: fixed; bottom: 8px; right: 8px; z-index: 1; width: 60px; height: 60px; width: 100%;" class="contact">
+    <div style="position: relative;" align="right">
+        <div class="info" align="left">
+            <div><a href="tel:0962925790"><md-icon>phone</md-icon> 0962.925.790</a></div>
+            <div><md-icon>email</md-icon><a href="mailto:www.nanacloset@gmail.com">www.nanacloset@gmail.com</a></div>
+            <div><md-icon>pageview</md-icon><a href="https://www.facebook.com/Menana198/" target="_blank">Fanpage Menana198</a></div>
+            <div><md-icon>inbox</md-icon><a href="https://m.facebook.com/messages/read/?fbid=1722718674613640" target="_blank">Inbox Facebook</a></div>
+        </div>
+        <img src="../assets/images/contact.png" width="100%" />
+    </div>    
 </div>

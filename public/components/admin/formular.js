@@ -48,8 +48,24 @@ app.component('formular', {
                 this.products = [];
                 for(var r of self.pars.split('\n')){
                     var c = r.split(' ');
-                    this.products.push({sl: +c[0], money: +c[1], ship: +c[2]});
+                    this.products.push({sl: +c[0], money: +c[1], ship: (c.length > 3 ? (!!+c[c.length-1] ? +c[c.length-1] : null) : null)});
                 }
+                for(let i =0; i< this.products.length; i++) {
+                    if(!this.products[i].ship) {
+                        let totalShip = this.products[i-1].ship;
+                        let lastIndex = this.products.findIndex((e, idx) => {
+                            if(idx > i) return !!e.ship;
+                            return false;
+                        });
+                        if(lastIndex === -1) lastIndex = this.products.length;                        
+                        for(var j = i; j < lastIndex; j++) {
+                            this.products[j].ship = totalShip/(lastIndex-i+1);
+                        }
+                        this.products[i-1].ship = totalShip/(lastIndex-i+1);
+                        i = lastIndex-1;
+                    }
+                }
+                console.log(this.products);
             }
             if(self.isQuick === 2) self.isQuick = 0;
         }

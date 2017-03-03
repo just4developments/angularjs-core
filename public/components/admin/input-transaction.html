@@ -1,0 +1,39 @@
+<div ng-repeat="(date, data) in $ctrl.data" ng-if="$root.isAuth">
+    <div class="demo-card-wide mdl-card mdl-shadow--2dp">
+        <div class="mdl-card__title">
+            <h2 class="mdl-card__title-text">{{date}}</h2>
+        </div>
+        <ul class="mdl-card__supporting-text">
+            <li>Tiền dự kiến bán được: <span class="status1">+{{data.money | money}}</span></li>
+            <li>Tiền nhập hàng: <span class="status-1">-{{data.money0 | money}}</span></li>            
+            <li>Tiền dự kiến lãi: <span class="status1">+{{(data.money - data.money0) | money}}</span></li>
+        </ul>
+    </div>
+    <table class="mdl-data-table mdl-js-data-table">
+        <thead>
+            <tr>              
+                <th></th>  
+                <th class="mdl-data-table__cell--non-numeric">Tên</th>
+                <th>Số lượng</th>
+                <th>Size</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="item in data.list">
+                <th>{{$index+1}}. </th>
+                <td class="mdl-data-table__cell--non-numeric">{{item.name}}</td>
+                <td>{{item.quantity0}} chiếc</td>
+                <td>
+                    <ul>
+                        <li ng-repeat="size in item.sizes"><small><b>{{size.size}}</b> - <i>{{size.quantity0}} Chiếc</i></small></li>
+                    </ul>
+                </td>
+                <td>
+                    <a href="{{$ctrl.apiUrl}}{{image}}" style="margin-right: 4px;" target="_blank" ng-repeat="image in item.images"><img image-src="image" size="'list.mob'" height="50" /></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <hr/>
+</div>

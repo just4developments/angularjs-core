@@ -2,12 +2,11 @@ window.app = angular.module('myApp', [
 		'ngMaterial',
 		'ngComponentRouter',
 		'duScroll',
-		'ngFacebook'
+		'ngFacebook',
+		'ngFileUpload'
 	])
 	.constant('$config', {
-		// apiUrl: 'http://api.nanacloset.com',
 		apiUrl: 'http://localhost:9000',
-		webUrl: 'http://www.nanacloset.com',
 	})
 	.value('$routerRootComponent', 'myApp')
 	.config(['$locationProvider', '$config', '$httpProvider', '$compileProvider', '$mdAriaProvider', function ($locationProvider, $config, $httpProvider, $compileProvider, $mdAriaProvider) {

@@ -7,6 +7,7 @@ app.component('myApp', {
         {path: '/statistic', name: 'Statistic', component: 'statistic'},
         {path: '/formula', name: 'Formula', component: 'formular'},
         {path: '/transaction', name: 'Transaction', component: 'transaction'},
+        {path: '/input-transaction', name: 'InputTransaction', component: 'inputTransaction'},
         {path: '/policy', name: 'Policy', component: 'policy'},
         {path: '/:categoryId/...', name: 'HomeNewestByCategoryId', component: 'home'}
     ],

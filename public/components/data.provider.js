@@ -1,6 +1,9 @@
 app
     .factory('Product', ['$http', '$rootScope', '$config', '$q', function ($http, $rootScope, $config, $q) {
         return {
+            findAll: () => {
+                return $http.get(`${$config.apiUrl}/product?is_input=true`);  
+            },
             find: (categoryId, type, recordsPerPage) => {                
                 return $http.get(`${$config.apiUrl}/product?categoryId=${categoryId||''}&type=${type}&recordsPerPage=${recordsPerPage||''}`);
             },

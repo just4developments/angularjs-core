@@ -7,7 +7,7 @@
           <div layout="row" layout-wrap layout-padding>
             <md-input-container ng-hide="$ctrl.isQuick == 0" flex="100">
                 <label>Quick</label>
-                <textarea ng-model="$ctrl.pars" rows="5"></textarea>
+                <textarea ng-model="$ctrl.pars" rows="5" placeholder=""></textarea>
             </md-input-container>
             <div flex="100" align="right">
                 <md-button class="md-raised md-warn" ng-click="$ctrl.autoparse()">Quick Add</md-button>
@@ -34,7 +34,7 @@
             </md-input-container>
             <md-input-container flex>
                 <label>Tổng tệ trong excel(NDT)</label>
-                <input ng-model="$ctrl.total" type="number" />
+                <input value="{{$ctrl.total | number}} NDT ~ {{($ctrl.total * $ctrl.rate) | number}} VND" type="text" disabled />
             </md-input-container>
             <h4 flex="100">Sản phẩm</h4>
             <div ng-repeat="item in $ctrl.products" flex="100" layout="row">

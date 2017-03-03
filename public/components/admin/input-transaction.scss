@@ -1,0 +1,13 @@
+input-transaction {
+    > div {
+        padding: 8px;
+    }
+    .status1,
+    .status1 .md-text {
+        color: green !important;
+    }
+    .status-1,
+    .status-1 .md-text {
+        color: #e34343 !important;
+    }
+}

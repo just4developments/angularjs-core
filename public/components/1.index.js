@@ -2,8 +2,7 @@ window.app = angular.module('myApp', [
 		'ngMaterial',
 		'ngComponentRouter',
 		'duScroll',
-		'ngFacebook',
-		'ngFileUpload'
+		'ngFacebook'
 	])
 	.constant('$config', {
 		apiUrl: 'http://localhost:9000',

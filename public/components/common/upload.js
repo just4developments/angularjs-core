@@ -1,49 +1,74 @@
-// TODO : Dang update image progress
-app.component('uploadLogo', {
+// app.directive('fileModel', ['$parse', function ($parse) {
+//   return {
+//     restrict: 'A',
+//     link: function (scope, element, attrs) {
+//       var model = $parse(attrs.fileModel);
+//       var modelSetter = model.assign;
+//       element.on('change', function () {
+//         scope.$apply(function () {
+//           modelSetter(scope, element[0].files[0]);
+//         });
+//       });
+//     }
+//   };
+// }]);
+
+app.service('Upload', ['$http', function ($http) {
+  this.uploadFileToUrl = function (body, uploadUrl, method) {
+    var fd = new FormData();
+    for(var i in body){
+      if(body[i] instanceof FileList && body[i].length > 0){
+        for(var j in body[i]){
+          fd.append(i, body[i][j]);
+        }
+      }else if(body[i] instanceof Object && !(body[i] instanceof File)){
+        fd.append(i, angular.toJson(body[i]));
+      }else{
+        fd.append(i, body[i]);
+      }
+    }
+    if('PUT' === method){
+      return $http.put(uploadUrl, fd, {
+        transformRequest: angular.identity,
+        headers: {
+          'Content-Type': undefined
+        }
+      });  
+    }
+    return $http.post(uploadUrl, fd, {
+      transformRequest: angular.identity,
+      headers: {
+        'Content-Type': undefined
+      }
+    });
+  }
+}]);
+
+app.component('uploadFile', {
   template: require('./upload.html'),
   bindings: {
-    theme: '@',
-    defaultSrc: '@',
-    itemSrc: '=',
-    url: '<',
-    file: '@',
-    fields: '<',
-    done: '&',
-    error: '&', 
-    pattern: '@',
-    size: '<'
+    imgSrc: '=',
+    fileModel: '=',
+    name: '@'
   },
-  controller: ['Upload', '$window', '$rootScope', '$config', function(Upload, $window, $rootScope, $config) {    
-    var self = this;
-    var height = 170;   
-    var body = this.fields || {};
-    if(this.size){
-        var i = this.itemSrc.lastIndexOf('/');
-        this.itemSrc = this.itemSrc.substr(0, i+1) + this.size + this.itemSrc.substr(i);
-    }
-    this.apiUrl = (this.itemSrc && this.itemSrc.indexOf('http')!==0) ? $config.apiUrl : '';
-    this.pattern = this.pattern || 'image/*';  
-    this.upload = function (file) {
-      if(file === null) return null;
-      body[this.file] = file;
-      self.percent = 0;
-      self.itemSrc = undefined;
-      this.percentCss = {'top': 100+'%'};
-      Upload.upload({
-          url: this.url,
-          data: body
-      }).then(function (resp) {            
-          delete self.percent;
-          self.itemSrc = resp.data[0];
-          self.percent = 100;
-          self.done({resp: resp});
-      }, function (resp) {
-          delete self.percent;
-          self.error({resp: resp});
-      }, function (evt) {
-          self.percent = parseInt(100 * evt.loaded / evt.total);
-          self.percentCss = {'top': (100 - self.percent) + '%'};
+  controller: ['$element', '$attrs', '$scope', '$parse', '$window', function ($element, $attrs, $scope, $parse, $window) {
+    require('./upload.scss');
+    var self = this; 
+    $element.on('change', function (e) {
+      $scope.$apply(function () {
+        self.fileModel = e.target.files;
       });
-    };
+      var selectedFile = event.target.files[0];
+      var reader = new FileReader();
+      var imgtag = document.getElementById("imageUpload");
+      imgtag.title = selectedFile.name;
+      reader.onload = function(event) {
+        imgtag.src = event.target.result;
+      };
+      reader.readAsDataURL(selectedFile);
+    });
+    this.open = () => {
+      $window.document.querySelector('#'+self.name).click();
+    }
   }]
 });

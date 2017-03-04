@@ -5,7 +5,7 @@ window.app = angular.module('myApp', [
 		'ngFacebook'
 	])
 	.constant('$config', {
-		apiUrl: 'http://localhost:9000',
+		apiUrl: 'http://localhost:9000'
 	})
 	.value('$routerRootComponent', 'myApp')
 	.config(['$locationProvider', '$config', '$httpProvider', '$compileProvider', '$mdAriaProvider', function ($locationProvider, $config, $httpProvider, $compileProvider, $mdAriaProvider) {

@@ -26,7 +26,7 @@
                     <div class="card-name">{{item.name}}</div>
                     <div class="card-des">{{item.des}}</div>
                     <div class="card-des" ng-if="$root.isAuth">Các size còn:<br/> 
-                        <span class="card-name" ng-repeat="s in item.sizes" title="Remain {{s.quantity}}/ {{s.quantity0}}" ng-if="s.quantity > 0">
+                        <span class="card-name" ng-repeat="s in item.sizes track by $index" title="Remain {{s.quantity}}/ {{s.quantity0}}" ng-if="s.quantity > 0">
                             <a href="#" ng-if="s.quantity > 0" class="card-name" ng-click="$ctrl.addSell(item, $index)">{{s.size}}</a>
                         </span>
                     </div>
@@ -150,7 +150,7 @@
                         <md-icon>add</md-icon>
                     </md-button>                    
                 </div>
-                <div layout="row" ng-repeat="s in $ctrl.p.sizes" ng-if="$ctrl.p && $ctrl.p.sizes">
+                <div layout="row" ng-repeat="s in $ctrl.p.sizes track by $index" ng-if="$ctrl.p && $ctrl.p.sizes">
                     <md-input-container class="md-block" flex>
                         <label>Kích cỡ</label>
                         <input ng-model="s.size" type="text" placeholder="S">
@@ -164,7 +164,7 @@
                         <input ng-model="s.quantity0" type="number" placeholder="0">                        
                     </md-input-container>
                     <md-input-container class="md-block" flex="10">
-                        <md-icon class="button" ng-click="$ctrl.p.sizes.splice($index, 1);">remove</md-icon>
+                        <md-icon class="button" ng-click="$ctrl.removeSize($index)">remove</md-icon>
                     </md-input-container>
                 </div>
                 <br/><br/>

@@ -15,7 +15,11 @@ app.component('product', {
         this.$routerOnActivate = (next) => {
             self.type = next.params.filter;
             Product.find($rootScope.categoryId, self.type).then((resp) => {
-                self.list = resp.data;
+                self.list = resp.data.map((e) => {
+                    if(typeof e.sizes === 'string') e.sizes = JSON.parse(e.sizes);
+                    if(typeof e.tags === 'string') e.tags = JSON.parse(e.tags);
+                    return e;
+                });
                 Category.find(1).then((resp) => {
                     self.categories = resp.data;
                     Category.find(2).then((resp) => {
@@ -24,6 +28,10 @@ app.component('product', {
                 });
             });
         };
+        this.removeSize = (index) => {
+            console.log(index, self.p);
+            self.p.sizes.splice(index, 1);
+        }
         this.isShow = (tags) => {
             if($rootScope.tagFilter.length === 0) return true;
             for(var i in $rootScope.tagFilter){

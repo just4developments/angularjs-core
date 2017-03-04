@@ -9,7 +9,7 @@ app.component('inputTransaction', {
                 self.data = {};
                 resp.data.map((e) => {
                    let date = new Date(e.created_date.substr(0, 10)); 
-                   date = date.getDate() + '/' + (date.getMonth()+1) + '/' + date.getFullYear();
+                   date = (date.getDate() +1) + '/' + (date.getMonth()+1) + '/' + date.getFullYear();
                    if(!self.data[date]) {
                        self.data[date] = {
                            list: [],
@@ -17,8 +17,8 @@ app.component('inputTransaction', {
                            money0: 0
                        }
                    }
-                   self.data[date].money += e.money;
-                   self.data[date].money0 += e.money0;
+                   self.data[date].money += e.money*e.quantity0;
+                   self.data[date].money0 += e.money0*e.quantity0;
                    self.data[date].list.push(e);
                 });
             });

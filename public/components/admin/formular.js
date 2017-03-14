@@ -19,7 +19,9 @@ app.component('formular', {
         }
         this.calculate = () => {
             if(!self.percent) return alert('Chưa nhập phí dịch vụ');
+            if(!self.kg) self.kg = window.prompt('Nhập số kg');
             if(!self.kg) return alert('Chưa nhập số kg');
+            self.kg = +self.kg;
             let productMoney = 0;
             let productNum = 0;
             let productShip = 0;
@@ -32,8 +34,8 @@ app.component('formular', {
             self.total = Math.round(productMoney + productShip + self.taxService);
             productMoney = (productMoney + productShip) * self.rate;
             let kg0 = Math.floor(self.kg);
-            let kgShip = (kg0 * self.kgMoney) + ((self.kg - kg0) * self.kgMoney);
-            let blaMoney = (self.total * self.rate) - productMoney + kgShip;
+            self.kgShip = (kg0 * self.kgMoney) + ((self.kg - kg0) * self.kgMoney);
+            let blaMoney = (self.total * self.rate) - productMoney + self.kgShip;
             let eachProduct = Math.round(blaMoney / productNum);
             let recal =0;
             for(var i in self.products){

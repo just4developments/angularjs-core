@@ -11,16 +11,17 @@
             </md-input-container>
             <div flex="100" align="right">
                 <md-button class="md-raised md-warn" ng-click="$ctrl.autoparse()">Quick Add</md-button>
+                <md-button ng-click="$ctrl.calculate()" class="md-raised md-primary">Calculator</md-button>
             </div>
-            <md-input-container flex="20" flex-xs="100">
-                <label>Tỉ giá (1NDT = ?VND)</label>
+            <md-input-container flex="10" flex-xs="100">
+                <label>Tỉ giá</label>
                 <input ng-model="$ctrl.rate" type="number" />
             </md-input-container>
             <md-input-container flex="10" flex-xs="100">
                 <label>Số KG</label>
                 <input ng-model="$ctrl.kg" type="number" />
             </md-input-container>
-            <md-input-container flex="15" flex-xs="100">
+            <md-input-container flex="10" flex-xs="100">
                 <label>? VND/1 KG</label>
                 <input ng-model="$ctrl.kgMoney" type="number" />
             </md-input-container>
@@ -28,13 +29,17 @@
                 <label>Phí DV(%)</label>
                 <input ng-model="$ctrl.percent" type="number" />
             </md-input-container>
-            <md-input-container flex="15" flex-xs="100">
-                <label>Tiền DV(NDT)</label>
+            <md-input-container flex="10" flex-xs="100">
+                <label>Tiền DV</label>
                 <input ng-model="$ctrl.taxService" type="number" disabled/>
             </md-input-container>
             <md-input-container flex>
-                <label>Tổng tệ trong excel(NDT)</label>
-                <input value="{{$ctrl.total | number}} NDT ~ {{($ctrl.total * $ctrl.rate) | number}} VND" type="text" disabled />
+                <label>Tổng tệ trong excel</label>
+                <input value="{{$ctrl.total | number}} NDT~ {{($ctrl.total * $ctrl.rate) | number}} VND" type="text" disabled />
+            </md-input-container>
+            <md-input-container flex>
+                <label>Tổng tiền</label>
+                <input value="{{($ctrl.total * $ctrl.rate + $ctrl.kgShip) | number}} VND" type="text" disabled />
             </md-input-container>
             <h4 flex="100">Sản phẩm</h4>
             <div ng-repeat="item in $ctrl.products" flex="100" layout="row">
@@ -58,8 +63,7 @@
                     <input value="{{item.price | money}}/1 chiếc" type="text" disabled />
                 </md-input-container>
             </div>
-            <md-button ng-click="$ctrl.addProduct()" class="md-raised">Manual Add</md-button>
-            <md-button ng-click="$ctrl.calculate()" class="md-raised md-primary">Calculator</md-button>
+            <md-button ng-click="$ctrl.addProduct()" class="md-raised">Manual Add</md-button>            
         </div>
         </md-content>
       </md-tab>

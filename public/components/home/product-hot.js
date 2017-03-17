@@ -10,7 +10,7 @@ app.component('productHot', {
         let getRandomInt = (min, max) => {
             return Math.floor(Math.random() * (max - min + 1)) + min;
         }
-        Product.find(this.categoryId, 'hot', recordsPerPage).then((resp) => {
+        Product.findByTags(this.categoryId, 'hot', recordsPerPage).then((resp) => {
             if(!resp.data || resp.data.length === 0) return;
             let rs = [];
             let getRdItem = (num) => {

@@ -14,7 +14,7 @@ app.component('product', {
         this.isAdd = false;
         this.$routerOnActivate = (next) => {
             self.type = next.params.filter;
-            Product.find($rootScope.categoryId, self.type).then((resp) => {
+            Product.findByTags($rootScope.categoryId, self.type).then((resp) => {
                 self.list = resp.data.map((e) => {
                     if(typeof e.sizes === 'string') e.sizes = JSON.parse(e.sizes);
                     if(typeof e.tags === 'string') e.tags = JSON.parse(e.tags);

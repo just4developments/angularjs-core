@@ -86,7 +86,7 @@ webpackJsonp([3],[
 			};
 		},
 		isOldIE = memoize(function() {
-			return /msie [6-9]\b/.test(window.navigator.userAgent.toLowerCase());
+			return /msie [6-9]\b/.test(self.navigator.userAgent.toLowerCase());
 		}),
 		getHeadElement = memoize(function () {
 			return document.head || document.getElementsByTagName("head")[0];
@@ -350,9 +350,8 @@ webpackJsonp([3],[
 	'use strict';
 
 	window.app = angular.module('myApp', ['ngMaterial', 'ngComponentRouter', 'duScroll', 'ngFacebook']).constant('$config', {
-		// apiUrl: 'http://localhost:9000',
-		apiUrl: 'http://api.nanacloset.com',
-		webUrl: 'http://nanacloset.com'
+		apiUrl: 'http://localhost:9000',
+		webUrl: 'http://localhost:4002'
 	}).value('$routerRootComponent', 'myApp').config(['$locationProvider', '$config', '$httpProvider', '$compileProvider', '$mdAriaProvider', function ($locationProvider, $config, $httpProvider, $compileProvider, $mdAriaProvider) {
 		//$locationProvider.hashPrefix('!');    
 		// $httpProvider.interceptors.push('AuthInterceptor');
@@ -602,9 +601,14 @@ webpackJsonp([3],[
 	        findAll: function findAll() {
 	            return $http.get($config.apiUrl + '/product?is_input=true');
 	        },
-	        find: function find(categoryId, type, recordsPerPage) {
-	            return $http.get($config.apiUrl + '/product?categoryId=' + (categoryId || '') + '&type=' + type + '&recordsPerPage=' + (recordsPerPage || ''));
+	        findByTags: function findByTags(tags, type, recordsPerPage) {
+	            if (!type) type = '';
+	            if (!tags) tags = '';else if (tags instanceof Array) tags = tags.join(',');
+	            return $http.get($config.apiUrl + '/product?tags=' + (tags || '') + '&type=' + type + '&recordsPerPage=' + (recordsPerPage || ''));
 	        },
+	        // find: (categoryId, type, recordsPerPage) => {                
+	        //     return $http.get(`${$config.apiUrl}/product?categoryId=${categoryId||''}&type=${type}&recordsPerPage=${recordsPerPage||''}`);
+	        // },
 	        delete: function _delete(id) {
 	            return $http.delete($config.apiUrl + '/product/' + id);
 	        },
@@ -1076,17 +1080,17 @@ webpackJsonp([3],[
 	    bindings: { $router: '<' },
 	    controller: ['$config', 'Category', '$scope', '$location', '$window', '$mdSidenav', '$rootScope', '$facebook', '$mdMedia', 'FacebookLoader', function ($config, Category, $scope, $location, $window, $mdSidenav, $rootScope, $facebook, $mdMedia, FacebookLoader) {
 	        var self = this;
-	        this.activeIndex = 0;
-	        Category.find().then(function (resp) {
+	        this.activeIndex = -1;
+	        Category.find(2).then(function (resp) {
 	            self.categories = resp.data;
 	            for (var i in self.categories) {
 	                if ($window.location.href.indexOf(self.categories[i]._id) != -1) {
 	                    self.activeIndex = i;
 	                }
 	            }
-	            if ($location.path() === '/') {
-	                $location.path('/' + self.categories[0]._id + '/moi-nhat');
-	            }
+	            // if($location.path() === '/'){
+	            //     $location.path(`/${self.categories[0]._id}/moi-nhat`);
+	            // }
 	        });
 	        this.goTo = function (id, index) {
 	            self.activeIndex = index;
@@ -1134,8 +1138,8 @@ webpackJsonp([3],[
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/sass-loader/index.js!./my-app.scss", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/sass-loader/index.js!./my-app.scss");
+			module.hot.accept("!!../../node_modules/css-loader/index.js!../../node_modules/sass-loader/index.js!./my-app.scss", function() {
+				var newContent = require("!!../../node_modules/css-loader/index.js!../../node_modules/sass-loader/index.js!./my-app.scss");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -1321,8 +1325,8 @@ webpackJsonp([3],[
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/sass-loader/index.js!./formular.scss", function() {
-				var newContent = require("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/sass-loader/index.js!./formular.scss");
+			module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/sass-loader/index.js!./formular.scss", function() {
+				var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/sass-loader/index.js!./formular.scss");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -1401,8 +1405,8 @@ webpackJsonp([3],[
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/sass-loader/index.js!./input-transaction.scss", function() {
-				var newContent = require("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/sass-loader/index.js!./input-transaction.scss");
+			module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/sass-loader/index.js!./input-transaction.scss", function() {
+				var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/sass-loader/index.js!./input-transaction.scss");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -1616,8 +1620,8 @@ webpackJsonp([3],[
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/sass-loader/index.js!./statistic.scss", function() {
-				var newContent = require("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/sass-loader/index.js!./statistic.scss");
+			module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/sass-loader/index.js!./statistic.scss", function() {
+				var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/sass-loader/index.js!./statistic.scss");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -1772,8 +1776,8 @@ webpackJsonp([3],[
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/sass-loader/index.js!./transaction.scss", function() {
-				var newContent = require("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/sass-loader/index.js!./transaction.scss");
+			module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/sass-loader/index.js!./transaction.scss", function() {
+				var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/sass-loader/index.js!./transaction.scss");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -1905,8 +1909,8 @@ webpackJsonp([3],[
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/sass-loader/index.js!./upload.scss", function() {
-				var newContent = require("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/sass-loader/index.js!./upload.scss");
+			module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/sass-loader/index.js!./upload.scss", function() {
+				var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/sass-loader/index.js!./upload.scss");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -1970,8 +1974,8 @@ webpackJsonp([3],[
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/sass-loader/index.js!./aboutus.scss", function() {
-				var newContent = require("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/sass-loader/index.js!./aboutus.scss");
+			module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/sass-loader/index.js!./aboutus.scss", function() {
+				var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/sass-loader/index.js!./aboutus.scss");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -2030,8 +2034,8 @@ webpackJsonp([3],[
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/sass-loader/index.js!./banner.scss", function() {
-				var newContent = require("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/sass-loader/index.js!./banner.scss");
+			module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/sass-loader/index.js!./banner.scss", function() {
+				var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/sass-loader/index.js!./banner.scss");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -2127,8 +2131,8 @@ webpackJsonp([3],[
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/sass-loader/index.js!./home.scss", function() {
-				var newContent = require("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/sass-loader/index.js!./home.scss");
+			module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/sass-loader/index.js!./home.scss", function() {
+				var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/sass-loader/index.js!./home.scss");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -2169,7 +2173,7 @@ webpackJsonp([3],[
 	        var getRandomInt = function getRandomInt(min, max) {
 	            return Math.floor(Math.random() * (max - min + 1)) + min;
 	        };
-	        Product.find(this.categoryId, 'hot', recordsPerPage).then(function (resp) {
+	        Product.findByTags(this.categoryId, 'hot', recordsPerPage).then(function (resp) {
 	            if (!resp.data || resp.data.length === 0) return;
 	            var rs = [];
 	            var getRdItem = function getRdItem(num) {
@@ -2212,8 +2216,8 @@ webpackJsonp([3],[
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/sass-loader/index.js!./product-hot.scss", function() {
-				var newContent = require("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/sass-loader/index.js!./product-hot.scss");
+			module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/sass-loader/index.js!./product-hot.scss", function() {
+				var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/sass-loader/index.js!./product-hot.scss");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -2254,7 +2258,7 @@ webpackJsonp([3],[
 	        this.isAdd = false;
 	        this.$routerOnActivate = function (next) {
 	            self.type = next.params.filter;
-	            Product.find($rootScope.categoryId, self.type).then(function (resp) {
+	            Product.findByTags($rootScope.categoryId, self.type).then(function (resp) {
 	                self.list = resp.data.map(function (e) {
 	                    if (typeof e.sizes === 'string') e.sizes = JSON.parse(e.sizes);
 	                    if (typeof e.tags === 'string') e.tags = JSON.parse(e.tags);
@@ -2427,8 +2431,8 @@ webpackJsonp([3],[
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/sass-loader/index.js!./product.scss", function() {
-				var newContent = require("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/sass-loader/index.js!./product.scss");
+			module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/sass-loader/index.js!./product.scss", function() {
+				var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/sass-loader/index.js!./product.scss");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -2499,8 +2503,8 @@ webpackJsonp([3],[
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/sass-loader/index.js!./policy.scss", function() {
-				var newContent = require("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/sass-loader/index.js!./policy.scss");
+			module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/sass-loader/index.js!./policy.scss", function() {
+				var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/sass-loader/index.js!./policy.scss");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});

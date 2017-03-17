@@ -4,9 +4,15 @@ app
             findAll: () => {
                 return $http.get(`${$config.apiUrl}/product?is_input=true`);  
             },
-            find: (categoryId, type, recordsPerPage) => {                
-                return $http.get(`${$config.apiUrl}/product?categoryId=${categoryId||''}&type=${type}&recordsPerPage=${recordsPerPage||''}`);
+            findByTags: (tags, type, recordsPerPage) => {                
+                if(!type) type = '';
+                if(!tags) tags = '';
+                else if(tags instanceof Array) tags = tags.join(',');
+                return $http.get(`${$config.apiUrl}/product?tags=${tags||''}&type=${type}&recordsPerPage=${recordsPerPage||''}`);
             },
+            // find: (categoryId, type, recordsPerPage) => {                
+            //     return $http.get(`${$config.apiUrl}/product?categoryId=${categoryId||''}&type=${type}&recordsPerPage=${recordsPerPage||''}`);
+            // },
             delete: (id) => {
                 return $http.delete(`${$config.apiUrl}/product/${id}`);
             },

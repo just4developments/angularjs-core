@@ -14,17 +14,17 @@ app.component('myApp', {
     bindings: { $router: '<' },
     controller: ['$config', 'Category', '$scope', '$location', '$window', '$mdSidenav', '$rootScope', '$facebook', '$mdMedia', 'FacebookLoader', function ($config, Category, $scope, $location, $window, $mdSidenav, $rootScope, $facebook, $mdMedia, FacebookLoader) {
         let self = this;
-        this.activeIndex = 0;
-        Category.find().then((resp) => {
+        this.activeIndex = -1;
+        Category.find(2).then((resp) => {
             self.categories = resp.data;
             for(var i in self.categories){
                 if($window.location.href.indexOf(self.categories[i]._id) != -1){
                     self.activeIndex = i;
                 }
             }
-            if($location.path() === '/'){
-                $location.path(`/${self.categories[0]._id}/moi-nhat`);
-            }
+            // if($location.path() === '/'){
+            //     $location.path(`/${self.categories[0]._id}/moi-nhat`);
+            // }
         });
         this.goTo = (id, index) => {
             self.activeIndex = index;

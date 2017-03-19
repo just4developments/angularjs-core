@@ -5,6 +5,10 @@
         </md-toolbar>
         <md-content>
             <md-list>
+                <md-list-item ng-click="$ctrl.closeGoTo('/', -1)">
+                    <p> Trang chủ </p>
+                    <md-icon class="md-secondary" ng-show="-1 == $ctrl.activeIndex">done</md-icon>
+                </md-list-item>
                 <md-list-item ng-repeat="c in $ctrl.categories" ng-click="$ctrl.closeGoTo(c._id + '/moi-nhat', $index)">
                     <p> {{ c.name }} </p>
                     <md-icon class="md-secondary" ng-show="$index == $ctrl.activeIndex">done</md-icon>
@@ -31,6 +35,7 @@
             </div>
         </header>
         <ul class="tab" hide-xs>
+            <li ng-class="{'active' : -1 == $ctrl.activeIndex}" ng-click="$ctrl.goTo('', -1)">Trang chủ</li>
             <li ng-class="{'active' : $index == $ctrl.activeIndex}" ng-repeat="c in $ctrl.categories" ng-click="$ctrl.goTo(c._id, $index)">{{c.name}}</li>
             <!--<li ng-click="$ctrl.goAboutus()">Khách hàng</li>-->
         </ul>

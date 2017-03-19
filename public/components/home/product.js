@@ -46,9 +46,6 @@ app.component('product', {
             }
             return true;
         }
-        this.searchTextChange = (text) => {
-            self.trans.buyer = text;
-        }
         this.selectedItemChange = (item) => {
             self.trans.address = item.address;
             self.trans.buyer = item.buyer;

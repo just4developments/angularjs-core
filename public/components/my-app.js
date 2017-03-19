@@ -28,7 +28,8 @@ app.component('myApp', {
         });
         this.goTo = (id, index) => {
             self.activeIndex = index;
-            $location.path(`${id}/moi-nhat`);
+            if(!id) $location.path(`/`);
+            else $location.path(`${id}/moi-nhat`);
         }
         this.goAboutus = (url) => {
             self.$router.navigate(['AboutUs']);

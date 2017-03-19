@@ -38,13 +38,14 @@
                     <div align="right" flex="30"><a href="#" ng-click="$ctrl.isSell = 0;"><span class="card-name">{{$ctrl.sizeName}}</span></a></div>
                     <md-input-container class="md-block" flex="100" md-no-float style="margin: 0px 0px 16px 0px">
                         <md-autocomplete
+                            ng-if="$ctrl.pickIndex === $index"
                             md-no-cache="false"
                             md-search-text="$ctrl.searchText"
                             md-items="item in $ctrl.querySearchBuyer($ctrl.searchText)"
-                            md-search-text-change="$ctrl.searchTextChange($ctrl.searchText)"
                             md-selected-item-change="$ctrl.selectedItemChange(item)"
                             md-item-text="item.buyer"
-                            md-min-length="0"
+                            md-min-length="1"
+                            md-delay="1000"
                             placeholder="Tên khách hàng">
                             <md-item-template>
                                 <span md-highlight-text="$ctrl.searchText" md-highlight-flags="^i">{{item.buyer}} - {{item.phone}}</span>
@@ -97,7 +98,7 @@
                     <md-icon ng-if="!item.status">visibility_off</md-icon>
                 </md-button>                
                 <div flex></div>
-                <md-button class="md-icon-button" aria-label="Details" ng-click="$parent.sizeIndex = $parent.sizeIndex ? 0 : 1;">
+                <md-button class="md-icon-button" aria-label="Details" ng-click="$parent.sizeIndex = $parent.sizeIndex ? 0 : 1; $ctrl.pickIndex = $parent.$index;">
                     <md-icon ng-if="!sizeIndex">more_horiz</md-icon>
                     <md-icon ng-if="sizeIndex">keyboard_arrow_left</md-icon>
                 </md-button>               
